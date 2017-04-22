@@ -1,0 +1,52 @@
+<div class="ng-cloak">
+  <nav class="topbanner navbar navbar-inverse navbar-embossed" role="navigation">
+    <div class="navbar-header">
+      <a class="ffCur fs25 navbar-brand" href="#">Tom's Media > </a>
+      <a class="plno pt20 ffCur fs20 navbar-brand" href="#movie">Movies</a>
+    </div>
+        
+    <div class="letter-box">
+      <ul class="pagination">  
+        <span class="space-20"></span>
+        <a class="letter-font" ng-click="clickLetter($event)" >0123</a>
+        <span class="space-5"></span>
+        <span class="space-25" ng-repeat="x in letterArray">
+          <a class="letter-font" ng-click="clickLetter($event)">{{x}}</a>
+        </span>
+      </ul>
+    </div>  
+  </nav>
+
+  <div ng-hide="loading" class="pull-right">
+    <button class="button"  ng-click="loadOnlineData(true)">
+      <span title="Click here to access online" ng-if="connection=='local'">Online</span>
+      <span title="Click here to refresh" ng-if="connection=='online'">Refresh</span>
+    </button>
+  </div>
+
+  <div ng-show="loading"  style="position:absolute;top:30%;left:40%">
+    <span align="center" style="color:white">
+      <h8 style="margin-left:-150px" ng-if="content">{{content}}</h8>
+      <h4 ng-if="!content">Loading...</h4>
+    </span>
+    <div><img src="../img/circle.gif"></div>
+  </div>
+      
+	<div ng-hide="loading" ng-repeat="x in data">
+	  <div ng-if="x.letter!=''">
+	    <a name="{{x.letter}}"></a><div class="ml50 ffCur fs25 pt100">Starts with {{x.letter}}</div>
+	  </div>
+		<div class="pt20 ml50 fui-folder text-nowrap">
+		  <a class="folder ml10 ffFant fs20">{{x.movie_name}}</a>
+			<span class="space-20"></span>
+      <a href=""><img class="icon" src="../img/icons/svg/video-player.svg"></a>|
+			<span class="space-20" ng-if="x.has_subtitle=='true'">
+        <a href=""><img class="icon" src="../img/icons/svg/closed-captioning.svg"></a>
+      </span>
+		</div>
+	</div>
+
+  <div class="pt100"></div>
+</div>
+
+  

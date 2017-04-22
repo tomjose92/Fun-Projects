@@ -1,0 +1,30 @@
+{
+  "name": "react-js-browser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack -d --watch",
+    "build": "webpack -p",
+    "serve": "http-server ./public"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-router": "^2.4.0",
+    "radium": "^0.18.0",
+    "webpack": "^1.14.0",
+    "bluebird": "^3.4.5",
+    "react-modal": "^1.4.0",
+    "react-native": "^0.43"
+  },
+  "devDependencies": {
+    "react-hot-loader": "^1.3.1"
+  }
+}

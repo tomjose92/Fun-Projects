@@ -1,0 +1,37 @@
+  <div class="ng-cloak">
+     <nav class="topbanner navbar navbar-inverse navbar-embossed" role="navigation" style="margin-top: -15px">
+        <div class="navbar-header" style="padding-top: 15px">
+          <a href='#' class="ffCur fs25 navbar-brand" ng-Click="$rootScope.setCall('tvshow')" href="#">Tom's Media > </a>
+          <a class="plno pt20 ffCur fs20 navbar-brand" href="#tvshow">TV Shows</a>
+        </div>
+        <div ng-show="showButton" class="pull-right">
+          <button class="button" ng-click="loadOnlineData(true)">
+            <span title="Click here to access online" ng-if="connection=='local'">Online</span>
+            <span title="Click here to refresh" ng-if="connection=='online'">Refresh</span>
+          </button>
+      </div>
+      </nav>
+    
+      <div class="pt100"></div>
+
+
+	    <div ng-show="loading"  style="position:absolute;top:30%;left:40%">
+        <span align="center" style="color:white">
+          <h8 style="margin-left:-150px" ng-if="content">{{content}}</h8>
+          <h4 ng-if="!content">Loading...</h4>
+        </span>
+        <div><img src="../img/circle.gif"></div>
+      </div>
+
+	   <div ng-hide="loading" ng-repeat="x in data" class="pt20 ml50 fui-folder text-nowrap">
+		    <a ng-click="toggleTVShow($index)" name="{{x.tv_show_tag}}" class="tvshow ml10 ffFant fs20">{{x.tv_show_name}}</a>
+		    <tvshow-season ng-show="x.show" toggleSeason="toggleSeason" seasons="x.seasons"></tvshow-season>
+        <tvshow-episode ng-show="x.show" episodes="x.episodes"></tvshow-episode>
+	   </div>
+
+      <div class="pt100"></div>
+
+      <script src="../dist/js/vendor/jquery.min.js"></script>
+      <script src="../dist/js/flat-ui.min.js"></script>
+      <script src="../dist/js/flat-ui.js"></script>
+  </div>

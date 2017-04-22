@@ -1,0 +1,4 @@
+<div ng-repeat="x in seasons" ng-class="{'fui-radio-checked':$index==selectedIndex}" class="pt20 ml50 fui-radio-unchecked text-nowrap">
+	<a ng-click="toggleSeason($index)" class="season ml10 ffFant fs20">{{x.tv_show_season}}</a>
+	<tvshow-episode  ng-show="x.show" episodes="x.episodes"></tvshow-episode>
+</div>

@@ -1,0 +1,1368 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"nex",
+				"nextProps"
+			],
+			[
+				"ne",
+				"nextProps"
+			],
+			[
+				"sho",
+				"shouldComponentUpdate"
+			],
+			[
+				"local",
+				"localUrl"
+			],
+			[
+				"online",
+				"onlineUrl"
+			],
+			[
+				"dis",
+				"display"
+			],
+			[
+				"display",
+				"displayData"
+			],
+			[
+				"TV",
+				"TVShowEpisodes"
+			],
+			[
+				"epsi",
+				"episodeScroll"
+			],
+			[
+				"cons",
+				"constructor"
+			],
+			[
+				"ta",
+				"tableName"
+			],
+			[
+				"Pr",
+				"PreparedStatement"
+			],
+			[
+				"Dri",
+				"DriverManager"
+			],
+			[
+				"br",
+				"browser"
+			],
+			[
+				"hard",
+				"harddisk"
+			],
+			[
+				"C",
+				"CommonDBUtil"
+			],
+			[
+				"q",
+				"queryDelete"
+			],
+			[
+				"qu",
+				"queryDelete"
+			],
+			[
+				"quer",
+				"query"
+			],
+			[
+				"JSON",
+				"JSONObject"
+			],
+			[
+				"delete",
+				"deleteTableData"
+			],
+			[
+				"JSO",
+				"JSONObject"
+			],
+			[
+				"JS",
+				"JSONArray"
+			],
+			[
+				"top",
+				"topPosition"
+			],
+			[
+				"MOV",
+				"MOVIE_FOLDER"
+			],
+			[
+				"F",
+				"FileOutputStream"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"overf",
+				"overflow-x"
+			],
+			[
+				"file",
+				"fileName"
+			],
+			[
+				"prin",
+				"printStackTrace"
+			],
+			[
+				"seas",
+				"seasonNumber"
+			],
+			[
+				"get",
+				"getName"
+			],
+			[
+				"rename",
+				"renameFiles"
+			],
+			[
+				"cone",
+				"contentToWrite"
+			],
+			[
+				"conte",
+				"contentToWrite"
+			],
+			[
+				"con",
+				"content"
+			],
+			[
+				"write",
+				"writeHTMLFile"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"back",
+				"background-position"
+			],
+			[
+				"margi",
+				"margin-top"
+			],
+			[
+				"has",
+				"hasClass\t.hasClass()"
+			],
+			[
+				"replace",
+				"replaceAll"
+			],
+			[
+				"SU",
+				"SUBTITLE_URL"
+			],
+			[
+				"sub",
+				"subtitleIcon"
+			],
+			[
+				"subt",
+				"subtitleIcon"
+			],
+			[
+				"MOVI",
+				"MOVIE_URL"
+			],
+			[
+				"M",
+				"MOVIE_ICON"
+			],
+			[
+				"tvShowEp",
+				"tvShowEpisodesText"
+			],
+			[
+				"tvShowSe",
+				"tvShowSeasonText"
+			],
+			[
+				"tv",
+				"tvShowText"
+			],
+			[
+				"tvSho",
+				"tvShowText"
+			],
+			[
+				"tvSh",
+				"tvShowElement"
+			],
+			[
+				"Collectio",
+				"Collections"
+			],
+			[
+				"divS",
+				"divSubtitleIcon"
+			],
+			[
+				"SUB",
+				"SUBTITLE_ICON"
+			],
+			[
+				"ad",
+				"ad360-body"
+			],
+			[
+				"app",
+				"appspane"
+			],
+			[
+				"conS",
+				"conSecurityName"
+			],
+			[
+				"SERVER_",
+				"SERVER_VALUE"
+			],
+			[
+				"resp",
+				"responseData"
+			],
+			[
+				"lgo",
+				"logoPath"
+			],
+			[
+				"is",
+				"isReloadRequired"
+			],
+			[
+				"B",
+				"BROWSER_TITLE"
+			],
+			[
+				"person",
+				"personalizeData"
+			],
+			[
+				"pers",
+				"personalizeData"
+			],
+			[
+				"per",
+				"personalizeData"
+			],
+			[
+				"getM",
+				"getMailSettings"
+			],
+			[
+				"set",
+				"setVisibleTabs"
+			],
+			[
+				"integ",
+				"integ_tab_id"
+			],
+			[
+				"ispr",
+				"isprimaryproduct"
+			],
+			[
+				"PRODUC",
+				"PRODUCT_ID"
+			],
+			[
+				"isintegra",
+				"isintegrated"
+			],
+			[
+				"ispar",
+				"isprimaryproduct"
+			],
+			[
+				"PRODU",
+				"PRODUCT_ID"
+			],
+			[
+				"tr",
+				"translate"
+			],
+			[
+				"IS_",
+				"IS_ENABLED"
+			],
+			[
+				"all",
+				"allowRemove"
+			],
+			[
+				"IS",
+				"IS_PRIMARY_PRODUCT"
+			],
+			[
+				"bri",
+				"browserTitle"
+			],
+			[
+				"log",
+				"logout"
+			],
+			[
+				"new",
+				"newMailSettings"
+			],
+			[
+				"prod",
+				"productId"
+			],
+			[
+				"update",
+				"updateDetails"
+			],
+			[
+				"getPro",
+				"getProductTagName"
+			],
+			[
+				"re",
+				"refreshedProduct"
+			],
+			[
+				"time",
+				"timeFormat"
+			],
+			[
+				"format",
+				"formatDate"
+			],
+			[
+				"TIME",
+				"TIME_ZONE"
+			],
+			[
+				"his",
+				"history"
+			],
+			[
+				"tim",
+				"timeformat"
+			],
+			[
+				"Co",
+				"CommonUtil"
+			],
+			[
+				"stat",
+				"statusMsg"
+			],
+			[
+				"getPR",
+				"getProductName"
+			],
+			[
+				"getPr",
+				"getProductSettings"
+			],
+			[
+				"slave",
+				"slaveUrl"
+			],
+			[
+				"ha",
+				"haDetails"
+			],
+			[
+				"reu",
+				"returnValue"
+			],
+			[
+				"return",
+				"returnValue"
+			],
+			[
+				"mas",
+				"masterUrl"
+			],
+			[
+				"master",
+				"masterSettings"
+			],
+			[
+				"PROD",
+				"PRODUCTS"
+			],
+			[
+				"produ",
+				"productHADetails"
+			],
+			[
+				"AD",
+				"ADManager"
+			],
+			[
+				"fail",
+				"failureReason"
+			],
+			[
+				"I1",
+				"I18NUtil"
+			],
+			[
+				"product",
+				"productToRefresh"
+			],
+			[
+				"pord",
+				"productDetails"
+			],
+			[
+				"BACK",
+				"BACKUP_LIST"
+			],
+			[
+				"backup",
+				"backupdetails"
+			],
+			[
+				"getJSO",
+				"getJSONObject"
+			],
+			[
+				"failu",
+				"failureTitle"
+			],
+			[
+				"failr",
+				"failureTitle"
+			],
+			[
+				"fa",
+				"failureMsgDiv"
+			],
+			[
+				"por",
+				"productDetails"
+			],
+			[
+				"rep",
+				"REPEAT_FREQUENCY"
+			],
+			[
+				"produc",
+				"productDetails"
+			],
+			[
+				"refre",
+				"refreshRoboUpdate"
+			],
+			[
+				"send",
+				"sendAction"
+			],
+			[
+				"S",
+				"STATUS"
+			],
+			[
+				"gets",
+				"getUpdateScheduleID"
+			],
+			[
+				"Sc",
+				"SchedulerUtil"
+			],
+			[
+				"schedule",
+				"scheduleTime"
+			],
+			[
+				"getC",
+				"getCalendarSettings"
+			],
+			[
+				"Robo",
+				"RoboUpdateHandler"
+			],
+			[
+				"robo",
+				"roboUpdateDetails"
+			],
+			[
+				"respon",
+				"responseData"
+			],
+			[
+				"response",
+				"response"
+			],
+			[
+				"show",
+				"showPurchaseLink"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Flat-UI-master/ReactJS Browser/src/client/app/styles/app.css",
+			"settings":
+			{
+				"buffer_size": 6965,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Flat-UI-master/ReactJS Browser/src/client/app/js/components/common/Header.js",
+			"settings":
+			{
+				"buffer_size": 3773,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Flat-UI-master/ReactJS Browser/src/client/app/js/constants/apis.js",
+			"settings":
+			{
+				"buffer_size": 273,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Java/Ant.sublime-build",
+					""
+				],
+				[
+					"Packages/Java/JavaC.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Java/JavaC.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/MyJava.sublime-build",
+					""
+				],
+				[
+					"Packages/MyJava.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/MyJava.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 241.0,
+		"last_filter": "Package Control: dis",
+		"selected_items":
+		[
+			[
+				"Package Control: dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: bullet"
+			],
+			[
+				"make",
+				"Set Syntax: Makefile"
+			]
+		],
+		"width": 725.0
+	},
+	"console":
+	{
+		"height": 239.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js"
+	],
+	"file_history":
+	[
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/components/TVShowSeason.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/components/Media.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/services/services.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/components/common/Header.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/components/TVShowEpisodes.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/components/Movies.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/components/common/Link.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/components/common/Icon.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/components/TVShow.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/package.json",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/index.jsx",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/styles/app.css",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/index.html",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/.jshintrc",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/js/components/common/Gap.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/common/Header.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/TVShowSeason.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/TVShowEpisodes.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/Media.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/common/Link.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/TVShow.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/Movies.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-router/es6/Link.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/common/Gap.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/common/Gap",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/components/common/Space.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/constants/apis.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/Angular/css/app.css",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/TVShowSeason.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/Movies.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/Link.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/TVShow.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/TVShowEpisodes.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/Media.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/src/client/app/Header.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/TVShowSeason.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java/MovieList.java",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java/CommonDBUtil.java",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java/CommonUtil.java",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java/TVShowsList.java",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java/MediaConstants.java",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java/HarddiskBrowserImpl.java",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java/sql/dumpSQLDataLinux",
+		"/home/tom/.config/sublime-text-3/Packages/User/System.out.println.sublime-snippet",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java/MEDIA_CONSTANTS.conf",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java/sql/dumpSQLData.bat",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Tom's Media.html",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/index.html",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/tom.html",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/docs/assets/js/movie.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/docs/assets/js/tvshow.js",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/tvseries.html",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/dist/css/flat-ui.css",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/movies.html",
+		"/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/php/writeMovie.php",
+		"/D/WSM-Work/Harddisk Browser/Java/HarddiskBrowserImpl.java",
+		"/D/WSM-Work/Harddisk Browser/Java/CommonUtil.java",
+		"/C/Users/tom-2525/Desktop/runHarddiskBrowser.bat",
+		"/D/WSM-Work/Harddisk Browser/Java/MediaConstants.java",
+		"/D/WSM-Work/Harddisk Browser/Java/CommonDBUtil.java",
+		"/D/WSM-Work/Harddisk Browser/Java/jninka.xml",
+		"/D/WSM-Work/Harddisk Browser/index.html",
+		"/D/WSM-Work/Harddisk Browser/Java/sql/dumpSQLData.bat",
+		"/D/WSM-Work/Fun Projects/Pokemon Go/json/pokemon.json",
+		"/D/CheckOuts/ads/source/java_source/com/manageengine/ads/startup/trayicon/TrayIconManager.java",
+		"/D/WSM-Work/Harddisk Browser/Java/MEDIA_CONSTANTS.conf",
+		"/D/WSM-Work/Harddisk Browser/Java/MovieList.java",
+		"/D/WSM-Work/Harddisk Browser/Java/TVShowsList.java",
+		"/D/WSM-Work/Fun Projects/Test/Test.java",
+		"/D/CheckOuts/ads/source/java_source/com/manageengine/ads/fw/roboupdate/RoboUpdater.java",
+		"/D/WSM-Work/Harddisk Browser/Java/MysqlCon.java",
+		"/D/WSM-Work/Harddisk Browser/Java/MOVIE_DIV_ELEMENTS.txt",
+		"/D/WSM-Work/Harddisk Browser/Java/TV_SHOW_DIV_ELEMENTS.txt",
+		"/D/WSM-Work/Harddisk Browser/Java/TV_SHOW.conf",
+		"/D/WSM-Work/Harddisk Browser/Java/TV_SHOW_CONF.conf",
+		"/D/WSM-Work/Ember/AD360 - product/LicenseComponents.java",
+		"/D/WSM-Work/Harddisk Browser/Flat-UI-master/dist/css/flat-ui.css",
+		"/C/Users/tom-2525/Desktop/Tom's Media.html",
+		"/C/Users/tom-2525/Desktop/FileSearch_2.bat",
+		"/C/Users/tom-2525/Desktop/Kill.bat_2.lnk",
+		"/D/WSM-Work/Harddisk Browser/Flat-UI-master/temp.html",
+		"/D/WSM-Work/Harddisk Browser/Flat-UI-master/tvseries.html",
+		"/D/CheckOuts/erp/source/server/com/manageengine/erp/server/dbsync/ERPPublisherImpl.java",
+		"/D/CheckOuts/ads/source/java_source/com/manageengine/ads/fw/authentication/tfa/ADSDuoWebAuthenticator.java",
+		"/D/WSM-Work/Harddisk Browser/Flat-UI-master/dist/js/flat-ui.js",
+		"/G/Tom/Tom's Media/Harddisk Browser/Tom's Media.html",
+		"/D/CheckOuts/ad360/product_package/conf/adsf/ADSProductAPIs.xml",
+		"/D/CheckOuts/ad360/webapps/ads/WEB-INF/api-struts-config.xml",
+		"/D/WSM-Work/Harddisk Browser/Flat-UI-master/docs/assets/js/movie.js",
+		"/D/WSM-Work/Harddisk Browser/Flat-UI-master/docs/assets/js/application.js",
+		"/D/WSM-Work/Harddisk Browser/Flat-UI-master/docs/assets/js/application_2.js",
+		"/D/WSM-Work/Harddisk Browser/Flat-UI-master/docs/assets/js/prettify_2.js",
+		"/D/WSM-Work/Harddisk Browser/Flat-UI-master/index.js",
+		"/D/WSM-Work/Ember/webclient/app/utils/common-util.js",
+		"/D/CheckOuts/ads/webapps/ads/adsf/js/common/Cookies.js",
+		"/D/WSM-Work/Ember/webclient/app/pods/admin/personalizesettings/controller.js",
+		"/D/CheckOuts/ad360/webapps/ads/jsp/common/Login.jsp",
+		"/D/CheckOuts/ad360/webapps/ads/jsp/common/LoginHeader.jsp",
+		"/C/O365 Integration/AD360/webapps/ads/adsf/jsp/layout/Container.jsp",
+		"/D/WSM-Work/Ember/webclient/app/pods/admin/auto-update/db-backup/controller.js",
+		"/D/CheckOuts/o365/source/java_source/com/manageengine/o365/client/license/LicenseAction.java",
+		"/C/O365 Integration/AD360/webapps/ads/WEB-INF/web.xml",
+		"/C/O365 Integration/AD360/resources/ad360/ApplicationResources_ja_JP.properties",
+		"/D/WSM-Work/Ember/webclient/app/components/auto-update.js",
+		"/C/O365 Integration/AD360/bin/reinitializeDB.bat",
+		"/C/Users/tom-2525/Desktop/2.1.txt",
+		"/C/Users/tom-2525/Desktop/2.2.txt",
+		"/C/O365 Integration/AD360/webapps/ads/WEB-INF/struts-config.xml",
+		"/D/CheckOuts/ads/webapps/ads/adsf/jsp/layout/flat/Container.jsp",
+		"/D/WSM-Work/Ember/webclient/app/pods/home/controller.js",
+		"/D/CheckOuts/ad360/product_package/resources/ad360/ApplicationResources_en_US.properties",
+		"/D/CheckOuts/ad360/product_package/resources/ad360/ApplicationResources_ja_JP.properties",
+		"/D/CheckOuts/ad360/build/ant.properties",
+		"/D/WSM-Work/Ember/webclient/app/pods/home/route.js",
+		"/D/CheckOuts/ad360/webapps/ads/webclient/app/index.html",
+		"/D/WSM-Work/Ember/webclient/vendor/js/Dashboard.js",
+		"/C/O365 Integration/AD360/webapps/ads/js/dashboard/Dashboard.js",
+		"/D/Downloads/Builds/AdventNet/MickeyLite/bin/run.bat",
+		"/D/WSM-Work/Ember/webclient/app/components/proxy-settings.js",
+		"/D/WSM-Work/Ember/webclient/app/components/autoupdate-settings.js",
+		"/C/O365 Integration/ADManager Plus/bin/reinitializeDB.bat",
+		"/C/O365 Integration/O365 Manager Plus/conf/ProcessInfo.xml",
+		"/C/O365 Integration/O365 Manager Plus/conf/TrayIconInfo.xml",
+		"/C/O365 Integration/O365 Manager Plus/conf/TrayIconManager.xml",
+		"/D/CheckOuts/ad360/source/java_source/com/manageengine/ads/client/admin/ServerSettings.java",
+		"/C/Users/tom-2525/Desktop/keys.txt",
+		"/C/O365 Integration/AD360/resources/ad360/ApplicationResources_en_US.properties",
+		"/D/WSM-Work/Ember/webclient/app/styles/app.css"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 127.0,
+		"where_history":
+		[
+			"-/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/*,/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/",
+			"-/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/*",
+			"-/node_modules/*",
+			"",
+			"*.js",
+			"*.css",
+			"*.hbs",
+			"js",
+			"hbs",
+			"",
+			"*.js",
+			"*.hbs",
+			"*.js",
+			"",
+			"*.js",
+			"",
+			"*.js",
+			"*.hbs",
+			"*.js",
+			"*.hbs",
+			"*.js",
+			"",
+			"*.hbs",
+			"",
+			"*.js",
+			"",
+			"D:\\WSM-Work\\Ember\\webclient\\app\\templates",
+			"D:\\WSM-Work\\Ember\\webclient\\app\\components",
+			"",
+			"D:\\WSM-Work\\Ember\\webclient\\app\\templates",
+			"D:\\WSM-Work\\Ember\\webclient\\app\\components",
+			"",
+			"D:\\WSM-Work\\Ember\\webclient\\app\\components\\dashboard",
+			"",
+			"D:\\WSM-Work\\Ember\\webclient\\app\\components",
+			"",
+			"D:\\WSM-Work\\Ember\\webclient\\app\\pods\\admin\\serversettings",
+			"",
+			"D:\\WSM-Work\\Ember\\",
+			"D:\\WSM-Work\\Ember\\webclient\\app",
+			"",
+			"D:\\WSM-Work\\Ember\\webclient\\assets",
+			"D:\\WSM-Work\\Ember\\webclient\\app",
+			"D:\\WSM-Work\\Ember\\webclient\\vendor",
+			"D:\\WSM-Work\\Ember\\webclient\\assets",
+			"D:\\WSM-Work\\Ember\\webclient\\app\\",
+			"D:\\WSM-Work\\Ember\\webclient\\app\\pods",
+			"",
+			"trayicon",
+			"",
+			"D:\\CheckOuts\\AD360_BUILDS\\AD360_4021_SINGLE_TRAYICON_BRANCH\\ad360",
+			"D:\\CheckOuts\\ADS_BUILDS\\ADS_4021_M4_SINGLE_TRAYICON_BRANCH",
+			"D:\\CheckOuts\\ADSSP_BUILDS\\ADSELFSERVICE_PLUS_5306_SINGLE_TRAYICON_BRANCH,D:\\CheckOuts\\ERP_BUILDS\\ERP_5103_SINGLE_TRAYICON_BRANCH,D:\\CheckOuts\\AD360_BUILDS\\AD360_4021_SINGLE_TRAYICON_BRANCH,D:\\CheckOuts\\ADAP_BUILDS\\ADAUDITPLUS_4685_SINGLE_TRAYICON_BRANCH,D:\\CheckOuts\\ADMP_BUILDS\\ADMANAGERPLUS_6330_SINGLE_TRAYICON_BRANCH",
+			"D:\\CheckOuts\\ADS_BUILDS\\ADS_4021_M4_SINGLE_TRAYICON_BRANCH",
+			"",
+			"D:\\CheckOuts\\ADS_BUILDS\\ADS_4021_M4_SINGLE_TRAYICON_BRANCH",
+			"",
+			"D:\\CheckOuts\\ADSSP_BUILDS\\ADSELFSERVICE_PLUS_5306_SINGLE_TRAYICON_BRANCH",
+			"D:\\CheckOuts\\ERP_BUILDS\\ERP_5103_SINGLE_TRAYICON_BRANCH,D:\\CheckOuts\\AD360_BUILDS\\AD360_4021_SINGLE_TRAYICON_BRANCH,D:\\CheckOuts\\ADAP_BUILDS\\ADAUDITPLUS_4685_SINGLE_TRAYICON_BRANCH,D:\\CheckOuts\\ADMP_BUILDS\\ADMANAGERPLUS_6330_SINGLE_TRAYICON_BRANCH,D:\\CheckOuts\\ADS_BUILDS\\ADS_4021_M4_SINGLE_TRAYICON_BRANCH,D:\\CheckOuts\\ADSSP_BUILDS\\ADSELFSERVICE_PLUS_5306_SINGLE_TRAYICON_BRANCH",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"folder",
+			"file",
+			"fcBlue",
+			"letter-bo",
+			"topbanner",
+			"filename",
+			"file",
+			"season",
+			"className",
+			"season",
+			"Link",
+			"img",
+			"im",
+			"img",
+			"icon",
+			"help-icon",
+			"text-nowrap",
+			"pull-right",
+			"subtitle",
+			"etter-box",
+			"letter-font",
+			"plno",
+			"pt100",
+			"pt60",
+			"pt40",
+			"pt20",
+			"pt15",
+			"ml50",
+			"ml10",
+			"fs15",
+			"fs20",
+			"fs25",
+			"ffFant",
+			"ffSans",
+			"ffCur",
+			"rendering",
+			"console",
+			"null",
+			"==",
+			"===",
+			"null",
+			"error",
+			"this.state",
+			"LOCAL",
+			"padding20",
+			"Gap",
+			"displayTVShow",
+			"fetchTVShowData",
+			"fetchin",
+			"displayTVShow",
+			"fetchUrl",
+			"map",
+			"\\=",
+			"===",
+			">",
+			"Tom's",
+			"right",
+			"letter-font",
+			"className",
+			"tvIcon",
+			"\\[style",
+			"[style",
+			"Object.assign",
+			"newSt",
+			"Link",
+			"className",
+			"pt20",
+			"pt60",
+			"pt40",
+			"pt100",
+			"className",
+			"pt2",
+			"pt100",
+			"className",
+			"\\",
+			"className",
+			"MOVIE_URL",
+			"className",
+			"ml50 ffCur fs25 pt100",
+			"ffCur",
+			"className",
+			"style",
+			"this.state",
+			"app",
+			"letter-box",
+			"Loading...",
+			"Loading",
+			"loading",
+			"console.log",
+			"refresh",
+			"TVSHOW_LOCAL_URL",
+			"fetchUrl",
+			"localUrl",
+			"TV_SHOW_URL",
+			"MOVIE_URL",
+			"localUrl",
+			"onlineUrl",
+			"onlineURL",
+			"onlineUrl",
+			"onlineURL",
+			"this.state",
+			"onlineUrl",
+			"onlineURL",
+			"onlineUrl",
+			"createClass",
+			"space-2",
+			"space-",
+			"episodeSc",
+			"space-",
+			"Space",
+			"space-",
+			"space",
+			"space-20",
+			"space-29",
+			"space-20",
+			"props",
+			"tvshow",
+			"Link",
+			"fs20",
+			"font-family: fantasy;",
+			"ffFant",
+			"ml10",
+			"folder",
+			"text-nowrap",
+			"fui-folder",
+			"ml50",
+			"pt20",
+			"pt20 ml50 fui-folder text-nowrap"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"TVSHOW_ONLINE_URL",
+			"MOVIE_ONLINE_URL",
+			"",
+			"let",
+			"../img/",
+			" ",
+			"\n",
+			"#191818",
+			"contain",
+			"\\[episodes\\]",
+			"</div></div></div></div>\n",
+			"\n",
+			"ml50",
+			"",
+			"episode fui-arrow-right",
+			">\n",
+			"",
+			"href=\"\"",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			"fui-folder text-nowrap",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			" ",
+			"\n",
+			"•",
+			"",
+			"proxySettings",
+			"autoUpdate",
+			"",
+			"auto_update_history",
+			"col-md-3",
+			" ",
+			"",
+			"patchDetails.CLASS",
+			"pull-left",
+			"col-md-4 col-md-offset-2 control-label",
+			"col-md-6",
+			"",
+			"getWebPageSource",
+			"ad360-prite",
+			"../images/ad360-sprite.png",
+			"'",
+			"\"",
+			"ad360-icon",
+			"active-directory-360",
+			"i18n",
+			"ì18n",
+			"i18m",
+			"ad360",
+			".parent()",
+			"parent()",
+			"ads",
+			"ad360",
+			"http://integ-build7/products/ads/webhost/ADS_4100_M1_CEN_ROBOUPDATE_BRANCH/Apr_12_2016/",
+			"http://integ-build4/products/erp/webhost/ERP_5141_CEN_ROBOUPDATE_BRANCH/Apr_11_2016_1/",
+			"http://integ-build4/products/ADSSP/webhost/ADSELFSERVICE_PLUS_5312_CEN_ROBOUPDATE_BRANCH/Apr_11_2016/",
+			"http://build/me/adauditplus/webhost/ADAUDITPLUS_4691_CEN_ROBOUPDATE_BRANCH/Apr_11_2016/",
+			"http://integ-build4/products/ADSM/webhost/ADMANAGERPLUS_6360_CEN_ROBOUPDATE_BRANCH/Apr_11_2016/",
+			"http://integ-build7/products/ads/webhost/ADS_4100_M1_CEN_ROBOUPDATE_BRANCH/Apr_11_2016/",
+			"http://build/me/adauditplus/webhost/ADAUDITPLUS_4691_CEN_ROBOUPDATE_BRANCH/Apr_08_2016/",
+			"http://integ-build4/products/ADSSP/webhost/ADSELFSERVICE_PLUS_5312_CEN_ROBOUPDATE_BRANCH/Apr_08_2016/",
+			"http://integ-build4/products/ADSM/webhost/ADMANAGERPLUS_6360_CEN_ROBOUPDATE_BRANCH/Apr_08_2016/",
+			"http://integ-build7/products/ads/webhost/ADS_4100_M1_CEN_ROBOUPDATE_BRANCH/Apr_08_2016/",
+			"http://integ-build7/products/ads/webhost/ADS_4100_M1_CEN_ROBOUPDATE_BRANCH/Apr_07_2016/",
+			"http://integ-build7/products/ads/webhost/ADS_4024_M1_CEN_ROBOUPDATE_BRANCH/Apr_07_2016/",
+			"separate",
+			"CEN_ROBOUPDATE_BRANCH/Mar_18_2016",
+			"http://integ-build7/products/ads/webhost/ADS_4024_M1_CEN_ROBOUPDATE_BRANCH/Mar_18_2016/",
+			"CEN_ROBOUPDATE_BRANCH/Mar_16_2016",
+			"http://integ-build7/products/ads/webhost/ADS_4024_M1_CEN_ROBOUPDATE_BRANCH/Mar_16_2016/",
+			"http://integ-build7/products/ads/webhost/ADS_4024_M1_CEN_ROBOUPDATE_BRANCH/Mar_14_2016/",
+			"http://integ-build7/products/ads/webhost/ADS_4024_M1_CEN_ROBOUPDATE_BRANCH/Mar_10_2016/",
+			"http://integ-build7/products/ads/webhost/ADS_4024_M1_CEN_ROBOUPDATE_BRANCH/Mar_08_2016/",
+			"jsonTVShow",
+			"websiteURl",
+			"url",
+			"System.out.println(",
+			"http://integ-build7/products/ads/webhost/ADS_4024_M1_CEN_ROBOUPDATE_BRANCH/Mar_04_2016/",
+			"http://integ-build7/products/ads/webhost/ADS_4024_M1_CEN_ROBOUPDATE_BRANCH/Mar_02_2016/"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Java"
+		},
+		{
+			"path": "/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/Angular"
+		},
+		{
+			"path": "/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser"
+		}
+	],
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Flat-UI-master/ReactJS Browser/src/client/app/styles/app.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6965,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								603,
+								603
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1680.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Flat-UI-master/ReactJS Browser/src/client/app/js/components/common/Header.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3773,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3472,
+								3472
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1554.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Flat-UI-master/ReactJS Browser/src/client/app/js/constants/apis.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 273,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								273,
+								273
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 223.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/java.sublime-build",
+	"project": "",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": false,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"link",
+				"ReactJS Browser/node_modules/react-router/es6/Link.js"
+			],
+			[
+				"app",
+				"Angular/css/app.css"
+			],
+			[
+				"pack",
+				"ReactJS Browser/package.json"
+			],
+			[
+				"applicationresources",
+				"ERP_5120_CEN_ROBOUPDATE_BRANCH\\erp\\product_package\\ancillary\\en_US\\resources\\erp\\ApplicationResources.properties"
+			],
+			[
+				"applicationresources_en",
+				"ADMANAGERPLUS_6351_CEN_ROBOUPDATE_BRANCH\\sym\\adsm\\product_package\\ancillary\\en_US\\resources\\adsm\\ApplicationResources_en_US.properties"
+			],
+			[
+				"applicationresources_en_us.properties",
+				"ADSELFSERVICE_PLUS_5311_CEN_ROBOUPDATE_BRANCH\\adssp\\product_package\\ancillary\\en_US\\resources\\adssp\\ApplicationResources_en_US.properties"
+			],
+			[
+				"roboup",
+				"D:\\WSM-Work\\RoboUpdate\\RoboUpdate Implementation"
+			],
+			[
+				"dbsyncmod",
+				"G:\\WSM-Work\\My Fav Reports\\ADSSP\\DBSyncModulesContainer.java"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 716.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Coding/UI Issues/UI Issues.sublime-workspace"
+			],
+			[
+				"angu",
+				"D:\\WSM-Work\\Angular JS\\Angular JS.sublime-workspace"
+			],
+			[
+				"cod",
+				"D:\\WSM-Work\\Coding\\Coding.sublime-workspace"
+			],
+			[
+				"web",
+				"D:\\WSM-Work\\Webinars\\Webinar.sublime-project"
+			],
+			[
+				"we",
+				"D:\\WSM-Work\\Webinars\\Webinar.sublime-project"
+			]
+		],
+		"width": 570.0
+	},
+	"select_symbol":
+	{
+		"height": 490.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 582.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 244.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

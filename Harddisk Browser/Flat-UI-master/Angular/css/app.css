@@ -1,0 +1,397 @@
+/*# Tom's UI */
+.ffCur{
+    font-family:cursive;
+}
+.ffSans{
+    font-family: sans-serif;
+}
+.ffFant{
+    font-family: fantasy;
+}
+.fs25{
+  font-size:25px;
+}
+.fs20{
+  font-size: 20px;
+}
+.fs15{
+  font-size: 15px;
+}
+.ml10{
+  margin-left: 10px;
+}
+.ml50{
+  margin-left: 50px;
+}
+.pt15{
+  padding-top: 15px;
+}
+.pt20{
+  padding-top: 20px;
+}
+.pt40{
+  padding-top: 40px;
+}
+.pt60{
+  padding-top: 60px; 
+}
+.pt100{
+  padding-top: 100px; 
+}
+.plno{
+  padding-left: 0px;
+}
+.movieBG{
+  background: transparent url(../img/movie.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.tvshowBG{
+  background: transparent url(../img/tvshow.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 1700px;
+}
+.mediaBG{
+  background-color: #191818;
+}
+a{
+  color: white;
+  text-decoration: none;
+  -webkit-transition: .25s;
+          transition: .25s;
+}
+li>a:hover,
+li>a:focus {
+  color: #444637;
+  text-decoration: none;
+}
+a:focus {
+  outline: none;
+}
+.space-5{
+  width: 5px;
+  display: inline-block;
+}
+.space-20{
+  width: 20px;
+  display: inline-block;
+}
+.space-25{
+  width: 25px;
+  display: inline-block;
+}
+.topbanner{
+  position: fixed;
+  width: 100%;
+}
+.letter-font
+{
+  color:black;
+  font-family: initial;
+  font-size: 18px;
+}
+.letter-font:hover{
+  color: white;
+  text-decoration: none;
+}
+.letter-box{
+  margin-bottom: -15px;
+  margin-top: -5px;
+  margin-left:100px;
+}
+.letter-box .pagination{
+  padding-right: 20px;
+}
+/*.file {
+  display:none;
+}
+.folder:focus + .file{
+  display:block;
+}*/
+.filename:focus,.filename:hover{
+  color:#7ed26e;
+}
+.folder {
+  outline:none;
+  color:#4044c6;
+  cursor:pointer;
+}
+.file a{
+  color: cyan;
+}
+.subtitle a{
+  color:#b8b963;
+}
+.tvIcon{
+  margin:-35px 150px;
+  width: 32px;
+  height: 32px;
+}
+.movieIcon{
+  margin:-35px 50px;
+  width:  32px;
+  height: 32px;
+}
+.icon{
+  width : 32px;
+  height: 32px; 
+}
+.pull-right{
+  float:right;
+}
+.text-nowrap{
+  white-space: nowrap;
+}
+.help-icon{
+  margin: 15px 15px;
+  height: 30px;
+}
+a{
+  cursor:pointer;
+}
+.season{
+  cursor:pointer;
+}
+.agentcarter{
+  background: #191818 url("../img/tv-shows/Agent Carter.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 10px;
+  background-size: contain;
+}
+.arrow{
+  background: #191818 url("../img/tv-shows/Arrow.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 50px;
+  background-size: contain;
+}
+.avengersassemble{
+  background: #191818 url("../img/tv-shows/Avengers Assemble.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 50px;  
+  background-size: contain;
+}
+.bettercallsaul{
+  background: #191818 url("../img/tv-shows/Better Call Saul.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-size: contain;
+}
+.breakingbad{
+  background: #191818 url("../img/tv-shows/Breaking Bad.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-size: contain;
+}
+.brooklynninenine{
+  background: #191818 url("../img/tv-shows/Brooklyn Nine Nine.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 10px;  
+  background-size: contain;
+}
+.daredevil{
+  background: #191818 url("../img/tv-shows/DareDevil.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 60px;
+  background-size: contain;
+}
+.flash{
+  background: #191818 url("../img/tv-shows/Flash.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 60px;  
+  background-size: contain;
+}
+.gameofthrones{
+  background: #191818 url("../img/tv-shows/Game Of Thrones.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 30px;  
+  background-size: contain;
+}
+.gotham{
+  background: #191818 url("../img/tv-shows/Gotham.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 60px;
+  background-size: contain;
+}
+.ironfist{
+  background: #191818 url("../img/tv-shows/Iron Fist.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 35px;
+  background-size: contain;
+}
+.jessicajones{
+  background: #191818 url("../img/tv-shows/Jessica Jones.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 60px;
+  background-size: contain;
+}
+.legendsoftomorrow{
+  background: #191818 url("../img/tv-shows/Legends Of Tomorrow.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 50px;
+  background-size: contain;
+}
+.limitless{
+  background: #191818 url("../img/tv-shows/Limitless.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 55px;
+  background-size: contain;
+}
+.lukecage{
+  background: #191818 url("../img/tv-shows/Luke Cage.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 65px;
+  background-size: contain;
+}
+.narcos{
+  background: #191818 url("../img/tv-shows/Narcos.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 60px;
+  background-size: contain;
+}
+.manwithaplan{
+  background: #191818 url("../img/tv-shows/Man with a Plan.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 60px;
+  background-size: contain;
+}
+.onepiece{
+  background: #191818 url("../img/tv-shows/One Piece.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 60px;
+  background-size: contain;
+}
+.onepunchman{
+  background: #191818 url("../img/tv-shows/One Punch Man.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 60px;
+  background-size: contain;
+}
+.siliconvalley{
+  background: #191818 url("../img/tv-shows/Silicon Valley.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 60px;
+  background-size: contain;
+}
+.suits{
+  background: #191818 url("img/tv-shows/Suits.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 30px;
+  background-size: contain;
+}
+.themusketeers{
+  background: #191818 url("img/tv-shows/The Musketeers.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 30px;
+  background-size: contain;
+}
+.supernatural{
+  background: #191818 url("img/tv-shows/Supernatural.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 30px;
+  background-size: contain;
+}
+.themusketeers{
+  background: #191818 url("img/tv-shows/The Musketeers.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 30px;
+  background-size: contain;
+}
+.vixen{
+  background: #191818 url("img/tv-shows/Vixen.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 50px;
+  background-size: contain;
+}
+.whitecollar{
+  background: #191818 url("img/tv-shows/White Collar.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: right;
+  background-position-y: 40px;
+  background-size: contain;
+}
+.episodescroll {
+      max-width: 700px;
+      height: 200px;
+      overflow-y: scroll; /* showing scrollbars */
+      border: 10px dashed white;
+      border-right-width: 0px;  
+      background-color: black;
+}
+
+.button {
+  border-radius: 50%;
+  position: fixed;
+  top:1.2%;
+  left:94%;
+  background-color: #555555; 
+  border: none;
+  color: white;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px -25px;
+  cursor: pointer;
+} /* Gray */ 
+
+.button:hover {
+    background-color: white;
+    color: black;
+}
+.button:active {
+  background-color: white;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

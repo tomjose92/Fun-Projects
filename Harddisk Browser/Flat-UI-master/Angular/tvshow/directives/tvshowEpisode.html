@@ -1,0 +1,9 @@
+<div ng-hide="showEpisodes" class="episodescroll">
+	<div ng-repeat="x in episodes" class="pt20 ml50 fui-arrow-right text-nowrap"><a title="{{x.tooltip}}" class=" ml10 ffFant fs20">{{x.tv_show_episode}}</a>
+		<span class="space-20"></span><a href=""><img class="icon" src="../img/icons/svg/tv.svg"></a>
+		<span ng-if="x.has_subtitle=true" class="space-20">
+			<a href=""><img class="icon" src="../img/icons/svg/closed-captioning.svg"></a>
+		</span>
+	</div>
+	<div class="pt20"></div>			
+</div>
