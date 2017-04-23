@@ -36,3 +36,20 @@ export const getLoadingLeft = () => {
     let documentWidth = document.documentElement.clientWidth;
     return (documentWidth/2 - 100);
 }
+
+export const blurImage = (val) => {
+  let modal = document.getElementById('modal_image');
+  if(!modal)
+  {
+    return;
+  }
+  
+	if(val)
+	{
+		modal.classList.add('blur');
+	}
+	else
+	{
+		modal.classList.remove('blur')
+	}
+}

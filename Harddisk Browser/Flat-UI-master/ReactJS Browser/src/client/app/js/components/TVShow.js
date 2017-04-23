@@ -8,6 +8,7 @@ import Gap from './common/Gap';
 import {fetchData} from '../services/services';
 import {Images} from '../constants/images';
 import TVShowModal from './TVShowModal';
+import {blurImage} from '../utils/utils';
 
 class TVShow extends React.Component {
   constructor(){
@@ -82,11 +83,16 @@ class TVShow extends React.Component {
       });
     }
 
-    showModal(tvShow){
+    showModal(tvShow,index){
+      let {records: tvShows} = this.state;
+      tvShow.prev = tvShows[index-1];
+      tvShow.next = tvShows[index+1];
+      tvShow.index = index;
       this.setState({
         tvShow,
         open: true
       });
+      blurImage(false);
     }
 
   	render() {
@@ -96,7 +102,7 @@ class TVShow extends React.Component {
         let {tv_show_name, tv_show_tag} = tvShow;
         return (
           <span className='tvShow' title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
-            <a onClick={()=>self.showModal(tvShow)}>
+            <a onClick={()=>self.showModal(tvShow, i)}>
               <img className='tvshow' key={"image"+i} style={styles.image} src={Images[tv_show_tag]}/>
             </a>
           </span>
@@ -108,7 +114,7 @@ class TVShow extends React.Component {
             <Header isLocal={isLocal} loading={loading} error={error} onRefresh={()=>this.fetchTVShowData(TVSHOW_ONLINE_URL)} app="TVShows"/>
           </nav>
           <div style={styles.container}>
-            {open && <TVShowModal tvShow={tvShow} callback={()=>this.closeModal()} />}
+            {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
             {!loading && TVShowImages}
           </div>
         </div>

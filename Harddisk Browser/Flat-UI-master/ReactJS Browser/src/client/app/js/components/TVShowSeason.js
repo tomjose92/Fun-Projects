@@ -1,7 +1,8 @@
 import React from 'react';
-import TVShowEpisodes from './TVShowEpisodes'
-import Link from './common/Link'
-import Gap from './common/Gap'
+import TVShowEpisodes from './TVShowEpisodes';
+import Link from './common/Link';
+import Gap from './common/Gap';
+import {blurImage} from '../utils/utils';
 
 class TVShowSeason extends React.Component{
     constructor(){
@@ -18,14 +19,26 @@ class TVShowSeason extends React.Component{
       if(display===undefined || display=="none")
       {
         seasons[index].showEpisodes="block"; 
-        document.getElementById('modal_image').className='blur';
+        blurImage(true);
       }
       else
       {
-        document.getElementById('modal_image').className='';
+        blurImage(false);
         seasons[index].showEpisodes="none";  
       }
       this.setState({change:true});
+    }
+
+    componentDidUpdate(prevProps){
+      let {showName: prevShow} = prevProps,
+      {showName: currentShow} = this.props;
+      if(currentShow!=prevShow)
+      {
+        this.hideSeasons();
+        this.setState({
+          change:true
+        });
+      }
     }
 
     render()
@@ -35,22 +48,20 @@ class TVShowSeason extends React.Component{
 
       let tvShowSeasons = seasons.map(function(season,i){ 
         return (
-          <div key={"season"+i} style={styles.container} className={season.showEpisodes=='block'?'fui-radio-checked':'fui-radio-unchecked'}>
+          <div key={"season"+i} style={styles.season} className={season.showEpisodes=='block'?'fui-radio-checked':'fui-radio-unchecked'}>
             <Link style={{color:'white',marginLeft: '20px'}} onClick={()=>self.toggleEpisodes(i)} content={season.tv_show_season} />
             <TVShowEpisodes episodes={season.episodes} displayEpisodes={season.showEpisodes}/>
           </div>
         );
       });
       return (
-        <div style={{position: 'absolute'}} className='tvShowSeasons'>
-          <Gap padding='padding100' />
+        <div style={styles.container} className='tvShowSeasons'>
           {tvShowSeasons}
         </div>)
     }
 
     hideSeasons(){
-      let {seasons} = this.props; 
-      seasons.map(function(season){season.showEpisodes='none';});
+      this.props.seasons.map(function(season){season.showEpisodes='none';});
     }
 
     componentWillUnmount(){
@@ -60,6 +71,10 @@ class TVShowSeason extends React.Component{
 
 const styles={
   container:{
+    position: 'absolute',
+    marginTop: '100px'
+  },
+  season:{
     paddingTop: '20px',
     marginLeft: '50px',
     whiteSpace: 'nowrap'

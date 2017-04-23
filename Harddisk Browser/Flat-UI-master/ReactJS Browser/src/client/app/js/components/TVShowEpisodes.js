@@ -41,7 +41,7 @@ const styles={
     borderStyle: 'dashed',
     borderColor: 'white',
     borderRightWidth: '0px',  
-    backgroundColor: 'black',
+    backgroundColor: 'black'
   },
   container:{
     paddingTop: '20px',

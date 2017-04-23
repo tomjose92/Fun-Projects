@@ -22,7 +22,7 @@ class TVShowModal extends Component {
   }
 
   render(){
-    let {tvShow: {episodes, seasons, tv_show_tag, tv_show_name}} = this.props;
+    let {tvShow: {episodes, seasons, tv_show_tag, tv_show_name, prev, next, index}} = this.props;
     let imageUrl = Images[tv_show_tag];
     let {marginLeft, width} = getModalMesaures();
     if(customStyles.content)
@@ -33,15 +33,20 @@ class TVShowModal extends Component {
 
     return (
        <Modal className='tvShowModal' contentLabel='ShowModal' style={customStyles} isOpen={this.state.isOpen}>
-          <div style={styles.title}>{tv_show_name}</div>
-          <img id='modal_image' style={styles.image} src={imageUrl} />
+          <div style={styles.titleContainer}>
+            {prev && <a className='fui-triangle-left-large' onClick={()=>this.props.navShow(prev, index-1)}/>}
+            <span style={styles.title}>{tv_show_name}</span>
+            {next && <a className='fui-triangle-right-large' onClick={()=>this.props.navShow(next, index+1)}/>}
+          </div>
+          <div style={styles.imageContainer}>
+            <img id='modal_image' style={styles.image} src={imageUrl} />
+          </div>
           {(episodes && seasons.length==0) && (
-            <div style={{position: 'absolute'}}>
-              <Gap padding='padding100'/>
+            <div style={{position: 'absolute', marginTop: '100px'}}>
               <TVShowEpisodes displayEpisodes='block' episodes={episodes} />
             </div>
           )}
-          {seasons && <TVShowSeason seasons={seasons} />}
+          {seasons && <TVShowSeason showName={tv_show_name} seasons={seasons} />}
           <div style={styles.close} onClick={()=>this.handleClose()}>&#10005;</div>
        </Modal>
     );
@@ -67,6 +72,7 @@ const customStyles = {
     bottom: 0,
     position: 'relative',
     padding: '0px',
+    overflow: 'overlay'
   }
 }
 
@@ -78,21 +84,27 @@ const slideAnimation = Radium.keyframes({
 });
 
 const styles={
-  title: {
+  titleContainer: {
     position: 'absolute',
     width: '100%',
-    textAlign: 'center',
+    textAlign: 'center'
+  },
+  title: {
+    padding: '0px 200px',
     fontSize: '30px',
     color: 'white',
     fontWeight: 'bold',
     fontFamily: 'fantasy' 
   },
+  imageContainer: {
+    textAlign: 'center',
+    width: '100%',
+    position: 'absolute',
+    marginTop: '50px',
+  },
   image:{
     height: '498px',
     width: '450px',
-    position: 'absolute',
-    left: '300px',
-    top: '50px',
     animation: 'x 2s',
     animationName: slideAnimation
   },
