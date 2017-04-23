@@ -1,7 +1,7 @@
 import React from 'react';
 import Space from './Space';
-import Radium from 'radium'
-
+import Radium from 'radium';
+import {getLoadingLeft} from '../../utils/utils';
 class Header extends React.Component {
 
     constructor() {
@@ -34,7 +34,6 @@ class Header extends React.Component {
     }
 
   	render() {
-      //console.log('rendering Header');
       let headerText = "Tom's Media",
       {app, isNormal, isLocal, displayData} = this.props;
       if(isNormal===undefined)
@@ -51,6 +50,8 @@ class Header extends React.Component {
       {
         text = (<span title="Click here to access online">Online</span>);
       }
+      let dynamicLoadingStyle = {display: this.displayLoader(), marginLeft: getLoadingLeft()};
+      let loadingStyle = Object.assign({},styles.loadingContainer,dynamicLoadingStyle);
       var loadingLink = (
       <div> 
         {!isNormal && (
@@ -60,11 +61,11 @@ class Header extends React.Component {
             </button>
           </div>
         )}
-        <div style={Object.assign({},styles.loading,{display:this.displayLoader()})}>
+        <div style={loadingStyle}>
           <span style={{color:"white"}}>
             <h4 style={{textAlign:'center'}}>Loading...</h4>
           </span>
-          <div><img src="img/circle.gif"/></div>
+          <div><img style={styles.loading} src="img/circle.gif"/></div>
         </div>
       </div>
       );
@@ -100,7 +101,7 @@ class Header extends React.Component {
       }
 
 	    return (
-        <div style={{zIndex: '100'}}>
+        <div style={styles.container}>
           <nav style={styles.topBanner} className="navbar navbar-inverse navbar-embossed" role="navigation">
             <div className="navbar-header">
               <a href="#" className="ffCur fs25 navbar-brand">{headerText}</a>
@@ -122,14 +123,21 @@ class Header extends React.Component {
 };
 
 const styles={
+  container: {
+    zIndex: '100',
+    position: 'fixed'
+  },
   topBanner:{
     width:'100%',
     position: 'fixed',
   },
-  loading:{
-    position: 'absolute',
-    top: '30%',
-    left: '40%'
+  loadingContainer:{
+    position: 'fixed',
+    marginTop: '200px',
+  },
+  loading: {
+    width: '200px',
+    height: '200px'
   },
   letterFont:{
     color: 'black',

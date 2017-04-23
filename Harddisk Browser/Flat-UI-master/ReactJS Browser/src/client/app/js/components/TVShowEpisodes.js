@@ -1,17 +1,19 @@
 import React from 'react';
-import Link from './common/Link'
-import Space from './common/Space'
-import Icon from './common/Icon'
+import Link from './common/Link';
+import Space from './common/Space';
+import Icon from './common/Icon';
+import {getEpisodesWidth} from '../utils/utils';
 
 class TVShowEpisodes extends React.Component {
+
   render()
   {
     let self=this,
     {displayEpisodes, episodes} = this.props,
     showEpisodes = (displayEpisodes==null)?"none":displayEpisodes;
-    if(episodes==null)
+    if(styles.episodeScroll)
     {
-      return <span></span>;
+      styles.episodeScroll.width = getEpisodesWidth();
     }
 
     let tvShowEpisodes = episodes.map(function(episode,k){

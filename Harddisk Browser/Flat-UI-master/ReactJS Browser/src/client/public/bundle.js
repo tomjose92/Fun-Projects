@@ -32673,6 +32673,8 @@
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
+	var _utils = __webpack_require__(/*! ../../utils/utils */ 376);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32726,7 +32728,6 @@
 	    value: function render() {
 	      var _this2 = this;
 	
-	      //console.log('rendering Header');
 	      var headerText = "Tom's Media",
 	          _props = this.props,
 	          app = _props.app,
@@ -32750,6 +32751,8 @@
 	          'Online'
 	        );
 	      }
+	      var dynamicLoadingStyle = { display: this.displayLoader(), marginLeft: (0, _utils.getLoadingLeft)() };
+	      var loadingStyle = Object.assign({}, styles.loadingContainer, dynamicLoadingStyle);
 	      var loadingLink = _react2.default.createElement(
 	        'div',
 	        null,
@@ -32766,7 +32769,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { style: Object.assign({}, styles.loading, { display: this.displayLoader() }) },
+	          { style: loadingStyle },
 	          _react2.default.createElement(
 	            'span',
 	            { style: { color: "white" } },
@@ -32779,7 +32782,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement('img', { src: 'img/circle.gif' })
+	            _react2.default.createElement('img', { style: styles.loading, src: 'img/circle.gif' })
 	          )
 	        )
 	      );
@@ -32822,7 +32825,7 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { style: { zIndex: '100' } },
+	        { style: styles.container },
 	        _react2.default.createElement(
 	          'nav',
 	          { style: styles.topBanner, className: 'navbar navbar-inverse navbar-embossed', role: 'navigation' },
@@ -32867,14 +32870,21 @@
 	;
 	
 	var styles = {
+	  container: {
+	    zIndex: '100',
+	    position: 'fixed'
+	  },
 	  topBanner: {
 	    width: '100%',
 	    position: 'fixed'
 	  },
+	  loadingContainer: {
+	    position: 'fixed',
+	    marginTop: '200px'
+	  },
 	  loading: {
-	    position: 'absolute',
-	    top: '30%',
-	    left: '40%'
+	    width: '200px',
+	    height: '200px'
 	  },
 	  letterFont: {
 	    color: 'black',
@@ -39684,13 +39694,13 @@
 	
 	        return _react2.default.createElement(
 	          'span',
-	          { title: tv_show_name, style: styles.imageBox, key: "tvShow" + i },
+	          { className: 'tvShow', title: tv_show_name, style: styles.imageBox, key: "tvShow" + i },
 	          _react2.default.createElement(
 	            'a',
 	            { onClick: function onClick() {
 	                return self.showModal(tvShow);
 	              } },
-	            _react2.default.createElement('img', { key: "image" + i, style: styles.image, src: _images.Images[tv_show_tag] })
+	            _react2.default.createElement('img', { className: 'tvshow', key: "image" + i, style: styles.image, src: _images.Images[tv_show_tag] })
 	          )
 	        );
 	      });
@@ -39706,14 +39716,12 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { id: 'tv_shows', style: styles.container },
-	          _react2.default.createElement(_Gap2.default, { padding: 'padding100' }),
+	          { style: styles.container },
 	          open && _react2.default.createElement(_TVShowModal2.default, { tvShow: tvShow, callback: function callback() {
 	              return _this2.closeModal();
 	            } }),
 	          !loading && TVShowImages
-	        ),
-	        _react2.default.createElement(_Gap2.default, { padding: 'padding100' })
+	        )
 	      );
 	    }
 	  }, {
@@ -39743,6 +39751,8 @@
 	var styles = {
 	  container: {
 	    textAlign: 'center',
+	    position: 'absolute',
+	    marginTop: '100px',
 	    marginLeft: '100px',
 	    marginRight: '100px',
 	    '@media only screen and (max-width: 1023px)': {
@@ -39851,7 +39861,7 @@
 	      var tvShowSeasons = seasons.map(function (season, i) {
 	        return _react2.default.createElement(
 	          'div',
-	          { key: "season" + i, style: styles.container, className: 'fui-radio-unchecked' },
+	          { key: "season" + i, style: styles.container, className: season.showEpisodes == 'block' ? 'fui-radio-checked' : 'fui-radio-unchecked' },
 	          _react2.default.createElement(_Link2.default, { style: { color: 'white', marginLeft: '20px' }, onClick: function onClick() {
 	              return self.toggleEpisodes(i);
 	            }, content: season.tv_show_season }),
@@ -39931,6 +39941,8 @@
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
+	var _utils = __webpack_require__(/*! ../utils/utils */ 376);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39957,8 +39969,8 @@
 	          episodes = _props.episodes,
 	          showEpisodes = displayEpisodes == null ? "none" : displayEpisodes;
 	
-	      if (episodes == null) {
-	        return _react2.default.createElement('span', null);
+	      if (styles.episodeScroll) {
+	        styles.episodeScroll.width = (0, _utils.getEpisodesWidth)();
 	      }
 	
 	      var tvShowEpisodes = episodes.map(function (episode, k) {
@@ -40095,6 +40107,10 @@
 	
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 	
+	var _radium = __webpack_require__(/*! radium */ 182);
+	
+	var _radium2 = _interopRequireDefault(_radium);
+	
 	var _images = __webpack_require__(/*! ../constants/images */ 359);
 	
 	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 357);
@@ -40109,9 +40125,7 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _radium = __webpack_require__(/*! radium */ 182);
-	
-	var _radium2 = _interopRequireDefault(_radium);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 376);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -40157,12 +40171,19 @@
 	          tv_show_name = _props$tvShow.tv_show_name;
 	
 	      var imageUrl = _images.Images[tv_show_tag];
-	      if (styles.image) {
-	        styles.image.backgroundImage = imageUrl;
+	
+	      var _getModalMesaures = (0, _utils.getModalMesaures)(),
+	          marginLeft = _getModalMesaures.marginLeft,
+	          width = _getModalMesaures.width;
+	
+	      if (customStyles.content) {
+	        customStyles.content.marginLeft = marginLeft;
+	        customStyles.content.width = width;
 	      }
+	
 	      return _react2.default.createElement(
 	        _reactModal2.default,
-	        { contentLabel: 'ShowModal', style: customStyles, isOpen: this.state.isOpen },
+	        { className: 'tvShowModal', contentLabel: 'ShowModal', style: customStyles, isOpen: this.state.isOpen },
 	        _react2.default.createElement(
 	          'div',
 	          { style: styles.title },
@@ -40196,14 +40217,15 @@
 	    zIndex: 1001
 	  },
 	  content: (_content = {
+	    outline: 'none',
 	    borderRadius: '5px',
 	    backgroundColor: 'rgba(0,0,0,0.945)',
 	    width: '1060px',
-	    margin: '0',
+	    left: '0px',
 	    top: '160px',
-	    left: '100px',
+	    marginLeft: '100px',
 	    height: '550px'
-	  }, _defineProperty(_content, 'top', '80px'), _defineProperty(_content, 'right', 0), _defineProperty(_content, 'bottom', 0), _defineProperty(_content, 'position', 'relative'), _defineProperty(_content, 'padding', '0px 20px'), _content)
+	  }, _defineProperty(_content, 'top', '80px'), _defineProperty(_content, 'right', 0), _defineProperty(_content, 'bottom', 0), _defineProperty(_content, 'position', 'relative'), _defineProperty(_content, 'padding', '0px'), _content)
 	};
 	
 	var slideAnimation = _radium2.default.keyframes({
@@ -40216,7 +40238,7 @@
 	var styles = {
 	  title: {
 	    position: 'absolute',
-	    width: '1000px',
+	    width: '100%',
 	    textAlign: 'center',
 	    fontSize: '30px',
 	    color: 'white',
@@ -42530,6 +42552,58 @@
 	  else this.add(className)
 	}
 
+
+/***/ }),
+/* 376 */
+/*!******************************************!*\
+  !*** ./src/client/app/js/utils/utils.js ***!
+  \******************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var getEpisodesWidth = exports.getEpisodesWidth = function getEpisodesWidth() {
+	  var width = 800,
+	      modal = document.getElementsByClassName('tvShowModal')[0];
+	  if (modal === undefined) {
+	    return width;
+	  }
+	  var modalWidth = modal.getBoundingClientRect().width;
+	  width = Math.min(width, modalWidth - 110);
+	  return width;
+	};
+	
+	var getModalMesaures = exports.getModalMesaures = function getModalMesaures() {
+	  var documentWidth = document.documentElement.clientWidth,
+	      tvShows = document.getElementsByClassName('tvshow'),
+	      width = 0,
+	      marginLeft = void 0;
+	  for (var i = 0; i < tvShows.length; i++) {
+	    var tvShow = tvShows[i];
+	    var tvShowRight = tvShow.getBoundingClientRect().right;
+	    var tvShowLeft = tvShow.getBoundingClientRect().left;
+	    if (i == 0) {
+	      marginLeft = tvShowLeft;
+	    }
+	
+	    if (tvShowRight - marginLeft > width) {
+	      width = tvShowRight - marginLeft;
+	    }
+	  }
+	  return { marginLeft: marginLeft, width: width };
+	};
+	
+	var getLoadingLeft = exports.getLoadingLeft = function getLoadingLeft() {
+	  var documentWidth = document.documentElement.clientWidth;
+	  return documentWidth / 2 - 100;
+	};
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "utils.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ })
 /******/ ]);

@@ -95,8 +95,10 @@ class TVShow extends React.Component {
     	let TVShowImages = tvShows.map(function(tvShow,i){
         let {tv_show_name, tv_show_tag} = tvShow;
         return (
-          <span title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
-            <a onClick={()=>self.showModal(tvShow)}><img key={"image"+i} style={styles.image} src={Images[tv_show_tag]}/></a>
+          <span className='tvShow' title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
+            <a onClick={()=>self.showModal(tvShow)}>
+              <img className='tvshow' key={"image"+i} style={styles.image} src={Images[tv_show_tag]}/>
+            </a>
           </span>
         )
       });
@@ -105,12 +107,10 @@ class TVShow extends React.Component {
           <nav>
             <Header isLocal={isLocal} loading={loading} error={error} onRefresh={()=>this.fetchTVShowData(TVSHOW_ONLINE_URL)} app="TVShows"/>
           </nav>
-          <div id='tv_shows' style={styles.container}>
-            <Gap padding='padding100'/>
+          <div style={styles.container}>
             {open && <TVShowModal tvShow={tvShow} callback={()=>this.closeModal()} />}
             {!loading && TVShowImages}
           </div>
-           <Gap padding='padding100'/>
         </div>
       );
   	}
@@ -137,6 +137,8 @@ const rotateImage = Radium.keyframes({
 const styles={
   container:{
     textAlign: 'center',
+    position: 'absolute',
+    marginTop: '100px',
     marginLeft: '100px',
     marginRight: '100px',
     '@media only screen and (max-width: 1023px)': {

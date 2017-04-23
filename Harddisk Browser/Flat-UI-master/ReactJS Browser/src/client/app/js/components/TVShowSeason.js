@@ -35,7 +35,7 @@ class TVShowSeason extends React.Component{
 
       let tvShowSeasons = seasons.map(function(season,i){ 
         return (
-          <div key={"season"+i} style={styles.container} className="fui-radio-unchecked">
+          <div key={"season"+i} style={styles.container} className={season.showEpisodes=='block'?'fui-radio-checked':'fui-radio-unchecked'}>
             <Link style={{color:'white',marginLeft: '20px'}} onClick={()=>self.toggleEpisodes(i)} content={season.tv_show_season} />
             <TVShowEpisodes episodes={season.episodes} displayEpisodes={season.showEpisodes}/>
           </div>
@@ -49,7 +49,7 @@ class TVShowSeason extends React.Component{
     }
 
     hideSeasons(){
-      let {seasons} = this.props;
+      let {seasons} = this.props; 
       seasons.map(function(season){season.showEpisodes='none';});
     }
 
