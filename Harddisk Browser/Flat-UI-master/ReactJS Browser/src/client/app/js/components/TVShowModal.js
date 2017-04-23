@@ -34,9 +34,9 @@ class TVShowModal extends Component {
     return (
        <Modal className='tvShowModal' contentLabel='ShowModal' style={customStyles} isOpen={this.state.isOpen}>
           <div style={styles.titleContainer}>
-            {prev && <a className='fui-triangle-left-large' onClick={()=>this.props.navShow(prev, index-1)}/>}
+            {prev && <a style={{cursor:'pointer'}} className='fui-triangle-left-large' onClick={()=>this.props.navShow(prev, index-1)}/>}
             <span style={styles.title}>{tv_show_name}</span>
-            {next && <a className='fui-triangle-right-large' onClick={()=>this.props.navShow(next, index+1)}/>}
+            {next && <a style={{cursor:'pointer'}} className='fui-triangle-right-large' onClick={()=>this.props.navShow(next, index+1)}/>}
           </div>
           <div style={styles.imageContainer}>
             <img id='modal_image' style={styles.image} src={imageUrl} />
@@ -76,13 +76,6 @@ const customStyles = {
   }
 }
 
-const slideAnimation = Radium.keyframes({
-  '0%':  {left:'0px'},
-  '25%': {left:'610px'},
-  '50%': {left:'265px'},
-  '100%': {left:'300px'}
-});
-
 const styles={
   titleContainer: {
     position: 'absolute',
@@ -90,7 +83,7 @@ const styles={
     textAlign: 'center'
   },
   title: {
-    padding: '0px 200px',
+    padding: '0px 100px',
     fontSize: '30px',
     color: 'white',
     fontWeight: 'bold',
@@ -104,9 +97,7 @@ const styles={
   },
   image:{
     height: '498px',
-    width: '450px',
-    animation: 'x 2s',
-    animationName: slideAnimation
+    width: '450px'
   },
   close:{
     background: '#56544D',
