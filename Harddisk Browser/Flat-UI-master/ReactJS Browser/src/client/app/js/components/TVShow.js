@@ -6,7 +6,7 @@ import Link from './common/Link';
 import {TVSHOW_ONLINE_URL, TVSHOW_LOCAL_URL} from '../constants/apis';
 import Gap from './common/Gap';
 import {fetchData} from '../services/services';
-import {Images} from '../constants/images';
+import {Images, Backgrounds} from '../constants/images';
 import TVShowModal from './TVShowModal';
 import {blurImage} from '../utils/utils';
 
@@ -103,7 +103,7 @@ class TVShow extends React.Component {
         return (
           <span className='tvShow' title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
             <a onClick={()=>self.showModal(tvShow, i)}>
-              <img className='tvshow' key={"image"+i} style={styles.image} src={Images[tv_show_tag]}/>
+              <img className='tvshow' key={"image"+i} style={Object.assign({},styles.image,Backgrounds[tv_show_tag])}/>
             </a>
           </span>
         )
@@ -161,7 +161,10 @@ const styles={
       transform: 'translateY(-10px)'      
     },
     animation: 'x 2s ease-in',
-    animationName: rotateImage
+    animationName: rotateImage,
+    backgroundRepeat: 'no-repeat',
+    backgroundClip : 'content-box',
+    backgroundSize : '1275px 1420px'
   },
   imageBox: {
     paddingLeft: '20px'

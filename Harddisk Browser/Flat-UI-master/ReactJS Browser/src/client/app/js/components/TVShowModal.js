@@ -24,10 +24,9 @@ class TVShowModal extends Component {
   render(){
     let {tvShow: {episodes, seasons, tv_show_tag, tv_show_name, prev, next, index}} = this.props;
     let imageUrl = Images[tv_show_tag];
-    let {marginLeft, width} = getModalMesaures();
+    let {width} = getModalMesaures();
     if(customStyles.content)
     {
-      customStyles.content.marginLeft = marginLeft;
       customStyles.content.width = width;
     }
 
@@ -56,7 +55,11 @@ class TVShowModal extends Component {
 const customStyles = {
   overlay: {
       backgroundColor: 'rgba(0,0,0,0.5)',
-      zIndex:1001
+      zIndex:1001,
+      display: 'flex',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      textAlign: 'center'
   },
   content: {
     outline: 'none',
@@ -64,10 +67,9 @@ const customStyles = {
     backgroundColor: 'rgba(0,0,0,0.945)',
     width: '1060px',
     left: '0px',
-    top: '160px',
-    marginLeft: '100px',
     height: '550px',
-    top: '80px',
+    margin: '0px auto',
+    marginTop: '55px',
     right: 0,
     bottom: 0,
     position: 'relative',

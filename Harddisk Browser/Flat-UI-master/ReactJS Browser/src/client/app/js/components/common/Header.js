@@ -14,7 +14,7 @@ class Header extends React.Component {
 
     displayLoader(){
       let {loading} = this.props,
-      value = (loading)?"block":"none";
+      value = (loading)?"flex":"none";
       return value;
     }
 
@@ -50,8 +50,7 @@ class Header extends React.Component {
       {
         text = (<span title="Click here to access online">Online</span>);
       }
-      let dynamicLoadingStyle = {display: this.displayLoader(), marginLeft: getLoadingLeft()};
-      let loadingStyle = Object.assign({},styles.loadingContainer,dynamicLoadingStyle);
+      let loadingStyle = Object.assign({},styles.loadingContainer,{display: this.displayLoader()});
       var loadingLink = (
       <div> 
         {!isNormal && (
@@ -133,7 +132,12 @@ const styles={
   },
   loadingContainer:{
     position: 'fixed',
-    marginTop: '200px',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    width: '100%',
+    height: '100%'
   },
   loading: {
     width: '200px',

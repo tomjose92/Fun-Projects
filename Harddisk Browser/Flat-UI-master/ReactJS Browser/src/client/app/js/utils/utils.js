@@ -29,7 +29,7 @@ export const getModalMesaures = () => {
         width = tvShowRight - marginLeft;
       }
     }
-    return {marginLeft, width};
+    return {width};
 }
 
 export const getLoadingLeft = () => {
