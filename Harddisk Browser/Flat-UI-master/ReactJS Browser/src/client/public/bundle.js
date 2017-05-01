@@ -67,11 +67,11 @@
 	
 	var _Media2 = _interopRequireDefault(_Media);
 	
-	var _Movies = __webpack_require__(/*! ./js/components/Movies */ 316);
+	var _Movies = __webpack_require__(/*! ./js/components/Movies */ 315);
 	
 	var _Movies2 = _interopRequireDefault(_Movies);
 	
-	var _TVShow = __webpack_require__(/*! ./js/components/TVShow */ 357);
+	var _TVShow = __webpack_require__(/*! ./js/components/TVShow */ 356);
 	
 	var _TVShow2 = _interopRequireDefault(_TVShow);
 	
@@ -32570,15 +32570,15 @@
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
-	var _Gap = __webpack_require__(/*! ./common/Gap */ 313);
+	var _Gap = __webpack_require__(/*! ./common/Gap */ 312);
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _Link = __webpack_require__(/*! ./common/Link */ 314);
+	var _Link = __webpack_require__(/*! ./common/Link */ 313);
 	
 	var _Link2 = _interopRequireDefault(_Link);
 	
-	var _Icon = __webpack_require__(/*! ./common/Icon */ 315);
+	var _Icon = __webpack_require__(/*! ./common/Icon */ 314);
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
@@ -32672,8 +32672,6 @@
 	var _radium = __webpack_require__(/*! radium */ 182);
 	
 	var _radium2 = _interopRequireDefault(_radium);
-	
-	var _utils = __webpack_require__(/*! ../../utils/utils */ 312);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -32996,71 +32994,6 @@
 
 /***/ }),
 /* 312 */
-/*!******************************************!*\
-  !*** ./src/client/app/js/utils/utils.js ***!
-  \******************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-	
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var getEpisodesWidth = exports.getEpisodesWidth = function getEpisodesWidth() {
-	  var width = 800,
-	      modal = document.getElementsByClassName('tvShowModal')[0];
-	  if (modal === undefined) {
-	    return width;
-	  }
-	  var modalWidth = modal.getBoundingClientRect().width;
-	  width = Math.min(width, modalWidth - 110);
-	  return width;
-	};
-	
-	var getModalMesaures = exports.getModalMesaures = function getModalMesaures() {
-	  var documentWidth = document.documentElement.clientWidth,
-	      tvShows = document.getElementsByClassName('tvshow'),
-	      width = 0,
-	      marginLeft = void 0;
-	  for (var i = 0; i < tvShows.length; i++) {
-	    var tvShow = tvShows[i];
-	    var tvShowRight = tvShow.getBoundingClientRect().right;
-	    var tvShowLeft = tvShow.getBoundingClientRect().left;
-	    if (i == 0) {
-	      marginLeft = tvShowLeft;
-	    }
-	
-	    if (tvShowRight - marginLeft > width) {
-	      width = tvShowRight - marginLeft;
-	    }
-	  }
-	  return { width: width };
-	};
-	
-	var getLoadingLeft = exports.getLoadingLeft = function getLoadingLeft() {
-	  var documentWidth = document.documentElement.clientWidth;
-	  return documentWidth / 2 - 100;
-	};
-	
-	var blurImage = exports.blurImage = function blurImage(val) {
-	  var modal = document.getElementById('modal_image');
-	  if (!modal) {
-	    return;
-	  }
-	
-	  if (val) {
-	    modal.classList.add('blur');
-	  } else {
-	    modal.classList.remove('blur');
-	  }
-	};
-	
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "utils.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-
-/***/ }),
-/* 313 */
 /*!****************************************************!*\
   !*** ./src/client/app/js/components/common/Gap.js ***!
   \****************************************************/
@@ -33109,7 +33042,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Gap.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 314 */
+/* 313 */
 /*!*****************************************************!*\
   !*** ./src/client/app/js/components/common/Link.js ***!
   \*****************************************************/
@@ -33162,7 +33095,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Link.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 315 */
+/* 314 */
 /*!*****************************************************!*\
   !*** ./src/client/app/js/components/common/Icon.js ***!
   \*****************************************************/
@@ -33204,7 +33137,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Icon.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 316 */
+/* 315 */
 /*!************************************************!*\
   !*** ./src/client/app/js/components/Movies.js ***!
   \************************************************/
@@ -33228,7 +33161,7 @@
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
-	var _Link = __webpack_require__(/*! ./common/Link */ 314);
+	var _Link = __webpack_require__(/*! ./common/Link */ 313);
 	
 	var _Link2 = _interopRequireDefault(_Link);
 	
@@ -33236,13 +33169,13 @@
 	
 	var _Space2 = _interopRequireDefault(_Space);
 	
-	var _Icon = __webpack_require__(/*! ./common/Icon */ 315);
+	var _Icon = __webpack_require__(/*! ./common/Icon */ 314);
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
-	var _apis = __webpack_require__(/*! ../constants/apis */ 317);
+	var _apis = __webpack_require__(/*! ../constants/apis */ 316);
 	
-	var _services = __webpack_require__(/*! ../services/services */ 318);
+	var _services = __webpack_require__(/*! ../services/services */ 317);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -33430,7 +33363,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "Movies.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 317 */
+/* 316 */
 /*!*********************************************!*\
   !*** ./src/client/app/js/constants/apis.js ***!
   \*********************************************/
@@ -33452,7 +33385,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "apis.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 318 */
+/* 317 */
 /*!************************************************!*\
   !*** ./src/client/app/js/services/services.js ***!
   \************************************************/
@@ -33467,7 +33400,7 @@
 	});
 	exports.fetchData = undefined;
 	
-	var _bluebird = __webpack_require__(/*! bluebird */ 319);
+	var _bluebird = __webpack_require__(/*! bluebird */ 318);
 	
 	var fetchData = exports.fetchData = function fetchData(url) {
 	    console.log("fetching url " + url);
@@ -33490,7 +33423,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "services.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 319 */
+/* 318 */
 /*!*******************************************!*\
   !*** ./~/bluebird/js/release/bluebird.js ***!
   \*******************************************/
@@ -33504,13 +33437,13 @@
 	    catch (e) {}
 	    return bluebird;
 	}
-	var bluebird = __webpack_require__(/*! ./promise */ 320)();
+	var bluebird = __webpack_require__(/*! ./promise */ 319)();
 	bluebird.noConflict = noConflict;
 	module.exports = bluebird;
 
 
 /***/ }),
-/* 320 */
+/* 319 */
 /*!******************************************!*\
   !*** ./~/bluebird/js/release/promise.js ***!
   \******************************************/
@@ -33529,7 +33462,7 @@
 	};
 	function Proxyable() {}
 	var UNDEFINED_BINDING = {};
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	
 	var getDomain;
 	if (util.isNode) {
@@ -33545,11 +33478,11 @@
 	}
 	util.notEnumerableProp(Promise, "_getDomain", getDomain);
 	
-	var es5 = __webpack_require__(/*! ./es5 */ 322);
-	var Async = __webpack_require__(/*! ./async */ 323);
+	var es5 = __webpack_require__(/*! ./es5 */ 321);
+	var Async = __webpack_require__(/*! ./async */ 322);
 	var async = new Async();
 	es5.defineProperty(Promise, "_async", {value: async});
-	var errors = __webpack_require__(/*! ./errors */ 328);
+	var errors = __webpack_require__(/*! ./errors */ 327);
 	var TypeError = Promise.TypeError = errors.TypeError;
 	Promise.RangeError = errors.RangeError;
 	var CancellationError = Promise.CancellationError = errors.CancellationError;
@@ -33560,19 +33493,19 @@
 	var INTERNAL = function(){};
 	var APPLY = {};
 	var NEXT_FILTER = {};
-	var tryConvertToPromise = __webpack_require__(/*! ./thenables */ 329)(Promise, INTERNAL);
+	var tryConvertToPromise = __webpack_require__(/*! ./thenables */ 328)(Promise, INTERNAL);
 	var PromiseArray =
-	    __webpack_require__(/*! ./promise_array */ 330)(Promise, INTERNAL,
+	    __webpack_require__(/*! ./promise_array */ 329)(Promise, INTERNAL,
 	                               tryConvertToPromise, apiRejection, Proxyable);
-	var Context = __webpack_require__(/*! ./context */ 331)(Promise);
+	var Context = __webpack_require__(/*! ./context */ 330)(Promise);
 	 /*jshint unused:false*/
 	var createContext = Context.create;
-	var debug = __webpack_require__(/*! ./debuggability */ 332)(Promise, Context);
+	var debug = __webpack_require__(/*! ./debuggability */ 331)(Promise, Context);
 	var CapturedTrace = debug.CapturedTrace;
 	var PassThroughHandlerContext =
-	    __webpack_require__(/*! ./finally */ 333)(Promise, tryConvertToPromise, NEXT_FILTER);
-	var catchFilter = __webpack_require__(/*! ./catch_filter */ 334)(NEXT_FILTER);
-	var nodebackForPromise = __webpack_require__(/*! ./nodeback */ 335);
+	    __webpack_require__(/*! ./finally */ 332)(Promise, tryConvertToPromise, NEXT_FILTER);
+	var catchFilter = __webpack_require__(/*! ./catch_filter */ 333)(NEXT_FILTER);
+	var nodebackForPromise = __webpack_require__(/*! ./nodeback */ 334);
 	var errorObj = util.errorObj;
 	var tryCatch = util.tryCatch;
 	function check(self, executor) {
@@ -34242,31 +34175,31 @@
 	                       "_makeSelfResolutionError",
 	                       makeSelfResolutionError);
 	
-	__webpack_require__(/*! ./method */ 336)(Promise, INTERNAL, tryConvertToPromise, apiRejection,
+	__webpack_require__(/*! ./method */ 335)(Promise, INTERNAL, tryConvertToPromise, apiRejection,
 	    debug);
-	__webpack_require__(/*! ./bind */ 337)(Promise, INTERNAL, tryConvertToPromise, debug);
-	__webpack_require__(/*! ./cancel */ 338)(Promise, PromiseArray, apiRejection, debug);
-	__webpack_require__(/*! ./direct_resolve */ 339)(Promise);
-	__webpack_require__(/*! ./synchronous_inspection */ 340)(Promise);
-	__webpack_require__(/*! ./join */ 341)(
+	__webpack_require__(/*! ./bind */ 336)(Promise, INTERNAL, tryConvertToPromise, debug);
+	__webpack_require__(/*! ./cancel */ 337)(Promise, PromiseArray, apiRejection, debug);
+	__webpack_require__(/*! ./direct_resolve */ 338)(Promise);
+	__webpack_require__(/*! ./synchronous_inspection */ 339)(Promise);
+	__webpack_require__(/*! ./join */ 340)(
 	    Promise, PromiseArray, tryConvertToPromise, INTERNAL, async, getDomain);
 	Promise.Promise = Promise;
 	Promise.version = "3.5.0";
-	__webpack_require__(/*! ./map.js */ 342)(Promise, PromiseArray, apiRejection, tryConvertToPromise, INTERNAL, debug);
-	__webpack_require__(/*! ./call_get.js */ 343)(Promise);
-	__webpack_require__(/*! ./using.js */ 344)(Promise, apiRejection, tryConvertToPromise, createContext, INTERNAL, debug);
-	__webpack_require__(/*! ./timers.js */ 345)(Promise, INTERNAL, debug);
-	__webpack_require__(/*! ./generators.js */ 346)(Promise, apiRejection, INTERNAL, tryConvertToPromise, Proxyable, debug);
-	__webpack_require__(/*! ./nodeify.js */ 347)(Promise);
-	__webpack_require__(/*! ./promisify.js */ 348)(Promise, INTERNAL);
-	__webpack_require__(/*! ./props.js */ 349)(Promise, PromiseArray, tryConvertToPromise, apiRejection);
-	__webpack_require__(/*! ./race.js */ 350)(Promise, INTERNAL, tryConvertToPromise, apiRejection);
-	__webpack_require__(/*! ./reduce.js */ 351)(Promise, PromiseArray, apiRejection, tryConvertToPromise, INTERNAL, debug);
-	__webpack_require__(/*! ./settle.js */ 352)(Promise, PromiseArray, debug);
-	__webpack_require__(/*! ./some.js */ 353)(Promise, PromiseArray, apiRejection);
-	__webpack_require__(/*! ./filter.js */ 354)(Promise, INTERNAL);
-	__webpack_require__(/*! ./each.js */ 355)(Promise, INTERNAL);
-	__webpack_require__(/*! ./any.js */ 356)(Promise);
+	__webpack_require__(/*! ./map.js */ 341)(Promise, PromiseArray, apiRejection, tryConvertToPromise, INTERNAL, debug);
+	__webpack_require__(/*! ./call_get.js */ 342)(Promise);
+	__webpack_require__(/*! ./using.js */ 343)(Promise, apiRejection, tryConvertToPromise, createContext, INTERNAL, debug);
+	__webpack_require__(/*! ./timers.js */ 344)(Promise, INTERNAL, debug);
+	__webpack_require__(/*! ./generators.js */ 345)(Promise, apiRejection, INTERNAL, tryConvertToPromise, Proxyable, debug);
+	__webpack_require__(/*! ./nodeify.js */ 346)(Promise);
+	__webpack_require__(/*! ./promisify.js */ 347)(Promise, INTERNAL);
+	__webpack_require__(/*! ./props.js */ 348)(Promise, PromiseArray, tryConvertToPromise, apiRejection);
+	__webpack_require__(/*! ./race.js */ 349)(Promise, INTERNAL, tryConvertToPromise, apiRejection);
+	__webpack_require__(/*! ./reduce.js */ 350)(Promise, PromiseArray, apiRejection, tryConvertToPromise, INTERNAL, debug);
+	__webpack_require__(/*! ./settle.js */ 351)(Promise, PromiseArray, debug);
+	__webpack_require__(/*! ./some.js */ 352)(Promise, PromiseArray, apiRejection);
+	__webpack_require__(/*! ./filter.js */ 353)(Promise, INTERNAL);
+	__webpack_require__(/*! ./each.js */ 354)(Promise, INTERNAL);
+	__webpack_require__(/*! ./any.js */ 355)(Promise);
 	                                                         
 	    util.toFastProperties(Promise);                                          
 	    util.toFastProperties(Promise.prototype);                                
@@ -34295,14 +34228,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ }),
-/* 321 */
+/* 320 */
 /*!***************************************!*\
   !*** ./~/bluebird/js/release/util.js ***!
   \***************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {"use strict";
-	var es5 = __webpack_require__(/*! ./es5 */ 322);
+	var es5 = __webpack_require__(/*! ./es5 */ 321);
 	var canEvaluate = typeof navigator == "undefined";
 	
 	var errorObj = {e: {}};
@@ -34684,7 +34617,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../../../node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ }),
-/* 322 */
+/* 321 */
 /*!**************************************!*\
   !*** ./~/bluebird/js/release/es5.js ***!
   \**************************************/
@@ -34773,7 +34706,7 @@
 
 
 /***/ }),
-/* 323 */
+/* 322 */
 /*!****************************************!*\
   !*** ./~/bluebird/js/release/async.js ***!
   \****************************************/
@@ -34782,9 +34715,9 @@
 	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
 	var firstLineError;
 	try {throw new Error(); } catch (e) {firstLineError = e;}
-	var schedule = __webpack_require__(/*! ./schedule */ 324);
-	var Queue = __webpack_require__(/*! ./queue */ 327);
-	var util = __webpack_require__(/*! ./util */ 321);
+	var schedule = __webpack_require__(/*! ./schedule */ 323);
+	var Queue = __webpack_require__(/*! ./queue */ 326);
+	var util = __webpack_require__(/*! ./util */ 320);
 	
 	function Async() {
 	    this._customScheduler = false;
@@ -34944,14 +34877,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ }),
-/* 324 */
+/* 323 */
 /*!*******************************************!*\
   !*** ./~/bluebird/js/release/schedule.js ***!
   \*******************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process, setImmediate) {"use strict";
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var schedule;
 	var noAsyncScheduler = function() {
 	    throw new Error("No async scheduler available\u000a\u000a    See http://goo.gl/MqrFmX\u000a");
@@ -35012,10 +34945,10 @@
 	}
 	module.exports = schedule;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../../../node-libs-browser/~/process/browser.js */ 3), __webpack_require__(/*! ./../../../timers-browserify/main.js */ 325).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../../../node-libs-browser/~/process/browser.js */ 3), __webpack_require__(/*! ./../../../timers-browserify/main.js */ 324).setImmediate))
 
 /***/ }),
-/* 325 */
+/* 324 */
 /*!*************************************!*\
   !*** ./~/timers-browserify/main.js ***!
   \*************************************/
@@ -35071,13 +35004,13 @@
 	};
 	
 	// setimmediate attaches itself to the global object
-	__webpack_require__(/*! setimmediate */ 326);
+	__webpack_require__(/*! setimmediate */ 325);
 	exports.setImmediate = setImmediate;
 	exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 326 */
+/* 325 */
 /*!****************************************!*\
   !*** ./~/setimmediate/setImmediate.js ***!
   \****************************************/
@@ -35273,7 +35206,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! ./../node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ }),
-/* 327 */
+/* 326 */
 /*!****************************************!*\
   !*** ./~/bluebird/js/release/queue.js ***!
   \****************************************/
@@ -35355,16 +35288,16 @@
 
 
 /***/ }),
-/* 328 */
+/* 327 */
 /*!*****************************************!*\
   !*** ./~/bluebird/js/release/errors.js ***!
   \*****************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var es5 = __webpack_require__(/*! ./es5 */ 322);
+	var es5 = __webpack_require__(/*! ./es5 */ 321);
 	var Objectfreeze = es5.freeze;
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var inherits = util.inherits;
 	var notEnumerableProp = util.notEnumerableProp;
 	
@@ -35480,7 +35413,7 @@
 
 
 /***/ }),
-/* 329 */
+/* 328 */
 /*!********************************************!*\
   !*** ./~/bluebird/js/release/thenables.js ***!
   \********************************************/
@@ -35488,7 +35421,7 @@
 
 	"use strict";
 	module.exports = function(Promise, INTERNAL) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var errorObj = util.errorObj;
 	var isObject = util.isObject;
 	
@@ -35575,7 +35508,7 @@
 
 
 /***/ }),
-/* 330 */
+/* 329 */
 /*!************************************************!*\
   !*** ./~/bluebird/js/release/promise_array.js ***!
   \************************************************/
@@ -35584,7 +35517,7 @@
 	"use strict";
 	module.exports = function(Promise, INTERNAL, tryConvertToPromise,
 	    apiRejection, Proxyable) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var isArray = util.isArray;
 	
 	function toResolutionValue(val) {
@@ -35769,7 +35702,7 @@
 
 
 /***/ }),
-/* 331 */
+/* 330 */
 /*!******************************************!*\
   !*** ./~/bluebird/js/release/context.js ***!
   \******************************************/
@@ -35847,7 +35780,7 @@
 
 
 /***/ }),
-/* 332 */
+/* 331 */
 /*!************************************************!*\
   !*** ./~/bluebird/js/release/debuggability.js ***!
   \************************************************/
@@ -35857,8 +35790,8 @@
 	module.exports = function(Promise, Context) {
 	var getDomain = Promise._getDomain;
 	var async = Promise._async;
-	var Warning = __webpack_require__(/*! ./errors */ 328).Warning;
-	var util = __webpack_require__(/*! ./util */ 321);
+	var Warning = __webpack_require__(/*! ./errors */ 327).Warning;
+	var util = __webpack_require__(/*! ./util */ 320);
 	var canAttachTrace = util.canAttachTrace;
 	var unhandledRejectionHandled;
 	var possiblyUnhandledRejection;
@@ -36773,7 +36706,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ }),
-/* 333 */
+/* 332 */
 /*!******************************************!*\
   !*** ./~/bluebird/js/release/finally.js ***!
   \******************************************/
@@ -36781,10 +36714,10 @@
 
 	"use strict";
 	module.exports = function(Promise, tryConvertToPromise, NEXT_FILTER) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var CancellationError = Promise.CancellationError;
 	var errorObj = util.errorObj;
-	var catchFilter = __webpack_require__(/*! ./catch_filter */ 334)(NEXT_FILTER);
+	var catchFilter = __webpack_require__(/*! ./catch_filter */ 333)(NEXT_FILTER);
 	
 	function PassThroughHandlerContext(promise, type, handler) {
 	    this.promise = promise;
@@ -36928,7 +36861,7 @@
 
 
 /***/ }),
-/* 334 */
+/* 333 */
 /*!***********************************************!*\
   !*** ./~/bluebird/js/release/catch_filter.js ***!
   \***********************************************/
@@ -36936,8 +36869,8 @@
 
 	"use strict";
 	module.exports = function(NEXT_FILTER) {
-	var util = __webpack_require__(/*! ./util */ 321);
-	var getKeys = __webpack_require__(/*! ./es5 */ 322).keys;
+	var util = __webpack_require__(/*! ./util */ 320);
+	var getKeys = __webpack_require__(/*! ./es5 */ 321).keys;
 	var tryCatch = util.tryCatch;
 	var errorObj = util.errorObj;
 	
@@ -36979,18 +36912,18 @@
 
 
 /***/ }),
-/* 335 */
+/* 334 */
 /*!*******************************************!*\
   !*** ./~/bluebird/js/release/nodeback.js ***!
   \*******************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var maybeWrapAsError = util.maybeWrapAsError;
-	var errors = __webpack_require__(/*! ./errors */ 328);
+	var errors = __webpack_require__(/*! ./errors */ 327);
 	var OperationalError = errors.OperationalError;
-	var es5 = __webpack_require__(/*! ./es5 */ 322);
+	var es5 = __webpack_require__(/*! ./es5 */ 321);
 	
 	function isUntypedError(obj) {
 	    return obj instanceof Error &&
@@ -37039,7 +36972,7 @@
 
 
 /***/ }),
-/* 336 */
+/* 335 */
 /*!*****************************************!*\
   !*** ./~/bluebird/js/release/method.js ***!
   \*****************************************/
@@ -37048,7 +36981,7 @@
 	"use strict";
 	module.exports =
 	function(Promise, INTERNAL, tryConvertToPromise, apiRejection, debug) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var tryCatch = util.tryCatch;
 	
 	Promise.method = function (fn) {
@@ -37103,7 +37036,7 @@
 
 
 /***/ }),
-/* 337 */
+/* 336 */
 /*!***************************************!*\
   !*** ./~/bluebird/js/release/bind.js ***!
   \***************************************/
@@ -37179,7 +37112,7 @@
 
 
 /***/ }),
-/* 338 */
+/* 337 */
 /*!*****************************************!*\
   !*** ./~/bluebird/js/release/cancel.js ***!
   \*****************************************/
@@ -37187,7 +37120,7 @@
 
 	"use strict";
 	module.exports = function(Promise, PromiseArray, apiRejection, debug) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var tryCatch = util.tryCatch;
 	var errorObj = util.errorObj;
 	var async = Promise._async;
@@ -37317,7 +37250,7 @@
 
 
 /***/ }),
-/* 339 */
+/* 338 */
 /*!*************************************************!*\
   !*** ./~/bluebird/js/release/direct_resolve.js ***!
   \*************************************************/
@@ -37372,7 +37305,7 @@
 
 
 /***/ }),
-/* 340 */
+/* 339 */
 /*!*********************************************************!*\
   !*** ./~/bluebird/js/release/synchronous_inspection.js ***!
   \*********************************************************/
@@ -37484,7 +37417,7 @@
 
 
 /***/ }),
-/* 341 */
+/* 340 */
 /*!***************************************!*\
   !*** ./~/bluebird/js/release/join.js ***!
   \***************************************/
@@ -37494,7 +37427,7 @@
 	module.exports =
 	function(Promise, PromiseArray, tryConvertToPromise, INTERNAL, async,
 	         getDomain) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var canEvaluate = util.canEvaluate;
 	var tryCatch = util.tryCatch;
 	var errorObj = util.errorObj;
@@ -37661,7 +37594,7 @@
 
 
 /***/ }),
-/* 342 */
+/* 341 */
 /*!**************************************!*\
   !*** ./~/bluebird/js/release/map.js ***!
   \**************************************/
@@ -37675,7 +37608,7 @@
 	                          INTERNAL,
 	                          debug) {
 	var getDomain = Promise._getDomain;
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var tryCatch = util.tryCatch;
 	var errorObj = util.errorObj;
 	var async = Promise._async;
@@ -37838,7 +37771,7 @@
 
 
 /***/ }),
-/* 343 */
+/* 342 */
 /*!*******************************************!*\
   !*** ./~/bluebird/js/release/call_get.js ***!
   \*******************************************/
@@ -37853,7 +37786,7 @@
 	}
 	
 	module.exports = function(Promise) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var canEvaluate = util.canEvaluate;
 	var isIdentifier = util.isIdentifier;
 	
@@ -37970,7 +37903,7 @@
 
 
 /***/ }),
-/* 344 */
+/* 343 */
 /*!****************************************!*\
   !*** ./~/bluebird/js/release/using.js ***!
   \****************************************/
@@ -37979,9 +37912,9 @@
 	"use strict";
 	module.exports = function (Promise, apiRejection, tryConvertToPromise,
 	    createContext, INTERNAL, debug) {
-	    var util = __webpack_require__(/*! ./util */ 321);
-	    var TypeError = __webpack_require__(/*! ./errors */ 328).TypeError;
-	    var inherits = __webpack_require__(/*! ./util */ 321).inherits;
+	    var util = __webpack_require__(/*! ./util */ 320);
+	    var TypeError = __webpack_require__(/*! ./errors */ 327).TypeError;
+	    var inherits = __webpack_require__(/*! ./util */ 320).inherits;
 	    var errorObj = util.errorObj;
 	    var tryCatch = util.tryCatch;
 	    var NULL = {};
@@ -38205,7 +38138,7 @@
 
 
 /***/ }),
-/* 345 */
+/* 344 */
 /*!*****************************************!*\
   !*** ./~/bluebird/js/release/timers.js ***!
   \*****************************************/
@@ -38213,7 +38146,7 @@
 
 	"use strict";
 	module.exports = function(Promise, INTERNAL, debug) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var TimeoutError = Promise.TimeoutError;
 	
 	function HandleWrapper(handle)  {
@@ -38307,7 +38240,7 @@
 
 
 /***/ }),
-/* 346 */
+/* 345 */
 /*!*********************************************!*\
   !*** ./~/bluebird/js/release/generators.js ***!
   \*********************************************/
@@ -38320,9 +38253,9 @@
 	                          tryConvertToPromise,
 	                          Proxyable,
 	                          debug) {
-	var errors = __webpack_require__(/*! ./errors */ 328);
+	var errors = __webpack_require__(/*! ./errors */ 327);
 	var TypeError = errors.TypeError;
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var errorObj = util.errorObj;
 	var tryCatch = util.tryCatch;
 	var yieldHandlers = [];
@@ -38539,7 +38472,7 @@
 
 
 /***/ }),
-/* 347 */
+/* 346 */
 /*!******************************************!*\
   !*** ./~/bluebird/js/release/nodeify.js ***!
   \******************************************/
@@ -38547,7 +38480,7 @@
 
 	"use strict";
 	module.exports = function(Promise) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var async = Promise._async;
 	var tryCatch = util.tryCatch;
 	var errorObj = util.errorObj;
@@ -38606,7 +38539,7 @@
 
 
 /***/ }),
-/* 348 */
+/* 347 */
 /*!********************************************!*\
   !*** ./~/bluebird/js/release/promisify.js ***!
   \********************************************/
@@ -38615,12 +38548,12 @@
 	"use strict";
 	module.exports = function(Promise, INTERNAL) {
 	var THIS = {};
-	var util = __webpack_require__(/*! ./util */ 321);
-	var nodebackForPromise = __webpack_require__(/*! ./nodeback */ 335);
+	var util = __webpack_require__(/*! ./util */ 320);
+	var nodebackForPromise = __webpack_require__(/*! ./nodeback */ 334);
 	var withAppended = util.withAppended;
 	var maybeWrapAsError = util.maybeWrapAsError;
 	var canEvaluate = util.canEvaluate;
-	var TypeError = __webpack_require__(/*! ./errors */ 328).TypeError;
+	var TypeError = __webpack_require__(/*! ./errors */ 327).TypeError;
 	var defaultSuffix = "Async";
 	var defaultPromisified = {__isPromisified__: true};
 	var noCopyProps = [
@@ -38929,7 +38862,7 @@
 
 
 /***/ }),
-/* 349 */
+/* 348 */
 /*!****************************************!*\
   !*** ./~/bluebird/js/release/props.js ***!
   \****************************************/
@@ -38938,9 +38871,9 @@
 	"use strict";
 	module.exports = function(
 	    Promise, PromiseArray, tryConvertToPromise, apiRejection) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var isObject = util.isObject;
-	var es5 = __webpack_require__(/*! ./es5 */ 322);
+	var es5 = __webpack_require__(/*! ./es5 */ 321);
 	var Es6Map;
 	if (typeof Map === "function") Es6Map = Map;
 	
@@ -39056,7 +38989,7 @@
 
 
 /***/ }),
-/* 350 */
+/* 349 */
 /*!***************************************!*\
   !*** ./~/bluebird/js/release/race.js ***!
   \***************************************/
@@ -39065,7 +38998,7 @@
 	"use strict";
 	module.exports = function(
 	    Promise, INTERNAL, tryConvertToPromise, apiRejection) {
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	
 	var raceLater = function (promise) {
 	    return promise.then(function(array) {
@@ -39114,7 +39047,7 @@
 
 
 /***/ }),
-/* 351 */
+/* 350 */
 /*!*****************************************!*\
   !*** ./~/bluebird/js/release/reduce.js ***!
   \*****************************************/
@@ -39128,7 +39061,7 @@
 	                          INTERNAL,
 	                          debug) {
 	var getDomain = Promise._getDomain;
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	var tryCatch = util.tryCatch;
 	
 	function ReductionPromiseArray(promises, fn, initialValue, _each) {
@@ -39295,7 +39228,7 @@
 
 
 /***/ }),
-/* 352 */
+/* 351 */
 /*!*****************************************!*\
   !*** ./~/bluebird/js/release/settle.js ***!
   \*****************************************/
@@ -39305,7 +39238,7 @@
 	module.exports =
 	    function(Promise, PromiseArray, debug) {
 	var PromiseInspection = Promise.PromiseInspection;
-	var util = __webpack_require__(/*! ./util */ 321);
+	var util = __webpack_require__(/*! ./util */ 320);
 	
 	function SettledPromiseArray(values) {
 	    this.constructor$(values);
@@ -39347,7 +39280,7 @@
 
 
 /***/ }),
-/* 353 */
+/* 352 */
 /*!***************************************!*\
   !*** ./~/bluebird/js/release/some.js ***!
   \***************************************/
@@ -39356,9 +39289,9 @@
 	"use strict";
 	module.exports =
 	function(Promise, PromiseArray, apiRejection) {
-	var util = __webpack_require__(/*! ./util */ 321);
-	var RangeError = __webpack_require__(/*! ./errors */ 328).RangeError;
-	var AggregateError = __webpack_require__(/*! ./errors */ 328).AggregateError;
+	var util = __webpack_require__(/*! ./util */ 320);
+	var RangeError = __webpack_require__(/*! ./errors */ 327).RangeError;
+	var AggregateError = __webpack_require__(/*! ./errors */ 327).AggregateError;
 	var isArray = util.isArray;
 	var CANCELLATION = {};
 	
@@ -39504,7 +39437,7 @@
 
 
 /***/ }),
-/* 354 */
+/* 353 */
 /*!*****************************************!*\
   !*** ./~/bluebird/js/release/filter.js ***!
   \*****************************************/
@@ -39525,7 +39458,7 @@
 
 
 /***/ }),
-/* 355 */
+/* 354 */
 /*!***************************************!*\
   !*** ./~/bluebird/js/release/each.js ***!
   \***************************************/
@@ -39564,7 +39497,7 @@
 
 
 /***/ }),
-/* 356 */
+/* 355 */
 /*!**************************************!*\
   !*** ./~/bluebird/js/release/any.js ***!
   \**************************************/
@@ -39594,7 +39527,7 @@
 
 
 /***/ }),
-/* 357 */
+/* 356 */
 /*!************************************************!*\
   !*** ./src/client/app/js/components/TVShow.js ***!
   \************************************************/
@@ -39618,7 +39551,7 @@
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 358);
+	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 357);
 	
 	var _TVShowSeason2 = _interopRequireDefault(_TVShowSeason);
 	
@@ -39626,17 +39559,17 @@
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
-	var _Link = __webpack_require__(/*! ./common/Link */ 314);
+	var _Link = __webpack_require__(/*! ./common/Link */ 313);
 	
 	var _Link2 = _interopRequireDefault(_Link);
 	
-	var _apis = __webpack_require__(/*! ../constants/apis */ 317);
+	var _apis = __webpack_require__(/*! ../constants/apis */ 316);
 	
-	var _Gap = __webpack_require__(/*! ./common/Gap */ 313);
+	var _Gap = __webpack_require__(/*! ./common/Gap */ 312);
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _services = __webpack_require__(/*! ../services/services */ 318);
+	var _services = __webpack_require__(/*! ../services/services */ 317);
 	
 	var _images = __webpack_require__(/*! ../constants/images */ 360);
 	
@@ -39644,7 +39577,7 @@
 	
 	var _TVShowModal2 = _interopRequireDefault(_TVShowModal);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 312);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 359);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -39670,7 +39603,8 @@
 	      displayTVShow: "none",
 	      isLocal: true,
 	      change: true,
-	      interval: 2000
+	      interval: 2000,
+	      search: false
 	    };
 	    return _this;
 	  }
@@ -39752,18 +39686,64 @@
 	      (0, _utils.blurImage)(false);
 	    }
 	  }, {
+	    key: 'setSearchText',
+	    value: function setSearchText(e) {
+	      var searchText = e.target.value.trim();
+	      var unfilteredTVShows = this.state.unfilteredTVShows;
+	
+	
+	      if (searchText.length == 0) {
+	        this.setState({
+	          records: unfilteredTVShows
+	        });
+	        return;
+	      }
+	      var tvShows = unfilteredTVShows;
+	      tvShows = tvShows.filter(function (tvShow) {
+	        return tvShow.tv_show_name.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+	      });
+	      this.setState({
+	        records: tvShows
+	      });
+	    }
+	  }, {
+	    key: 'toggleSearch',
+	    value: function toggleSearch() {
+	      var _state2 = this.state,
+	          search = _state2.search,
+	          unfilteredTVShows = _state2.unfilteredTVShows,
+	          tvShows = _state2.records;
+	
+	      if (search) {
+	        this.setState({
+	          records: unfilteredTVShows
+	        });
+	      }
+	
+	      this.setState({
+	        search: !search
+	      });
+	
+	      if (!unfilteredTVShows) {
+	        this.setState({
+	          unfilteredTVShows: tvShows
+	        });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 	
 	      var self = this,
-	          _state2 = this.state,
-	          tvShows = _state2.records,
-	          isLocal = _state2.isLocal,
-	          loading = _state2.loading,
-	          error = _state2.error,
-	          open = _state2.open,
-	          tvShow = _state2.tvShow;
+	          _state3 = this.state,
+	          tvShows = _state3.records,
+	          isLocal = _state3.isLocal,
+	          loading = _state3.loading,
+	          error = _state3.error,
+	          open = _state3.open,
+	          tvShow = _state3.tvShow,
+	          search = _state3.search;
 	
 	      var TVShowImages = tvShows.map(function (tvShow, i) {
 	        var tv_show_name = tvShow.tv_show_name,
@@ -39791,15 +39771,34 @@
 	              return _this2.fetchTVShowData(_apis.TVSHOW_ONLINE_URL);
 	            }, app: 'TVShows' })
 	        ),
-	        _react2.default.createElement(
+	        !loading && _react2.default.createElement(
 	          'div',
-	          { style: styles.container },
-	          open && _react2.default.createElement(_TVShowModal2.default, { tvShow: tvShow, navShow: function navShow(tvShow, index) {
-	              return _this2.showModal(tvShow, index);
-	            }, callback: function callback() {
-	              return _this2.closeModal();
-	            } }),
-	          !loading && TVShowImages
+	          { style: styles.outerContainer },
+	          _react2.default.createElement(
+	            'div',
+	            { style: styles.searchContainer },
+	            _react2.default.createElement(
+	              'span',
+	              { style: { paddingRight: '10px' } },
+	              'Search'
+	            ),
+	            search && _react2.default.createElement('input', { onChange: function onChange(e) {
+	                return _this2.setSearchText(e);
+	              }, style: styles.inputText, type: 'text' }),
+	            _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: search ? 'fui-cross' : 'fui-search', onClick: function onClick() {
+	                return _this2.toggleSearch();
+	              } })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { style: styles.container },
+	            open && _react2.default.createElement(_TVShowModal2.default, { tvShow: tvShow, navShow: function navShow(tvShow, index) {
+	                return _this2.showModal(tvShow, index);
+	              }, callback: function callback() {
+	                return _this2.closeModal();
+	              } }),
+	            TVShowImages
+	          )
 	        )
 	      );
 	    }
@@ -39828,8 +39827,22 @@
 	});
 	
 	var styles = {
-	  container: {
+	  inputText: {
+	    height: '25px',
+	    color: 'black'
+	  },
+	  outerContainer: {
 	    textAlign: 'center',
+	    width: '100%'
+	  },
+	  searchContainer: {
+	    position: 'fixed',
+	    top: '10px',
+	    width: '100%',
+	    zIndex: 100,
+	    color: 'white'
+	  },
+	  container: {
 	    position: 'absolute',
 	    marginTop: '100px',
 	    marginLeft: '100px',
@@ -39863,7 +39876,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 358 */
+/* 357 */
 /*!******************************************************!*\
   !*** ./src/client/app/js/components/TVShowSeason.js ***!
   \******************************************************/
@@ -39883,19 +39896,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 359);
+	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 358);
 	
 	var _TVShowEpisodes2 = _interopRequireDefault(_TVShowEpisodes);
 	
-	var _Link = __webpack_require__(/*! ./common/Link */ 314);
+	var _Link = __webpack_require__(/*! ./common/Link */ 313);
 	
 	var _Link2 = _interopRequireDefault(_Link);
 	
-	var _Gap = __webpack_require__(/*! ./common/Gap */ 313);
+	var _Gap = __webpack_require__(/*! ./common/Gap */ 312);
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 312);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 359);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -39914,7 +39927,7 @@
 	    var _this = _possibleConstructorReturn(this, (TVShowSeason.__proto__ || Object.getPrototypeOf(TVShowSeason)).call(this));
 	
 	    _this.state = {
-	      change: false
+	      toggle: false
 	    };
 	    return _this;
 	  }
@@ -39929,11 +39942,12 @@
 	      if (display === undefined || display == "none") {
 	        seasons[index].showEpisodes = "block";
 	        (0, _utils.blurImage)(true);
+	        this.setState({ toggle: true });
 	      } else {
 	        (0, _utils.blurImage)(false);
 	        seasons[index].showEpisodes = "none";
+	        this.setState({ toggle: false });
 	      }
-	      this.setState({ change: true });
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -39944,7 +39958,7 @@
 	      if (currentShow != prevShow) {
 	        this.hideSeasons();
 	        this.setState({
-	          change: true
+	          toggle: false
 	        });
 	      }
 	    }
@@ -39953,7 +39967,6 @@
 	    value: function render() {
 	      var self = this,
 	          seasons = this.props.seasons;
-	
 	
 	      var tvShowSeasons = seasons.map(function (season, i) {
 	        return _react2.default.createElement(
@@ -39993,11 +40006,12 @@
 	var styles = {
 	  container: {
 	    position: 'absolute',
-	    marginTop: '100px'
+	    marginTop: '100px',
+	    textAlign: 'left'
 	  },
 	  season: {
 	    paddingTop: '20px',
-	    marginLeft: '50px',
+	    marginLeft: '25px',
 	    whiteSpace: 'nowrap'
 	  }
 	};
@@ -40007,7 +40021,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowSeason.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 359 */
+/* 358 */
 /*!********************************************************!*\
   !*** ./src/client/app/js/components/TVShowEpisodes.js ***!
   \********************************************************/
@@ -40027,7 +40041,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Link = __webpack_require__(/*! ./common/Link */ 314);
+	var _Link = __webpack_require__(/*! ./common/Link */ 313);
 	
 	var _Link2 = _interopRequireDefault(_Link);
 	
@@ -40035,11 +40049,11 @@
 	
 	var _Space2 = _interopRequireDefault(_Space);
 	
-	var _Icon = __webpack_require__(/*! ./common/Icon */ 315);
+	var _Icon = __webpack_require__(/*! ./common/Icon */ 314);
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 312);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 359);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -40117,7 +40131,8 @@
 	    borderStyle: 'dashed',
 	    borderColor: 'white',
 	    borderRightWidth: '0px',
-	    backgroundColor: 'black'
+	    backgroundColor: 'black',
+	    margin: '0px 20px'
 	  },
 	  container: {
 	    paddingTop: '20px',
@@ -40130,6 +40145,53 @@
 	exports.default = TVShowEpisodes;
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowEpisodes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ }),
+/* 359 */
+/*!******************************************!*\
+  !*** ./src/client/app/js/utils/utils.js ***!
+  \******************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var getEpisodesWidth = exports.getEpisodesWidth = function getEpisodesWidth() {
+	  var width = 800,
+	      modal = document.getElementsByClassName('tvShowModal')[0];
+	  if (modal === undefined) {
+	    return width;
+	  }
+	  var modalWidth = modal.getBoundingClientRect().width;
+	  width = Math.min(width, modalWidth - 110);
+	  return width;
+	};
+	
+	var getModalMesaures = exports.getModalMesaures = function getModalMesaures() {
+	  var documentWidth = document.documentElement.clientWidth;
+	  var noOfShows = Math.floor(documentWidth / 300);
+	  var width = noOfShows * 250 + noOfShows * 20;
+	  return { width: width };
+	};
+	
+	var blurImage = exports.blurImage = function blurImage(val) {
+	  var modal = document.getElementById('modal_image');
+	  if (!modal) {
+	    return;
+	  }
+	
+	  if (val) {
+	    modal.classList.add('blur');
+	  } else {
+	    modal.classList.remove('blur');
+	  }
+	};
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/home/tom/Fun Projects/Harddisk Browser/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "utils.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
 /* 360 */
@@ -40337,19 +40399,19 @@
 	
 	var _images = __webpack_require__(/*! ../constants/images */ 360);
 	
-	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 358);
+	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 357);
 	
 	var _TVShowSeason2 = _interopRequireDefault(_TVShowSeason);
 	
-	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 359);
+	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 358);
 	
 	var _TVShowEpisodes2 = _interopRequireDefault(_TVShowEpisodes);
 	
-	var _Gap = __webpack_require__(/*! ./common/Gap */ 313);
+	var _Gap = __webpack_require__(/*! ./common/Gap */ 312);
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 312);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 359);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	

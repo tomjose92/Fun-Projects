@@ -11,30 +11,10 @@ export const getEpisodesWidth = () => {
 }
 
 export const getModalMesaures = () => {
-    let documentWidth = document.documentElement.clientWidth,
-    tvShows = document.getElementsByClassName('tvshow'),
-    width=0,marginLeft;
-    for(let i=0;i<tvShows.length;i++)
-    {
-      let tvShow = tvShows[i];
-      let tvShowRight = tvShow.getBoundingClientRect().right;
-      let tvShowLeft = tvShow.getBoundingClientRect().left;
-      if(i==0)
-      {
-        marginLeft=tvShowLeft;
-      }
-
-      if(tvShowRight - marginLeft > width)
-      {
-        width = tvShowRight - marginLeft;
-      }
-    }
-    return {width};
-}
-
-export const getLoadingLeft = () => {
     let documentWidth = document.documentElement.clientWidth;
-    return (documentWidth/2 - 100);
+    let noOfShows = Math.floor(documentWidth/300);
+    let width = noOfShows*250 + (noOfShows)*20;
+    return {width};
 }
 
 export const blurImage = (val) => {

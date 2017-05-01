@@ -8,7 +8,7 @@ class TVShowSeason extends React.Component{
     constructor(){
       super();
       this.state = {
-        change:false,
+        toggle:false,
       };
     }
     
@@ -20,13 +20,15 @@ class TVShowSeason extends React.Component{
       {
         seasons[index].showEpisodes="block"; 
         blurImage(true);
+        this.setState({toggle:true});
       }
       else
       {
         blurImage(false);
         seasons[index].showEpisodes="none";  
+        this.setState({toggle:false});
       }
-      this.setState({change:true});
+      
     }
 
     componentDidUpdate(prevProps){
@@ -36,7 +38,7 @@ class TVShowSeason extends React.Component{
       {
         this.hideSeasons();
         this.setState({
-          change:true
+          toggle:false
         });
       }
     }
@@ -44,8 +46,7 @@ class TVShowSeason extends React.Component{
     render()
     {
       let self=this,
-      {seasons} = this.props;  
-
+      {seasons} = this.props;
       let tvShowSeasons = seasons.map(function(season,i){ 
         return (
           <div key={"season"+i} style={styles.season} className={season.showEpisodes=='block'?'fui-radio-checked':'fui-radio-unchecked'}>
@@ -72,11 +73,12 @@ class TVShowSeason extends React.Component{
 const styles={
   container:{
     position: 'absolute',
-    marginTop: '100px'
+    marginTop: '100px',
+    textAlign: 'left'
   },
   season:{
     paddingTop: '20px',
-    marginLeft: '50px',
+    marginLeft: '25px',
     whiteSpace: 'nowrap'
   }
 }

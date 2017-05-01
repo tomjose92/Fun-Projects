@@ -1,7 +1,6 @@
 import React from 'react';
 import Space from './Space';
 import Radium from 'radium';
-import {getLoadingLeft} from '../../utils/utils';
 class Header extends React.Component {
 
     constructor() {
