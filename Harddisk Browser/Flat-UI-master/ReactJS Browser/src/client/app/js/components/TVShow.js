@@ -204,7 +204,8 @@ const styles={
     top:'10px',
     width:'100%',
     zIndex:100,
-    color:'white'
+    color:'white',
+    height: '0px'
   },
   container:{
     position: 'absolute',
