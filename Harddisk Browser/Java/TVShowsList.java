@@ -29,6 +29,7 @@ public class TVShowsList extends CommonUtil
       public static String currentTvShowContent = "";
       public static String tvShowTag = null;
       public static String tvShowSeason = null;
+      public static JSONObject tvShowEpisodesData = new JSONObject();
 	public static void main(String args[])
 	{
 		try{
@@ -84,9 +85,10 @@ public class TVShowsList extends CommonUtil
                   json.put("TV_SHOW_NAME",tvShowName);
                   json.put("TV_SHOW_TAG",fileTag);
 
-                  data.put(json);
                   tvShowTag = fileTag;
-                  listSeasons(tvShowPath);
+                  JSONArray seasons = listSeasons(tvShowPath);
+                  json.put("SEASONS",seasons);
+                  data.put(json);
                   tvShowContent+=currentTvShowContent;
                   currentTvShowContent="";
             }
@@ -97,7 +99,7 @@ public class TVShowsList extends CommonUtil
             return tvShowContent;
       }
 
-      public static void listSeasons(String tvShowPath) throws Exception
+      public static JSONArray listSeasons(String tvShowPath) throws Exception
       {
             File[] directories = new File(tvShowPath).listFiles(new FileFilter() {
                   @Override
@@ -105,12 +107,15 @@ public class TVShowsList extends CommonUtil
                         return file.isDirectory();
                   }
             });
+
+            JSONArray tvShowSeasons = new JSONArray();
             if(directories.length==0)
             {
                   tvShowSeason = "";
                   String episodeElements = listEpisodes(tvShowPath);
                   currentTvShowContent=currentTvShowContent.replace("SEASON_LINKS",episodeElements);
             }
+
             for(File file:directories)
             {
                   String tvShowSeasonName = file.getName();
@@ -125,15 +130,20 @@ public class TVShowsList extends CommonUtil
                   String episodeElements = listEpisodes(tvShowSeasonPath);
                   tvShowSeasonElement=tvShowSeasonElement.replace("ICON","fui-radio-checked").replace("TEXT",tvShowSeasonText).replace("LINK",episodeElements+"\n\t\t");
                   currentTvShowContent=currentTvShowContent.replace("SEASON_LINKS",tvShowSeasonElement+"SEASON_LINKS");
+                  tvShowSeasons.put(tvShowEpisodesData);
             }
+
+            return tvShowSeasons;
       }
 
-      public static String listEpisodes(String tvShowSeasonPath)
+      public static String listEpisodes(String tvShowSeasonPath) throws Exception
       {
             String []extensions={"mkv","mp4","avi","flv"};  //NO I18N
             boolean recursive =true;
             Collection files= FileUtils.listFiles(new File(tvShowSeasonPath),extensions,recursive);
             List <String> fileNames = new ArrayList();
+            tvShowEpisodesData = new JSONObject();
+            tvShowEpisodesData.put("TV_SHOW_SEASON",tvShowSeason);
             try{
                   JSONObject fileDetails = new JSONObject();
                   String tvShowEpisodesElement = "";
@@ -179,7 +189,7 @@ public class TVShowsList extends CommonUtil
                               fileName=fileName.substring(0,50)+"..";
                         }
                         episodeData.put(json);
-
+                        tvShowEpisodesData.put("EPISODES",episodeData);
                         tvShowEpisodeText = tvShowEpisodeText.replace("TEXT",fileName).replace("SELECTOR","");
                         tvShowEpisodeElement = tvShowEpisodeElement.replace("ICON","fui-arrow-right").replace("TEXT",tvShowEpisodeText).replace("LINK",icons+"\n\t\t\t\t");
                         tvShowEpisodesElement += "\t\t\t" + tvShowEpisodeElement;

@@ -1,6 +1,5 @@
 import React from 'react';
 import Radium from 'radium'
-import TVShowSeason from './TVShowSeason'
 import Header from './common/Header';
 import Link from './common/Link';
 import {TVSHOW_ONLINE_URL, TVSHOW_LOCAL_URL} from '../constants/apis';
