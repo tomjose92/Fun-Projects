@@ -15,5 +15,7 @@ public class MediaConstants
     public static final String MOVIES_TABLE = "movies";
     public static final String TVSHOWS_TABLE = "tvshows";
     public static final String TVSHOW_EPISODES_TABLE = "tvshowepisodes";
+
+    public static final String REACT_JSON_FOLDER = "../Flat-UI-master/ReactJS Browser/src/client/json/";
 }
 

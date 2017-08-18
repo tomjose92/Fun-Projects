@@ -81,11 +81,11 @@ public class CommonUtil extends MediaConstants
             return props;
       }
 
-      public static void writeFile(String filePath, String content) 
+      public static void writeFile(String filePath, Object obj) 
       {
             FileOutputStream fop = null;
             File file;
-
+            String content = obj.toString();
             try {
 
                   file = new File(filePath);
@@ -103,7 +103,7 @@ public class CommonUtil extends MediaConstants
                   fop.flush();
                   fop.close();
 
-                  System.out.println("Done");
+                  System.out.println("Data added to file " + filePath);
 
             } catch (IOException e) {
                   e.printStackTrace();

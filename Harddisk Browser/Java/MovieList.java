@@ -154,9 +154,11 @@ public class MovieList extends CommonUtil
             {
                   contentToWrite+=movieContent;
             }
+            writeFile(REACT_JSON_FOLDER + "movie.json",data);
             writeFile("MOVIE_DIV_ELEMENTS.txt",contentToWrite);
             System.out.println("No of movies " + fileNames.size());
             CommonDBUtil.addMovieData(data);
+            
             return contentToWrite;
       }
 

@@ -93,6 +93,7 @@ public class TVShowsList extends CommonUtil
             tvShowContent = tvShowContent.replaceAll("SEASON_LINKS","\t").replaceAll("LINK","").replaceAll("\\|","").replaceAll("\\*","").replaceAll("\\^","");
             writeFile("TV_SHOW_DIV_ELEMENTS.txt",tvShowContent);
             CommonDBUtil.addTVShowData(data);
+            writeFile(REACT_JSON_FOLDER + "tvshow.json",data);
             return tvShowContent;
       }
 
