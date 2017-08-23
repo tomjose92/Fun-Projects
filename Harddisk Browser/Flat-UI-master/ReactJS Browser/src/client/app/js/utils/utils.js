@@ -10,7 +10,7 @@ export const getEpisodesWidth = () => {
     return width;
 }
 
-export const getModalMesaures = () => {
+export const getModalMeasures = () => {
     let documentWidth = document.documentElement.clientWidth;
     let noOfShows = Math.floor(documentWidth/300);
     let width = noOfShows*250 + (noOfShows)*20;

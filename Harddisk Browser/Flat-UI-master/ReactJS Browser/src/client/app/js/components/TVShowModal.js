@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
 import Radium from 'radium';
-import {Images} from '../constants/images';
+import {Images,ModalPosition} from '../constants/images';
 import TVShowSeason from './TVShowSeason';
 import TVShowEpisodes from './TVShowEpisodes';
 import Gap from './common/Gap';
-import {getModalMesaures} from '../utils/utils';
+import {getModalMeasures} from '../utils/utils';
 
 class TVShowModal extends Component {
   constructor(){
@@ -23,8 +23,7 @@ class TVShowModal extends Component {
 
   render(){
     let {tvShow: {episodes, seasons, tv_show_tag, tv_show_name, prev, next, index}} = this.props;
-    let imageUrl = Images[tv_show_tag];
-    let {width} = getModalMesaures();
+    let {width} = getModalMeasures();
     if(customStyles.content)
     {
       customStyles.content.width = width;
@@ -38,7 +37,7 @@ class TVShowModal extends Component {
             {next && <a style={{cursor:'pointer'}} className='fui-triangle-right-large' onClick={()=>this.props.navShow(next, index+1)}/>}
           </div>
           <div style={styles.imageContainer}>
-            <img id='modal_image' style={styles.image} src={imageUrl} />
+            <img id='modal_image' style={[styles.image,Images[tv_show_tag],ModalPosition[tv_show_tag]]} />
           </div>
           {(episodes && seasons.length==0) && (
             <div style={{position: 'absolute', marginTop: '100px'}}>
@@ -99,7 +98,9 @@ const styles={
   },
   image:{
     height: '498px',
-    width: '450px'
+    width: '450px',
+    backgroundSize: '2292px 2536px',
+    backgroundRepeat: 'no-repeat'
   },
   close:{
     background: '#56544D',
