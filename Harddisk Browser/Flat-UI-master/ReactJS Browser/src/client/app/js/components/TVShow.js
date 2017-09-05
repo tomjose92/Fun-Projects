@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Radium from 'radium'
 import Header from './common/Header';
 import Link from './common/Link';
@@ -8,6 +9,9 @@ import {fetchData} from '../services/services';
 import {Images, ImagePosition} from '../constants/images';
 import TVShowModal from './TVShowModal';
 import {blurImage} from '../utils/utils';
+import {fetchTVShowData} from '../actions/actions'
+import {getTVShowData, isFetchingTVShow, getTVShowStatus} from '../selectors/selectors';
+import isEmpty from 'lodash/isEmpty';
 
 class TVShow extends React.Component {
   constructor(){
@@ -15,61 +19,29 @@ class TVShow extends React.Component {
       document.body.className="mediaBG";
       this.state = {
         records:[],
-        loading:false,
         error:false,
         displayTVShow:"none",
-        isLocal:true,
-        change:true,
         interval:2000,
         search: false
       };
     }
 
     displayTVShow(){
-      let loading = (this.state!==undefined)?this.state.loading:true;
-      let value = (!loading)?"block":"none";
+      let {isLoading} = this.props;
+      let value = (!isLoading)?"block":"none";
       return value;
     }
 
-    fetchTVShowData(url){
+    fetchTVShowData(isLocal){
       console.log('fetchTVShowData');
-      this.setState({
-        loading: true
-      });
-      let {interval,records} = this.state,
-      self=this;
-
-      fetchData(url) 
-      .then(response =>{
-        let {error,data} = response,
-        loading=false;
-        if(error)
-        {
-          self.setState({loading,error});
-          return;
-        } 
-        setTimeout(function(){
-          self.setState({records:data,loading,error});
-          if( url==TVSHOW_LOCAL_URL)
-          {
-            console.log("Online");
-            self.setState({isLocal:true});
-          }
-          else
-          {
-            console.log("Refresh");
-            self.setState({isLocal:false}); 
-          }
-        },interval);
-      })
+      console.log('Accessing',isLocal?'local':'online');   
+      let url = isLocal?TVSHOW_LOCAL_URL: TVSHOW_ONLINE_URL;
+      this.props.fetchTVShowData({url, isLocal}); 
     }
 
     componentWillMount() {
-      console.log("componentWillMount");
-      
-      console.log('Accessing local');   
-      this.fetchTVShowData(TVSHOW_LOCAL_URL);
-    
+      let {tvShows} = this.props;
+      isEmpty(tvShows) && this.fetchTVShowData(TVSHOW_LOCAL_URL);
     }
 
     shouldComponentUpdate( nextProps){
@@ -97,16 +69,15 @@ class TVShow extends React.Component {
 
     setSearchText(e){
       let searchText = e.target.value.trim();
-      let {unfilteredTVShows} = this.state;
+      let {tvShows} = this.props;
       
       if(searchText.length==0)
       {
         this.setState({
-          records: unfilteredTVShows
+          records: tvShows
         });
         return;
       }
-      let tvShows = unfilteredTVShows;
       tvShows = tvShows.filter((tvShow)=>{
         return (tvShow.tv_show_name.toLowerCase().indexOf(searchText.toLowerCase())>-1);
       });
@@ -116,11 +87,12 @@ class TVShow extends React.Component {
     }
 
     toggleSearch(){
-      let {search, unfilteredTVShows, records:tvShows} = this.state;
+      let {search} = this.state;
+      let {tvShows} = this.props;
       if(search)
       {
         this.setState({
-          records: unfilteredTVShows
+          records: tvShows
         });
       }
 
@@ -128,18 +100,14 @@ class TVShow extends React.Component {
         search: !search
       });
 
-      if(!unfilteredTVShows)
-      {
-        this.setState({
-          unfilteredTVShows:tvShows
-        });
-      }
     }
 
   	render() {
       let self=this,
-    	{records: tvShows, isLocal, loading, error, open, tvShow,search} = this.state;
-    	let TVShowImages = tvShows.map(function(tvShow,i){
+    	{error, open, tvShow,search, records: tvShows} = this.state;
+      let {isLocal, isLoading} = this.props;
+
+    	let TVShowImages = isEmpty(tvShows)? null : tvShows.map(function(tvShow,i){
         let {tv_show_name, tv_show_tag} = tvShow;
         return (
           <span className='tvShow' title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
@@ -149,12 +117,13 @@ class TVShow extends React.Component {
           </span>
         )
       });
+
 	    return (
         <div>
           <nav>
-            <Header isLocal={isLocal} loading={loading} error={error} onRefresh={()=>this.fetchTVShowData(TVSHOW_ONLINE_URL)} app="TVShows"/>
+            <Header isLocal={isLocal} loading={isLoading} error={error} onRefresh={()=>this.fetchTVShowData(TVSHOW_ONLINE_URL)} app="TVShows"/>
           </nav>
-          {!loading && 
+          {!isLoading && 
           <div style={styles.outerContainer}>
             <div style={styles.searchContainer}>
               <span style={{paddingRight:'10px'}}>Search</span> 
@@ -172,10 +141,19 @@ class TVShow extends React.Component {
 
     componentDidMount() {
       let self=this;
-      console.log('Accessing online');   
-      setTimeout(function(){
-        self.fetchTVShowData(TVSHOW_ONLINE_URL);
-      },this.state.interval);
+      /*setTimeout(function(){
+        self.fetchTVShowData(false);
+      },this.state.interval);*/
+    }
+
+    componentDidUpdate(prevProps, prevState)
+    {
+      let {tvShows} = this.props;
+      let {tvShows: oldTVShows, isLoading:oldLoading} = prevProps;
+      if(tvShows!=oldTVShows && isEmpty(this.state.records))
+      {
+        this.setState({records: tvShows});
+      }      
     }
 
 };
@@ -235,4 +213,20 @@ const styles={
   }
 }
 
-export default Radium(TVShow);
+const mapStateToProps = (state) =>{
+  let tvShows = getTVShowData(state);
+  let isLoading = isFetchingTVShow(state);
+  let isLocal = getTVShowStatus(state);
+  return {
+    tvShows,
+    isLoading,
+    isLocal
+  };
+};
+
+export default Radium(connect(
+  mapStateToProps,
+  {
+    fetchTVShowData
+  }
+)(TVShow));

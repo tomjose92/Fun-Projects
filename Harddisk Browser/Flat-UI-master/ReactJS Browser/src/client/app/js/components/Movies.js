@@ -1,10 +1,13 @@
-import React from 'react'
+import React from 'react';
+import {connect} from 'react-redux';
 import Header from './common/Header'
 import Link from './common/Link'
 import Space from './common/Space'
 import Icon from './common/Icon'
 import {MOVIE_ONLINE_URL,MOVIE_LOCAL_URL} from '../constants/apis'
-import {fetchData} from '../services/services'
+import {fetchMovieData} from '../actions/actions'
+import {getMovieData, isFetchingMovies, getMovieStatus} from '../selectors/selectors';
+import isEmpty from 'lodash/isEmpty';
 
 class Movies extends React.Component {
     constructor() {
@@ -12,55 +15,27 @@ class Movies extends React.Component {
       document.body.className="movieBG";
       this.state= {
         records:[],
-        loading:true,
         error:false,
         displayMovies:"none",
-        isLocal:true,
         interval:2000
       };
     }
 
     displayMovies(){
-      let loading = (this.state!=null)?this.state.loading:true,
-      value = (!loading)?"block":"none";
+      let {isLoading} = this.props,
+      value = (!isLoading)?"block":"none";
       return value;
     }
-
-
-    fetchMovieData(url){
-      console.log('fetchMovieData');
-      this.setState({loading:true});
-      let {interval} = this.state,
-      self=this;
-      fetchData(url) 
-      .then(response => {
-        let {data,error} = response,
-        loading=false;
-        if(error)
-        {
-          self.setState({loading,error});
-          return;
-        } 
-        setTimeout(function(){
-          if(url==MOVIE_LOCAL_URL)
-          {
-            console.log("Online");
-            self.setState({isLocal:true});
-          }
-          else
-          {
-            console.log("Refresh");
-            self.setState({isLocal:false}); 
-          }
-          self.setState({records:data,loading,error});
-        },interval);
-      })
+    
+    fetchMovieData(isLocal){
+      console.log('Accessing',isLocal?'local':'online');   
+      let url = isLocal? MOVIE_LOCAL_URL : MOVIE_ONLINE_URL; 
+      this.props.fetchMovieData({url, isLocal}); 
     } 
 
     componentWillMount() {
-      console.log("componentWillMount");
-      console.log('Accessing local');   
-      this.fetchMovieData(MOVIE_LOCAL_URL);
+      let {movies} = this.props;
+      isEmpty(movies) && this.fetchMovieData(true);
     }
 
     shouldComponentUpdate(nextProps){
@@ -69,8 +44,10 @@ class Movies extends React.Component {
 
   	render() {
       let self=this,
-    	{records:movies, isLocal, loading, error} = this.state,
-    	MovieLinks = movies.map(function(movie,i){
+    	{error} = this.state,
+      {movies, isLoading, isLocal} = this.props;
+
+    	let MovieLinks = isEmpty(movies)? null : movies.map(function(movie,i){
         let movieName = movie.movie_name;
         let letterLink = "";
         if(movie.letter!="")
@@ -93,7 +70,7 @@ class Movies extends React.Component {
       	);
     	});
 	    return (
-        <div><nav><Header app="Movies" isLocal={isLocal} loading={loading} error={error} onRefresh={()=>this.fetchMovieData(MOVIE_ONLINE_URL)} />
+        <div><nav><Header app="Movies" isLocal={isLocal} loading={isLoading} error={error} onRefresh={()=>this.fetchMovieData(false)} />
           <div style={{display:this.displayMovies()}}>
             {MovieLinks}
           </div>  
@@ -101,17 +78,13 @@ class Movies extends React.Component {
       );
   	}
 
-    componentDidUpdate(){
-
-    }
-
     componentDidMount() {
       let self=this,
       {interval} = this.state;
-      console.log('Accessing online');   
+      /*
       setTimeout(function(){
-        self.fetchMovieData(MOVIE_ONLINE_URL);
-      },interval);
+        self.fetchMovieData(false);
+      },interval);*/
     }
 };
 
@@ -129,4 +102,20 @@ const styles={
   }
 }
 
-export default Movies;
+const mapStateToProps = (state) =>{
+  let movies = getMovieData(state);
+  let isLoading = isFetchingMovies(state);
+  let isLocal = getMovieStatus(state);
+  return {
+    movies,
+    isLoading,
+    isLocal
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    fetchMovieData
+  }
+)(Movies);
