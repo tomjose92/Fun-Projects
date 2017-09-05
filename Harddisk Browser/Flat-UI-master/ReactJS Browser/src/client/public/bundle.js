@@ -43109,6 +43109,11 @@
 	      var tvShows = this.props.tvShows;
 	
 	      (0, _isEmpty2.default)(tvShows) && this.fetchTVShowData(_apis.TVSHOW_LOCAL_URL);
+	      var records = this.state.records;
+	
+	      if ((0, _isEmpty2.default)(records)) {
+	        this.setState({ records: tvShows });
+	      }
 	    }
 	  }, {
 	    key: 'shouldComponentUpdate',

@@ -42,6 +42,11 @@ class TVShow extends React.Component {
     componentWillMount() {
       let {tvShows} = this.props;
       isEmpty(tvShows) && this.fetchTVShowData(TVSHOW_LOCAL_URL);
+      let {records} = this.state;
+      if(isEmpty(records))
+      {
+        this.setState({records: tvShows});
+      }
     }
 
     shouldComponentUpdate( nextProps){
