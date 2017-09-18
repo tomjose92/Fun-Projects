@@ -9,7 +9,11 @@ export const loading = (state = false, action) => {
 	if(action.type === FETCH_MOVIE_START){
 		return true;
 	}
-	if(action.type === FETCH_MOVIE_SUCCESS || action.type === FETCH_MOVIE_ERROR){
+	else if(action.type === FETCH_MOVIE_SUCCESS){
+		let {isInit} = action.payload;
+		return !isInit;
+	}
+	else if(action.type === FETCH_MOVIE_ERROR){
 		return false;
 	}
   	return state;
@@ -23,7 +27,7 @@ export const data = (state = [],action) => {
 	return state;
 }
 
-export const isLocal = (state=true, action) => {
+export const isLocal = (state={}, action) => {
 	if(action.type === FETCH_MOVIE_SUCCESS){
 		let {isLocal} = action.payload;
 		return isLocal;

@@ -16,8 +16,8 @@ class Movies extends React.Component {
       this.state= {
         records:[],
         error:false,
-        displayMovies:"none",
-        interval:2000
+        interval:2000,
+        isInit: false
       };
     }
 
@@ -30,12 +30,21 @@ class Movies extends React.Component {
     fetchMovieData(isLocal){
       console.log('Accessing',isLocal?'local':'online');   
       let url = isLocal? MOVIE_LOCAL_URL : MOVIE_ONLINE_URL; 
-      this.props.fetchMovieData({url, isLocal}); 
+      let isInit = this.state.isInit;
+      this.props.fetchMovieData({url, isLocal, isInit});
+      !isInit && this.setState({
+        isInit: true
+      });
     } 
 
     componentWillMount() {
       let {movies} = this.props;
-      isEmpty(movies) && this.fetchMovieData(true);
+      if(isEmpty(movies))
+        this.fetchMovieData(true);
+      else
+        this.setState({
+          isInit: true
+        });
     }
 
     shouldComponentUpdate(nextProps){
@@ -81,10 +90,13 @@ class Movies extends React.Component {
     componentDidMount() {
       let self=this,
       {interval} = this.state;
-      /*
-      setTimeout(function(){
-        self.fetchMovieData(false);
-      },interval);*/
+      let {movies} = this.props;
+      if(isEmpty(movies))
+      {
+        setTimeout(function(){
+          self.fetchMovieData(false);
+        },interval);
+      }
     }
 };
 

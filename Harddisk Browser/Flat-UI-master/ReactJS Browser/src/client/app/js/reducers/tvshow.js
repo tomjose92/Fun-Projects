@@ -9,7 +9,10 @@ export const loading = (state = false, action) => {
 	if(action.type === FETCH_TVSHOW_START){
 		return true;
 	}
-	if(action.type === FETCH_TVSHOW_SUCCESS || action.type === FETCH_TVSHOW_ERROR){
+	if(action.type === FETCH_TVSHOW_SUCCESS){
+		let {isInit} = action.payload;
+		return !isInit;
+	}else if(action.type === FETCH_TVSHOW_ERROR){
 		return false;
 	}
   	return state;

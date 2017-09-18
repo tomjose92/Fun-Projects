@@ -14,10 +14,9 @@ export const fetchMovieSuccess = (data) => {
   };
 };
 
-export const fetchMovieError = (data) => {
+export const fetchMovieError = () => {
   return {
-    type: ActionTypes.FETCH_MOVIE_ERROR,
-    payload: data
+    type: ActionTypes.FETCH_MOVIE_ERROR
   };
 };
 
@@ -34,24 +33,27 @@ export const fetchTVShowSuccess = (data) => {
   };
 };
 
-export const fetchTVShowError = (data) => {
+export const fetchTVShowError = () => {
   return {
-    type: ActionTypes.FETCH_TVSHOW_ERROR,
-    payload: data
+    type: ActionTypes.FETCH_TVSHOW_ERROR
   };
 };
 
 export const fetchMovieData = (data) => {
   return (dispatch) => {
     dispatch(fetchMovieStart());
-    let {url, isLocal} = data;
+    let {url, isLocal, isInit} = data;
+    let interval = isInit? 0: 1000;
     Services.fetchData(url)
     .then((response)=>{
-      setTimeout(() => {
-        dispatch(fetchMovieSuccess({response, isLocal}));
-      }, 2000);
-    }).catch( (err) => {
-      dispatch(fetchMovieError(err));
+      let {error} = response;
+      if(!error){
+        setTimeout(() => {
+          dispatch(fetchMovieSuccess({response, isLocal, isInit}));
+        }, interval);
+      }
+      else
+        dispatch(fetchMovieError());  
     });
   };
 };
@@ -59,14 +61,18 @@ export const fetchMovieData = (data) => {
 export const fetchTVShowData = (data) => {
   return (dispatch) => {
     dispatch(fetchTVShowStart());
-    let {url, isLocal} = data;
+    let {url, isLocal, isInit} = data;
+    let interval = isInit? 0: 1000;
     Services.fetchData(url)
     .then((response)=>{
-      setTimeout(() => {
-        dispatch(fetchTVShowSuccess({response, isLocal}));
-      }, 2000);
-    }).catch( (err) => {
-      dispatch(fetchTVShowError(err));
+      let {error} = response;
+      if(!error){
+        setTimeout(() => {
+          dispatch(fetchTVShowSuccess({response, isLocal, isInit}));
+        }, interval);
+      }
+      else
+        dispatch(fetchTVShowError());
     });
   };
 };

@@ -20,32 +20,38 @@ class TVShow extends React.Component {
       this.state = {
         records:[],
         error:false,
-        displayTVShow:"none",
         interval:2000,
-        search: false
+        search: false,
+        isInit: false
       };
     }
 
-    displayTVShow(){
-      let {isLoading} = this.props;
-      let value = (!isLoading)?"block":"none";
-      return value;
-    }
-
-    fetchTVShowData(isLocal){
+    fetchTVShowData(isLocal=true){
       console.log('fetchTVShowData');
       console.log('Accessing',isLocal?'local':'online');   
       let url = isLocal?TVSHOW_LOCAL_URL: TVSHOW_ONLINE_URL;
-      this.props.fetchTVShowData({url, isLocal}); 
+      let {isInit} = this.state;
+      this.props.fetchTVShowData({url, isLocal, isInit});
+      !isInit && this.setState({
+        isInit: true
+      });
     }
 
     componentWillMount() {
       let {tvShows} = this.props;
-      isEmpty(tvShows) && this.fetchTVShowData(TVSHOW_LOCAL_URL);
-      let {records} = this.state;
-      if(isEmpty(records))
+      if(isEmpty(tvShows)){
+        this.fetchTVShowData();
+      }
+      else
       {
-        this.setState({records: tvShows});
+        let {records} = this.state;
+        if(isEmpty(records))
+        {
+          this.setState({
+            records: tvShows, 
+            isInit: true
+          });
+        }
       }
     }
 
@@ -126,7 +132,7 @@ class TVShow extends React.Component {
 	    return (
         <div>
           <nav>
-            <Header isLocal={isLocal} loading={isLoading} error={error} onRefresh={()=>this.fetchTVShowData(TVSHOW_ONLINE_URL)} app="TVShows"/>
+            <Header isLocal={isLocal} loading={isLoading} error={error} onRefresh={()=>this.fetchTVShowData(false)} app="TVShows"/>
           </nav>
           {!isLoading && 
           <div style={styles.outerContainer}>
@@ -146,9 +152,13 @@ class TVShow extends React.Component {
 
     componentDidMount() {
       let self=this;
-      /*setTimeout(function(){
-        self.fetchTVShowData(false);
-      },this.state.interval);*/
+      let {records} = this.state;
+      if(isEmpty(records))
+      {
+        setTimeout(function(){
+          self.fetchTVShowData(false);
+        },this.state.interval);
+      }
     }
 
     componentDidUpdate(prevProps, prevState)
