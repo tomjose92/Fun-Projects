@@ -21,6 +21,31 @@ class TVShowModal extends Component {
     this.props.callback();
   }
 
+  componentDidMount(){
+    this.handleKeyPress();
+  }
+
+  componentWillUnmount(){
+    document.onkeydown = null;
+  }  
+
+  handleKeyPress(){
+    let self = this;
+    document.onkeydown = function(evt) {
+      let {tvShow: {index, prev, next}} = self.props;
+        evt = evt || window.event;
+        if (evt.key == "Escape" || evt.key == "Esc" || evt.keyCode == 27){
+            self.handleClose();
+        }
+        else if(evt.key == "ArrowLeft" || evt.keyCode == 37){
+          prev && self.props.navShow(prev, index-1);
+        }
+        else if(evt.key == "ArrowRight" || evt.keyCode == 39){
+          next && self.props.navShow(next, index+1)
+        }
+    };
+  }
+
   render(){
     let {tvShow: {episodes, seasons, tv_show_tag, tv_show_name, prev, next, index}} = this.props;
     let {width} = getModalMeasures();

@@ -43750,6 +43750,36 @@
 	      this.props.callback();
 	    }
 	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.handleKeyPress();
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      document.onkeydown = null;
+	    }
+	  }, {
+	    key: 'handleKeyPress',
+	    value: function handleKeyPress() {
+	      var self = this;
+	      document.onkeydown = function (evt) {
+	        var _self$props$tvShow = self.props.tvShow,
+	            index = _self$props$tvShow.index,
+	            prev = _self$props$tvShow.prev,
+	            next = _self$props$tvShow.next;
+	
+	        evt = evt || window.event;
+	        if (evt.key == "Escape" || evt.key == "Esc" || evt.keyCode == 27) {
+	          self.handleClose();
+	        } else if (evt.key == "ArrowLeft" || evt.keyCode == 37) {
+	          prev && self.props.navShow(prev, index - 1);
+	        } else if (evt.key == "ArrowRight" || evt.keyCode == 39) {
+	          next && self.props.navShow(next, index + 1);
+	        }
+	      };
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
