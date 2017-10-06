@@ -165,7 +165,7 @@ class TVShow extends React.Component {
     {
       let {tvShows} = this.props;
       let {tvShows: oldTVShows, isLoading:oldLoading} = prevProps;
-      if(tvShows!=oldTVShows && isEmpty(this.state.records))
+      if(tvShows!=oldTVShows)
       {
         this.setState({records: tvShows});
       }      

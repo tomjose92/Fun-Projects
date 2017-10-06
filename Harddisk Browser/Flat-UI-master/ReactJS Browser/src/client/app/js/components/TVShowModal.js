@@ -53,7 +53,10 @@ class TVShowModal extends Component {
     {
       customStyles.content.width = width;
     }
-
+    if(episodes && seasons.length==0)
+    {
+      seasons=[{episodes, tv_show_season:'All Episodes'}];  
+    }
     return (
        <Modal className='tvShowModal' contentLabel='ShowModal' style={customStyles} isOpen={this.state.isOpen}>
           <div style={styles.titleContainer}>
@@ -64,11 +67,6 @@ class TVShowModal extends Component {
           <div style={styles.imageContainer}>
             <img id='modal_image' style={[styles.image,Images[tv_show_tag],ModalPosition[tv_show_tag]]} />
           </div>
-          {(episodes && seasons.length==0) && (
-            <div style={{position: 'absolute', marginTop: '100px'}}>
-              <TVShowEpisodes displayEpisodes='block' episodes={episodes} />
-            </div>
-          )}
           {seasons && <TVShowSeason showName={tv_show_name} seasons={seasons} />}
           <div style={styles.close} onClick={()=>this.handleClose()}>&#10005;</div>
        </Modal>
