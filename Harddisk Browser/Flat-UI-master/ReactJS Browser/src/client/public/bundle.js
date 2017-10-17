@@ -71,13 +71,13 @@
 	
 	var _Movies2 = _interopRequireDefault(_Movies);
 	
-	var _TVShow = __webpack_require__(/*! ./js/components/TVShow */ 421);
+	var _TVShow = __webpack_require__(/*! ./js/components/TVShow */ 422);
 	
 	var _TVShow2 = _interopRequireDefault(_TVShow);
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
 	
-	var _store = __webpack_require__(/*! ./js/store/store */ 440);
+	var _store = __webpack_require__(/*! ./js/store/store */ 441);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -33305,7 +33305,7 @@
 	
 	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
 	
-	var _isEmpty = __webpack_require__(/*! lodash/isEmpty */ 392);
+	var _isEmpty = __webpack_require__(/*! lodash/isEmpty */ 393);
 	
 	var _isEmpty2 = _interopRequireDefault(_isEmpty);
 	
@@ -35355,7 +35355,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.fetchTVShowData = exports.fetchMovieData = exports.fetchTVShowError = exports.fetchTVShowSuccess = exports.fetchTVShowStart = exports.fetchMovieError = exports.fetchMovieSuccess = exports.fetchMovieStart = undefined;
+	exports.setCurrentTVShow = exports.fetchTVShowInfo = exports.setCurrentTVShowSuccess = exports.fetchTVShowInfoSuccess = exports.fetchTVShowsData = exports.fetchMovieData = exports.fetchTVShowsError = exports.fetchTVShowsSuccess = exports.fetchTVShowsStart = exports.fetchMovieError = exports.fetchMovieSuccess = exports.fetchMovieStart = undefined;
 	
 	var _actionTypes = __webpack_require__(/*! ./actionTypes.js */ 350);
 	
@@ -35386,22 +35386,22 @@
 	  };
 	};
 	
-	var fetchTVShowStart = exports.fetchTVShowStart = function fetchTVShowStart() {
+	var fetchTVShowsStart = exports.fetchTVShowsStart = function fetchTVShowsStart() {
 	  return {
-	    type: ActionTypes.FETCH_TVSHOW_START
+	    type: ActionTypes.FETCH_TVSHOWS_START
 	  };
 	};
 	
-	var fetchTVShowSuccess = exports.fetchTVShowSuccess = function fetchTVShowSuccess(data) {
+	var fetchTVShowsSuccess = exports.fetchTVShowsSuccess = function fetchTVShowsSuccess(data) {
 	  return {
-	    type: ActionTypes.FETCH_TVSHOW_SUCCESS,
+	    type: ActionTypes.FETCH_TVSHOWS_SUCCESS,
 	    payload: data
 	  };
 	};
 	
-	var fetchTVShowError = exports.fetchTVShowError = function fetchTVShowError() {
+	var fetchTVShowsError = exports.fetchTVShowsError = function fetchTVShowsError() {
 	  return {
-	    type: ActionTypes.FETCH_TVSHOW_ERROR
+	    type: ActionTypes.FETCH_TVSHOWS_ERROR
 	  };
 	};
 	
@@ -35425,9 +35425,9 @@
 	  };
 	};
 	
-	var fetchTVShowData = exports.fetchTVShowData = function fetchTVShowData(data) {
+	var fetchTVShowsData = exports.fetchTVShowsData = function fetchTVShowsData(data) {
 	  return function (dispatch) {
-	    dispatch(fetchTVShowStart());
+	    dispatch(fetchTVShowsStart());
 	    var url = data.url,
 	        isLocal = data.isLocal,
 	        isInit = data.isInit;
@@ -35438,10 +35438,38 @@
 	
 	      if (!error) {
 	        setTimeout(function () {
-	          dispatch(fetchTVShowSuccess({ response: response, isLocal: isLocal, isInit: isInit }));
+	          dispatch(fetchTVShowsSuccess({ response: response, isLocal: isLocal, isInit: isInit }));
 	        }, interval);
-	      } else dispatch(fetchTVShowError());
+	      } else dispatch(fetchTVShowsError());
 	    });
+	  };
+	};
+	
+	var fetchTVShowInfoSuccess = exports.fetchTVShowInfoSuccess = function fetchTVShowInfoSuccess(data) {
+	  return {
+	    type: ActionTypes.FETCH_TVSHOW_INFO_SUCCESS,
+	    payload: data
+	  };
+	};
+	
+	var setCurrentTVShowSuccess = exports.setCurrentTVShowSuccess = function setCurrentTVShowSuccess(tvShowName) {
+	  return {
+	    type: ActionTypes.SET_CURRENT_TVSHOW_SUCCESS,
+	    payload: { tvShowName: tvShowName }
+	  };
+	};
+	
+	var fetchTVShowInfo = exports.fetchTVShowInfo = function fetchTVShowInfo(tvShowName) {
+	  return function (dispatch) {
+	    Services.fetchTVShowInfo(tvShowName).then(function (response) {
+	      dispatch(fetchTVShowInfoSuccess({ tvShowName: tvShowName, response: response }));
+	    });
+	  };
+	};
+	
+	var setCurrentTVShow = exports.setCurrentTVShow = function setCurrentTVShow(tvShowName) {
+	  return function (dispatch) {
+	    dispatch(setCurrentTVShowSuccess(tvShowName));
 	  };
 	};
 	
@@ -35465,9 +35493,14 @@
 	var FETCH_MOVIE_ERROR = exports.FETCH_MOVIE_ERROR = 'FETCH_MOVIE_ERROR';
 	var FETCH_MOVIE_START = exports.FETCH_MOVIE_START = 'FETCH_MOVIE_START';
 	
-	var FETCH_TVSHOW_SUCCESS = exports.FETCH_TVSHOW_SUCCESS = 'FETCH_TVSHOW_SUCCESS';
-	var FETCH_TVSHOW_ERROR = exports.FETCH_TVSHOW_ERROR = 'FETCH_TVSHOW_ERROR';
-	var FETCH_TVSHOW_START = exports.FETCH_TVSHOW_START = 'FETCH_TVSHOW_START';
+	var FETCH_TVSHOWS_SUCCESS = exports.FETCH_TVSHOWS_SUCCESS = 'FETCH_TVSHOW_SUCCESS';
+	var FETCH_TVSHOWS_ERROR = exports.FETCH_TVSHOWS_ERROR = 'FETCH_TVSHOW_ERROR';
+	var FETCH_TVSHOWS_START = exports.FETCH_TVSHOWS_START = 'FETCH_TVSHOW_START';
+	
+	var FETCH_TVSHOW_INFO_SUCCESS = exports.FETCH_TVSHOW_INFO_SUCCESS = 'FETCH_TVSHOW_INFO_SUCCESS';
+	var FETCH_TVSHOW_INFO_ERROR = exports.FETCH_TVSHOW_INFO_ERROR = 'FETCH_TVSHOW_INFO_ERROR';
+	
+	var SET_CURRENT_TVSHOW_SUCCESS = exports.SET_CURRENT_TVSHOW_SUCCESS = 'SET_CURRENT_TVSHOW_SUCCESS';
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "actionTypes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -35485,7 +35518,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.fetchData = undefined;
+	exports.fetchTVShowInfo = exports.fetchData = undefined;
 	
 	var _bluebird = __webpack_require__(/*! bluebird */ 352);
 	
@@ -35510,6 +35543,20 @@
 	            console.log("fetchurl error");
 	            error = true;
 	            resolve({ data: data, error: error });
+	        });
+	    });
+	};
+	
+	var fetchTVShowInfo = exports.fetchTVShowInfo = function fetchTVShowInfo(show) {
+	    console.log("fetching TVShowInfo " + show);
+	    return new _bluebird.Promise(function (resolve) {
+	        var url = 'http://api.tvmaze.com/singlesearch/shows?q=' + show;
+	        fetch(url).then(function (response) {
+	            return response.json();
+	        }).then(function (json) {
+	            resolve(json);
+	        }).catch(function (e) {
+	            console.log("fetchTVShow error", e);
 	        });
 	    });
 	};
@@ -41666,11 +41713,15 @@
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.getCurrentTVShowInfo = exports.getCurrentTVShow = exports.getTVShowsInfo = exports.getTVShowStatus = exports.getTVShowData = exports.isFetchingTVShow = exports.getMovieStatus = exports.getMovieData = exports.isFetchingMovies = undefined;
+	
+	var _reselect = __webpack_require__(/*! reselect */ 392);
+	
 	var isFetchingMovies = exports.isFetchingMovies = function isFetchingMovies(state) {
 	  return state.movies && state.movies.loading;
 	};
@@ -41690,24 +41741,153 @@
 	var getTVShowStatus = exports.getTVShowStatus = function getTVShowStatus(state) {
 	  return state.tvshows && state.tvshows.isLocal;
 	};
+	var getTVShowsInfo = exports.getTVShowsInfo = function getTVShowsInfo(state) {
+	  return state.tvshows && state.tvshows.showsInfo;
+	};
+	var getCurrentTVShow = exports.getCurrentTVShow = function getCurrentTVShow(state) {
+	  return state.tvshows && state.tvshows.currentTVShow;
+	};
+	
+	var getCurrentTVShowInfo = exports.getCurrentTVShowInfo = (0, _reselect.createSelector)([getCurrentTVShow, getTVShowsInfo], function (tvShowName, tvShowsInfo) {
+	  return tvShowsInfo[tvShowName];
+	});
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "selectors.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
 /* 392 */
+/*!*********************************!*\
+  !*** ./~/reselect/lib/index.js ***!
+  \*********************************/
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports.defaultMemoize = defaultMemoize;
+	exports.createSelectorCreator = createSelectorCreator;
+	exports.createStructuredSelector = createStructuredSelector;
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function defaultEqualityCheck(a, b) {
+	  return a === b;
+	}
+	
+	function defaultMemoize(func) {
+	  var equalityCheck = arguments.length <= 1 || arguments[1] === undefined ? defaultEqualityCheck : arguments[1];
+	
+	  var lastArgs = null;
+	  var lastResult = null;
+	  return function () {
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    if (lastArgs === null || lastArgs.length !== args.length || !args.every(function (value, index) {
+	      return equalityCheck(value, lastArgs[index]);
+	    })) {
+	      lastResult = func.apply(undefined, args);
+	    }
+	    lastArgs = args;
+	    return lastResult;
+	  };
+	}
+	
+	function getDependencies(funcs) {
+	  var dependencies = Array.isArray(funcs[0]) ? funcs[0] : funcs;
+	
+	  if (!dependencies.every(function (dep) {
+	    return typeof dep === 'function';
+	  })) {
+	    var dependencyTypes = dependencies.map(function (dep) {
+	      return typeof dep;
+	    }).join(', ');
+	    throw new Error('Selector creators expect all input-selectors to be functions, ' + ('instead received the following types: [' + dependencyTypes + ']'));
+	  }
+	
+	  return dependencies;
+	}
+	
+	function createSelectorCreator(memoize) {
+	  for (var _len2 = arguments.length, memoizeOptions = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+	    memoizeOptions[_key2 - 1] = arguments[_key2];
+	  }
+	
+	  return function () {
+	    for (var _len3 = arguments.length, funcs = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+	      funcs[_key3] = arguments[_key3];
+	    }
+	
+	    var recomputations = 0;
+	    var resultFunc = funcs.pop();
+	    var dependencies = getDependencies(funcs);
+	
+	    var memoizedResultFunc = memoize.apply(undefined, [function () {
+	      recomputations++;
+	      return resultFunc.apply(undefined, arguments);
+	    }].concat(memoizeOptions));
+	
+	    var selector = function selector(state, props) {
+	      for (var _len4 = arguments.length, args = Array(_len4 > 2 ? _len4 - 2 : 0), _key4 = 2; _key4 < _len4; _key4++) {
+	        args[_key4 - 2] = arguments[_key4];
+	      }
+	
+	      var params = dependencies.map(function (dependency) {
+	        return dependency.apply(undefined, [state, props].concat(args));
+	      });
+	      return memoizedResultFunc.apply(undefined, _toConsumableArray(params));
+	    };
+	
+	    selector.resultFunc = resultFunc;
+	    selector.recomputations = function () {
+	      return recomputations;
+	    };
+	    selector.resetRecomputations = function () {
+	      return recomputations = 0;
+	    };
+	    return selector;
+	  };
+	}
+	
+	var createSelector = exports.createSelector = createSelectorCreator(defaultMemoize);
+	
+	function createStructuredSelector(selectors) {
+	  var selectorCreator = arguments.length <= 1 || arguments[1] === undefined ? createSelector : arguments[1];
+	
+	  if (typeof selectors !== 'object') {
+	    throw new Error('createStructuredSelector expects first argument to be an object ' + ('where each property is a selector, instead received a ' + typeof selectors));
+	  }
+	  var objectKeys = Object.keys(selectors);
+	  return selectorCreator(objectKeys.map(function (key) {
+	    return selectors[key];
+	  }), function () {
+	    for (var _len5 = arguments.length, values = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+	      values[_key5] = arguments[_key5];
+	    }
+	
+	    return values.reduce(function (composition, value, index) {
+	      composition[objectKeys[index]] = value;
+	      return composition;
+	    }, {});
+	  });
+	}
+
+/***/ }),
+/* 393 */
 /*!*****************************!*\
   !*** ./~/lodash/isEmpty.js ***!
   \*****************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseKeys = __webpack_require__(/*! ./_baseKeys */ 393),
-	    getTag = __webpack_require__(/*! ./_getTag */ 396),
-	    isArguments = __webpack_require__(/*! ./isArguments */ 410),
-	    isArray = __webpack_require__(/*! ./isArray */ 412),
-	    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 413),
-	    isBuffer = __webpack_require__(/*! ./isBuffer */ 415),
-	    isPrototype = __webpack_require__(/*! ./_isPrototype */ 394),
-	    isTypedArray = __webpack_require__(/*! ./isTypedArray */ 417);
+	var baseKeys = __webpack_require__(/*! ./_baseKeys */ 394),
+	    getTag = __webpack_require__(/*! ./_getTag */ 397),
+	    isArguments = __webpack_require__(/*! ./isArguments */ 411),
+	    isArray = __webpack_require__(/*! ./isArray */ 413),
+	    isArrayLike = __webpack_require__(/*! ./isArrayLike */ 414),
+	    isBuffer = __webpack_require__(/*! ./isBuffer */ 416),
+	    isPrototype = __webpack_require__(/*! ./_isPrototype */ 395),
+	    isTypedArray = __webpack_require__(/*! ./isTypedArray */ 418);
 	
 	/** `Object#toString` result references. */
 	var mapTag = '[object Map]',
@@ -41780,14 +41960,14 @@
 
 
 /***/ }),
-/* 393 */
+/* 394 */
 /*!*******************************!*\
   !*** ./~/lodash/_baseKeys.js ***!
   \*******************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isPrototype = __webpack_require__(/*! ./_isPrototype */ 394),
-	    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ 395);
+	var isPrototype = __webpack_require__(/*! ./_isPrototype */ 395),
+	    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ 396);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -41819,7 +41999,7 @@
 
 
 /***/ }),
-/* 394 */
+/* 395 */
 /*!**********************************!*\
   !*** ./~/lodash/_isPrototype.js ***!
   \**********************************/
@@ -41846,7 +42026,7 @@
 
 
 /***/ }),
-/* 395 */
+/* 396 */
 /*!*********************************!*\
   !*** ./~/lodash/_nativeKeys.js ***!
   \*********************************/
@@ -41861,19 +42041,19 @@
 
 
 /***/ }),
-/* 396 */
+/* 397 */
 /*!*****************************!*\
   !*** ./~/lodash/_getTag.js ***!
   \*****************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(/*! ./_DataView */ 397),
-	    Map = __webpack_require__(/*! ./_Map */ 406),
-	    Promise = __webpack_require__(/*! ./_Promise */ 407),
-	    Set = __webpack_require__(/*! ./_Set */ 408),
-	    WeakMap = __webpack_require__(/*! ./_WeakMap */ 409),
+	var DataView = __webpack_require__(/*! ./_DataView */ 398),
+	    Map = __webpack_require__(/*! ./_Map */ 407),
+	    Promise = __webpack_require__(/*! ./_Promise */ 408),
+	    Set = __webpack_require__(/*! ./_Set */ 409),
+	    WeakMap = __webpack_require__(/*! ./_WeakMap */ 410),
 	    baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 330),
-	    toSource = __webpack_require__(/*! ./_toSource */ 404);
+	    toSource = __webpack_require__(/*! ./_toSource */ 405);
 	
 	/** `Object#toString` result references. */
 	var mapTag = '[object Map]',
@@ -41928,13 +42108,13 @@
 
 
 /***/ }),
-/* 397 */
+/* 398 */
 /*!*******************************!*\
   !*** ./~/lodash/_DataView.js ***!
   \*******************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(/*! ./_getNative */ 398),
+	var getNative = __webpack_require__(/*! ./_getNative */ 399),
 	    root = __webpack_require__(/*! ./_root */ 332);
 	
 	/* Built-in method references that are verified to be native. */
@@ -41944,14 +42124,14 @@
 
 
 /***/ }),
-/* 398 */
+/* 399 */
 /*!********************************!*\
   !*** ./~/lodash/_getNative.js ***!
   \********************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ 399),
-	    getValue = __webpack_require__(/*! ./_getValue */ 405);
+	var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ 400),
+	    getValue = __webpack_require__(/*! ./_getValue */ 406);
 	
 	/**
 	 * Gets the native function at `key` of `object`.
@@ -41970,16 +42150,16 @@
 
 
 /***/ }),
-/* 399 */
+/* 400 */
 /*!***********************************!*\
   !*** ./~/lodash/_baseIsNative.js ***!
   \***********************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(/*! ./isFunction */ 400),
-	    isMasked = __webpack_require__(/*! ./_isMasked */ 402),
-	    isObject = __webpack_require__(/*! ./isObject */ 401),
-	    toSource = __webpack_require__(/*! ./_toSource */ 404);
+	var isFunction = __webpack_require__(/*! ./isFunction */ 401),
+	    isMasked = __webpack_require__(/*! ./_isMasked */ 403),
+	    isObject = __webpack_require__(/*! ./isObject */ 402),
+	    toSource = __webpack_require__(/*! ./_toSource */ 405);
 	
 	/**
 	 * Used to match `RegExp`
@@ -42026,14 +42206,14 @@
 
 
 /***/ }),
-/* 400 */
+/* 401 */
 /*!********************************!*\
   !*** ./~/lodash/isFunction.js ***!
   \********************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 330),
-	    isObject = __webpack_require__(/*! ./isObject */ 401);
+	    isObject = __webpack_require__(/*! ./isObject */ 402);
 	
 	/** `Object#toString` result references. */
 	var asyncTag = '[object AsyncFunction]',
@@ -42072,7 +42252,7 @@
 
 
 /***/ }),
-/* 401 */
+/* 402 */
 /*!******************************!*\
   !*** ./~/lodash/isObject.js ***!
   \******************************/
@@ -42112,13 +42292,13 @@
 
 
 /***/ }),
-/* 402 */
+/* 403 */
 /*!*******************************!*\
   !*** ./~/lodash/_isMasked.js ***!
   \*******************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var coreJsData = __webpack_require__(/*! ./_coreJsData */ 403);
+	var coreJsData = __webpack_require__(/*! ./_coreJsData */ 404);
 	
 	/** Used to detect methods masquerading as native. */
 	var maskSrcKey = (function() {
@@ -42141,7 +42321,7 @@
 
 
 /***/ }),
-/* 403 */
+/* 404 */
 /*!*********************************!*\
   !*** ./~/lodash/_coreJsData.js ***!
   \*********************************/
@@ -42156,7 +42336,7 @@
 
 
 /***/ }),
-/* 404 */
+/* 405 */
 /*!*******************************!*\
   !*** ./~/lodash/_toSource.js ***!
   \*******************************/
@@ -42191,7 +42371,7 @@
 
 
 /***/ }),
-/* 405 */
+/* 406 */
 /*!*******************************!*\
   !*** ./~/lodash/_getValue.js ***!
   \*******************************/
@@ -42213,13 +42393,13 @@
 
 
 /***/ }),
-/* 406 */
+/* 407 */
 /*!**************************!*\
   !*** ./~/lodash/_Map.js ***!
   \**************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(/*! ./_getNative */ 398),
+	var getNative = __webpack_require__(/*! ./_getNative */ 399),
 	    root = __webpack_require__(/*! ./_root */ 332);
 	
 	/* Built-in method references that are verified to be native. */
@@ -42229,13 +42409,13 @@
 
 
 /***/ }),
-/* 407 */
+/* 408 */
 /*!******************************!*\
   !*** ./~/lodash/_Promise.js ***!
   \******************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(/*! ./_getNative */ 398),
+	var getNative = __webpack_require__(/*! ./_getNative */ 399),
 	    root = __webpack_require__(/*! ./_root */ 332);
 	
 	/* Built-in method references that are verified to be native. */
@@ -42245,13 +42425,13 @@
 
 
 /***/ }),
-/* 408 */
+/* 409 */
 /*!**************************!*\
   !*** ./~/lodash/_Set.js ***!
   \**************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(/*! ./_getNative */ 398),
+	var getNative = __webpack_require__(/*! ./_getNative */ 399),
 	    root = __webpack_require__(/*! ./_root */ 332);
 	
 	/* Built-in method references that are verified to be native. */
@@ -42261,13 +42441,13 @@
 
 
 /***/ }),
-/* 409 */
+/* 410 */
 /*!******************************!*\
   !*** ./~/lodash/_WeakMap.js ***!
   \******************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(/*! ./_getNative */ 398),
+	var getNative = __webpack_require__(/*! ./_getNative */ 399),
 	    root = __webpack_require__(/*! ./_root */ 332);
 	
 	/* Built-in method references that are verified to be native. */
@@ -42277,13 +42457,13 @@
 
 
 /***/ }),
-/* 410 */
+/* 411 */
 /*!*********************************!*\
   !*** ./~/lodash/isArguments.js ***!
   \*********************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ 411),
+	var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ 412),
 	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 338);
 	
 	/** Used for built-in method references. */
@@ -42322,7 +42502,7 @@
 
 
 /***/ }),
-/* 411 */
+/* 412 */
 /*!**************************************!*\
   !*** ./~/lodash/_baseIsArguments.js ***!
   \**************************************/
@@ -42349,7 +42529,7 @@
 
 
 /***/ }),
-/* 412 */
+/* 413 */
 /*!*****************************!*\
   !*** ./~/lodash/isArray.js ***!
   \*****************************/
@@ -42384,14 +42564,14 @@
 
 
 /***/ }),
-/* 413 */
+/* 414 */
 /*!*********************************!*\
   !*** ./~/lodash/isArrayLike.js ***!
   \*********************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(/*! ./isFunction */ 400),
-	    isLength = __webpack_require__(/*! ./isLength */ 414);
+	var isFunction = __webpack_require__(/*! ./isFunction */ 401),
+	    isLength = __webpack_require__(/*! ./isLength */ 415);
 	
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -42426,7 +42606,7 @@
 
 
 /***/ }),
-/* 414 */
+/* 415 */
 /*!******************************!*\
   !*** ./~/lodash/isLength.js ***!
   \******************************/
@@ -42470,14 +42650,14 @@
 
 
 /***/ }),
-/* 415 */
+/* 416 */
 /*!******************************!*\
   !*** ./~/lodash/isBuffer.js ***!
   \******************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(/*! ./_root */ 332),
-	    stubFalse = __webpack_require__(/*! ./stubFalse */ 416);
+	    stubFalse = __webpack_require__(/*! ./stubFalse */ 417);
 	
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -42518,7 +42698,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/module.js */ 341)(module)))
 
 /***/ }),
-/* 416 */
+/* 417 */
 /*!*******************************!*\
   !*** ./~/lodash/stubFalse.js ***!
   \*******************************/
@@ -42545,15 +42725,15 @@
 
 
 /***/ }),
-/* 417 */
+/* 418 */
 /*!**********************************!*\
   !*** ./~/lodash/isTypedArray.js ***!
   \**********************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ 418),
-	    baseUnary = __webpack_require__(/*! ./_baseUnary */ 419),
-	    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ 420);
+	var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ 419),
+	    baseUnary = __webpack_require__(/*! ./_baseUnary */ 420),
+	    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ 421);
 	
 	/* Node.js helper references. */
 	var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -42581,14 +42761,14 @@
 
 
 /***/ }),
-/* 418 */
+/* 419 */
 /*!***************************************!*\
   !*** ./~/lodash/_baseIsTypedArray.js ***!
   \***************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ 330),
-	    isLength = __webpack_require__(/*! ./isLength */ 414),
+	    isLength = __webpack_require__(/*! ./isLength */ 415),
 	    isObjectLike = __webpack_require__(/*! ./isObjectLike */ 338);
 	
 	/** `Object#toString` result references. */
@@ -42650,7 +42830,7 @@
 
 
 /***/ }),
-/* 419 */
+/* 420 */
 /*!********************************!*\
   !*** ./~/lodash/_baseUnary.js ***!
   \********************************/
@@ -42673,7 +42853,7 @@
 
 
 /***/ }),
-/* 420 */
+/* 421 */
 /*!*******************************!*\
   !*** ./~/lodash/_nodeUtil.js ***!
   \*******************************/
@@ -42705,7 +42885,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/module.js */ 341)(module)))
 
 /***/ }),
-/* 421 */
+/* 422 */
 /*!************************************************!*\
   !*** ./src/client/app/js/components/TVShow.js ***!
   \************************************************/
@@ -42745,21 +42925,19 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _services = __webpack_require__(/*! ../services/services */ 351);
+	var _images = __webpack_require__(/*! ../constants/images */ 423);
 	
-	var _images = __webpack_require__(/*! ../constants/images */ 422);
-	
-	var _TVShowModal = __webpack_require__(/*! ./TVShowModal */ 423);
+	var _TVShowModal = __webpack_require__(/*! ./TVShowModal */ 424);
 	
 	var _TVShowModal2 = _interopRequireDefault(_TVShowModal);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 439);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	var _actions = __webpack_require__(/*! ../actions/actions */ 349);
 	
 	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
 	
-	var _isEmpty = __webpack_require__(/*! lodash/isEmpty */ 392);
+	var _isEmpty = __webpack_require__(/*! lodash/isEmpty */ 393);
 	
 	var _isEmpty2 = _interopRequireDefault(_isEmpty);
 	
@@ -42800,7 +42978,7 @@
 	      var url = isLocal ? _apis.TVSHOW_LOCAL_URL : _apis.TVSHOW_ONLINE_URL;
 	      var isInit = this.state.isInit;
 	
-	      this.props.fetchTVShowData({ url: url, isLocal: isLocal, isInit: isInit });
+	      this.props.fetchTVShowsData({ url: url, isLocal: isLocal, isInit: isInit });
 	      !isInit && this.setState({
 	        isInit: true
 	      });
@@ -42840,6 +43018,15 @@
 	    key: 'showModal',
 	    value: function showModal(tvShow, index) {
 	      var tvShows = this.state.records;
+	      var tvShowsInfo = this.props.tvShowsInfo;
+	      var tv_show_name = tvShow.tv_show_name;
+	
+	
+	      if (!tvShowsInfo[tv_show_name]) {
+	        this.props.fetchTVShowInfo(tv_show_name);
+	      } else {
+	        this.props.setCurrentTVShow(tv_show_name);
+	      }
 	
 	      tvShow.prev = tvShows[index - 1];
 	      tvShow.next = tvShows[index + 1];
@@ -43049,21 +43236,25 @@
 	  var tvShows = (0, _selectors.getTVShowData)(state);
 	  var isLoading = (0, _selectors.isFetchingTVShow)(state);
 	  var isLocal = (0, _selectors.getTVShowStatus)(state);
+	  var tvShowsInfo = (0, _selectors.getTVShowsInfo)(state);
 	  return {
 	    tvShows: tvShows,
 	    isLoading: isLoading,
-	    isLocal: isLocal
+	    isLocal: isLocal,
+	    tvShowsInfo: tvShowsInfo
 	  };
 	};
 	
 	exports.default = (0, _radium2.default)((0, _reactRedux.connect)(mapStateToProps, {
-	  fetchTVShowData: _actions.fetchTVShowData
+	  fetchTVShowsData: _actions.fetchTVShowsData,
+	  fetchTVShowInfo: _actions.fetchTVShowInfo,
+	  setCurrentTVShow: _actions.setCurrentTVShow
 	})(TVShow));
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 422 */
+/* 423 */
 /*!***********************************************!*\
   !*** ./src/client/app/js/constants/images.js ***!
   \***********************************************/
@@ -43363,7 +43554,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "images.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 423 */
+/* 424 */
 /*!*****************************************************!*\
   !*** ./src/client/app/js/components/TVShowModal.js ***!
   \*****************************************************/
@@ -43383,21 +43574,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactModal = __webpack_require__(/*! react-modal */ 424);
+	var _reactModal = __webpack_require__(/*! react-modal */ 425);
 	
 	var _reactModal2 = _interopRequireDefault(_reactModal);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
 	
 	var _radium = __webpack_require__(/*! radium */ 184);
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _images = __webpack_require__(/*! ../constants/images */ 422);
+	var _images = __webpack_require__(/*! ../constants/images */ 423);
 	
-	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 437);
+	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 438);
 	
 	var _TVShowSeason2 = _interopRequireDefault(_TVShowSeason);
 	
-	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 438);
+	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 439);
 	
 	var _TVShowEpisodes2 = _interopRequireDefault(_TVShowEpisodes);
 	
@@ -43405,7 +43598,13 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 439);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
+	
+	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
+	
+	var _MetaData = __webpack_require__(/*! ./MetaData */ 446);
+	
+	var _MetaData2 = _interopRequireDefault(_MetaData);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -43472,14 +43671,16 @@
 	    value: function render() {
 	      var _this2 = this;
 	
-	      var _props$tvShow = this.props.tvShow,
+	      var _props = this.props,
+	          _props$tvShow = _props.tvShow,
 	          episodes = _props$tvShow.episodes,
 	          seasons = _props$tvShow.seasons,
 	          tv_show_tag = _props$tvShow.tv_show_tag,
 	          tv_show_name = _props$tvShow.tv_show_name,
 	          prev = _props$tvShow.prev,
 	          next = _props$tvShow.next,
-	          index = _props$tvShow.index;
+	          index = _props$tvShow.index,
+	          currentTVShowInfo = _props.currentTVShowInfo;
 	
 	      var _getModalMeasures = (0, _utils.getModalMeasures)(),
 	          width = _getModalMeasures.width;
@@ -43511,9 +43712,12 @@
 	        _react2.default.createElement(
 	          'div',
 	          { style: styles.imageContainer },
-	          _react2.default.createElement('img', { id: 'modal_image', style: [styles.image, _images.Images[tv_show_tag], _images.ModalPosition[tv_show_tag]] })
+	          _react2.default.createElement('img', { id: 'modal_image',
+	            style: Object.assign({}, styles.image, _images.Images[tv_show_tag], _images.ModalPosition[tv_show_tag])
+	          })
 	        ),
 	        seasons && _react2.default.createElement(_TVShowSeason2.default, { showName: tv_show_name, seasons: seasons }),
+	        currentTVShowInfo && _react2.default.createElement(_MetaData2.default, { data: currentTVShowInfo }),
 	        _react2.default.createElement(
 	          'div',
 	          { style: styles.close, onClick: function onClick() {
@@ -43598,23 +43802,30 @@
 	  }
 	};
 	
-	exports.default = (0, _radium2.default)(TVShowModal);
+	var mapStateToProps = function mapStateToProps(state) {
+	  var currentTVShowInfo = (0, _selectors.getCurrentTVShowInfo)(state);
+	  return {
+	    currentTVShowInfo: currentTVShowInfo
+	  };
+	};
+	
+	exports.default = (0, _radium2.default)((0, _reactRedux.connect)(mapStateToProps, null)(TVShowModal));
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowModal.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 424 */
+/* 425 */
 /*!************************************!*\
   !*** ./~/react-modal/lib/index.js ***!
   \************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./components/Modal */ 425);
+	module.exports = __webpack_require__(/*! ./components/Modal */ 426);
 	
 
 
 /***/ }),
-/* 425 */
+/* 426 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/components/Modal.js ***!
   \***********************************************/
@@ -43622,16 +43833,16 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 37);
-	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 426);
+	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 427);
 	var PropTypes = __webpack_require__(/*! prop-types */ 320);
-	var ExecutionEnvironment = __webpack_require__(/*! exenv */ 427);
-	var ModalPortal = React.createFactory(__webpack_require__(/*! ./ModalPortal */ 428));
-	var ariaAppHider = __webpack_require__(/*! ../helpers/ariaAppHider */ 434);
-	var refCount = __webpack_require__(/*! ../helpers/refCount */ 435);
-	var elementClass = __webpack_require__(/*! element-class */ 436);
+	var ExecutionEnvironment = __webpack_require__(/*! exenv */ 428);
+	var ModalPortal = React.createFactory(__webpack_require__(/*! ./ModalPortal */ 429));
+	var ariaAppHider = __webpack_require__(/*! ../helpers/ariaAppHider */ 435);
+	var refCount = __webpack_require__(/*! ../helpers/refCount */ 436);
+	var elementClass = __webpack_require__(/*! element-class */ 437);
 	var renderSubtreeIntoContainer = __webpack_require__(/*! react-dom */ 37).unstable_renderSubtreeIntoContainer;
-	var Assign = __webpack_require__(/*! lodash.assign */ 432);
-	var createReactClass = __webpack_require__(/*! create-react-class */ 433);
+	var Assign = __webpack_require__(/*! lodash.assign */ 433);
+	var createReactClass = __webpack_require__(/*! create-react-class */ 434);
 	
 	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
 	var AppElement = ExecutionEnvironment.canUseDOM ? document.body : {appendChild: function() {}};
@@ -43802,7 +44013,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../process/browser.js */ 3)))
 
 /***/ }),
-/* 426 */
+/* 427 */
 /*!****************************************!*\
   !*** ./~/react-dom-factories/index.js ***!
   \****************************************/
@@ -44006,7 +44217,7 @@
 
 
 /***/ }),
-/* 427 */
+/* 428 */
 /*!**************************!*\
   !*** ./~/exenv/index.js ***!
   \**************************/
@@ -44054,18 +44265,18 @@
 
 
 /***/ }),
-/* 428 */
+/* 429 */
 /*!*****************************************************!*\
   !*** ./~/react-modal/lib/components/ModalPortal.js ***!
   \*****************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(/*! react */ 1);
-	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 426);
-	var focusManager = __webpack_require__(/*! ../helpers/focusManager */ 429);
-	var scopeTab = __webpack_require__(/*! ../helpers/scopeTab */ 431);
-	var Assign = __webpack_require__(/*! lodash.assign */ 432);
-	var createReactClass = __webpack_require__(/*! create-react-class */ 433);
+	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 427);
+	var focusManager = __webpack_require__(/*! ../helpers/focusManager */ 430);
+	var scopeTab = __webpack_require__(/*! ../helpers/scopeTab */ 432);
+	var Assign = __webpack_require__(/*! lodash.assign */ 433);
+	var createReactClass = __webpack_require__(/*! create-react-class */ 434);
 	
 	var div = DOMFactories.div;
 	
@@ -44266,13 +44477,13 @@
 
 
 /***/ }),
-/* 429 */
+/* 430 */
 /*!***************************************************!*\
   !*** ./~/react-modal/lib/helpers/focusManager.js ***!
   \***************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 430);
+	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 431);
 	var focusLaterElements = [];
 	var modalElement = null;
 	var needToFocus = false;
@@ -44343,7 +44554,7 @@
 
 
 /***/ }),
-/* 430 */
+/* 431 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/helpers/tabbable.js ***!
   \***********************************************/
@@ -44402,13 +44613,13 @@
 
 
 /***/ }),
-/* 431 */
+/* 432 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/helpers/scopeTab.js ***!
   \***********************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 430);
+	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 431);
 	
 	module.exports = function(node, event) {
 	  var tabbable = findTabbable(node);
@@ -44430,7 +44641,7 @@
 
 
 /***/ }),
-/* 432 */
+/* 433 */
 /*!**********************************!*\
   !*** ./~/lodash.assign/index.js ***!
   \**********************************/
@@ -45076,7 +45287,7 @@
 
 
 /***/ }),
-/* 433 */
+/* 434 */
 /*!***************************************!*\
   !*** ./~/create-react-class/index.js ***!
   \***************************************/
@@ -45113,7 +45324,7 @@
 
 
 /***/ }),
-/* 434 */
+/* 435 */
 /*!***************************************************!*\
   !*** ./~/react-modal/lib/helpers/ariaAppHider.js ***!
   \***************************************************/
@@ -45164,7 +45375,7 @@
 
 
 /***/ }),
-/* 435 */
+/* 436 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/helpers/refCount.js ***!
   \***********************************************/
@@ -45192,7 +45403,7 @@
 
 
 /***/ }),
-/* 436 */
+/* 437 */
 /*!**********************************!*\
   !*** ./~/element-class/index.js ***!
   \**********************************/
@@ -45260,7 +45471,7 @@
 
 
 /***/ }),
-/* 437 */
+/* 438 */
 /*!******************************************************!*\
   !*** ./src/client/app/js/components/TVShowSeason.js ***!
   \******************************************************/
@@ -45280,7 +45491,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 438);
+	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 439);
 	
 	var _TVShowEpisodes2 = _interopRequireDefault(_TVShowEpisodes);
 	
@@ -45292,7 +45503,7 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 439);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -45405,7 +45616,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowSeason.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 438 */
+/* 439 */
 /*!********************************************************!*\
   !*** ./src/client/app/js/components/TVShowEpisodes.js ***!
   \********************************************************/
@@ -45437,7 +45648,7 @@
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 439);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -45531,7 +45742,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowEpisodes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 439 */
+/* 440 */
 /*!******************************************!*\
   !*** ./src/client/app/js/utils/utils.js ***!
   \******************************************/
@@ -45578,7 +45789,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "utils.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 440 */
+/* 441 */
 /*!******************************************!*\
   !*** ./src/client/app/js/store/store.js ***!
   \******************************************/
@@ -45595,11 +45806,11 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 441);
+	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 442);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 442);
+	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 443);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
@@ -45618,7 +45829,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "store.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 441 */
+/* 442 */
 /*!************************************!*\
   !*** ./~/redux-thunk/lib/index.js ***!
   \************************************/
@@ -45649,7 +45860,7 @@
 	exports['default'] = thunk;
 
 /***/ }),
-/* 442 */
+/* 443 */
 /*!************************************************!*\
   !*** ./src/client/app/js/reducers/reducers.js ***!
   \************************************************/
@@ -45666,9 +45877,9 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _movies = __webpack_require__(/*! ./movies */ 443);
+	var _movies = __webpack_require__(/*! ./movies */ 444);
 	
-	var _tvshow = __webpack_require__(/*! ./tvshow */ 444);
+	var _tvshow = __webpack_require__(/*! ./tvshow */ 445);
 	
 	var createReducer = exports.createReducer = function createReducer() {
 	  return (0, _redux.combineReducers)({
@@ -45682,7 +45893,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "reducers.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 443 */
+/* 444 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/movies.js ***!
   \**********************************************/
@@ -45750,7 +45961,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "movies.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 444 */
+/* 445 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/tvshow.js ***!
   \**********************************************/
@@ -45763,7 +45974,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.tvshows = exports.isLocal = exports.data = exports.loading = undefined;
+	exports.tvshows = exports.currentTVShow = exports.showsInfo = exports.isLocal = exports.data = exports.loading = undefined;
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
@@ -45773,14 +45984,14 @@
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 		var action = arguments[1];
 	
-		if (action.type === _actionTypes.FETCH_TVSHOW_START) {
+		if (action.type === _actionTypes.FETCH_TVSHOWS_START) {
 			return true;
 		}
-		if (action.type === _actionTypes.FETCH_TVSHOW_SUCCESS) {
+		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
 			var isInit = action.payload.isInit;
 	
 			return !isInit;
-		} else if (action.type === _actionTypes.FETCH_TVSHOW_ERROR) {
+		} else if (action.type === _actionTypes.FETCH_TVSHOWS_ERROR) {
 			return false;
 		}
 		return state;
@@ -45790,7 +46001,7 @@
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 		var action = arguments[1];
 	
-		if (action.type === _actionTypes.FETCH_TVSHOW_SUCCESS) {
+		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
 			var _data = action.payload.response.data;
 	
 			return _data;
@@ -45802,7 +46013,7 @@
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 		var action = arguments[1];
 	
-		if (action.type === _actionTypes.FETCH_TVSHOW_SUCCESS) {
+		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
 			var _isLocal = action.payload.isLocal;
 	
 			return _isLocal;
@@ -45810,13 +46021,171 @@
 		return state;
 	};
 	
+	var showsInfo = exports.showsInfo = function showsInfo() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_TVSHOW_INFO_SUCCESS) {
+			var _action$payload = action.payload,
+			    tvShowName = _action$payload.tvShowName,
+			    response = _action$payload.response;
+	
+			if (response) {
+				var newState = state;
+				newState[tvShowName] = response;
+				return newState;
+			}
+		}
+		return state;
+	};
+	
+	var currentTVShow = exports.currentTVShow = function currentTVShow() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.SET_CURRENT_TVSHOW_SUCCESS || action.type === _actionTypes.FETCH_TVSHOW_INFO_SUCCESS) {
+			return action.payload.tvShowName;
+		}
+		return state;
+	};
+	
 	var tvshows = exports.tvshows = (0, _redux.combineReducers)({
 		loading: loading,
 		data: data,
-		isLocal: isLocal
+		isLocal: isLocal,
+		showsInfo: showsInfo,
+		currentTVShow: currentTVShow
 	});
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "tvshow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ }),
+/* 446 */
+/*!**************************************************!*\
+  !*** ./src/client/app/js/components/MetaData.js ***!
+  \**************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var MetaData = function (_Component) {
+	  _inherits(MetaData, _Component);
+	
+	  function MetaData() {
+	    _classCallCheck(this, MetaData);
+	
+	    return _possibleConstructorReturn(this, (MetaData.__proto__ || Object.getPrototypeOf(MetaData)).call(this));
+	  }
+	
+	  _createClass(MetaData, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props$data = this.props.data,
+	          _props$data$genres = _props$data.genres,
+	          genres = _props$data$genres === undefined ? [] : _props$data$genres,
+	          status = _props$data.status,
+	          runtime = _props$data.runtime,
+	          name = _props$data.name,
+	          rating = _props$data.rating;
+	
+	      var genresHTML = genres.map(function (genre) {
+	        return _react2.default.createElement(
+	          'span',
+	          { style: styles.value, key: genre },
+	          '\xA0 ',
+	          genre,
+	          ', '
+	        );
+	      });
+	      return _react2.default.createElement(
+	        'div',
+	        { style: styles.container },
+	        rating && _react2.default.createElement(
+	          'div',
+	          null,
+	          'Rating: \xA0 ',
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.value },
+	            rating.average
+	          )
+	        ),
+	        status && _react2.default.createElement(
+	          'div',
+	          null,
+	          'Status:\xA0 ',
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.value },
+	            status
+	          )
+	        ),
+	        runtime && _react2.default.createElement(
+	          'div',
+	          null,
+	          'RunTime: \xA0 ',
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.value },
+	            runtime,
+	            ' mins'
+	          )
+	        ),
+	        genresHTML && _react2.default.createElement(
+	          'div',
+	          null,
+	          'Genre: ',
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            genresHTML
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return MetaData;
+	}(_react.Component);
+	
+	var styles = {
+	  container: {
+	    position: 'absolute',
+	    right: '0px',
+	    top: '150px',
+	    paddingRight: '30px',
+	    fontSize: '20px',
+	    textAlign: 'left',
+	    width: '30%'
+	  },
+	  value: {
+	    color: 'white'
+	  }
+	};
+	
+	exports.default = MetaData;
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "MetaData.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ })
 /******/ ]);

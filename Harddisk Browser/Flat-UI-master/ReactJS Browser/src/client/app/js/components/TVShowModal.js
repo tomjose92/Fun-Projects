@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
+import {connect} from 'react-redux';
 import Radium from 'radium';
 import {Images,ModalPosition} from '../constants/images';
 import TVShowSeason from './TVShowSeason';
 import TVShowEpisodes from './TVShowEpisodes';
 import Gap from './common/Gap';
 import {getModalMeasures} from '../utils/utils';
+import {getCurrentTVShowInfo} from '../selectors/selectors';
+import MetaData from './MetaData';
 
 class TVShowModal extends Component {
   constructor(){
@@ -47,7 +50,7 @@ class TVShowModal extends Component {
   }
 
   render(){
-    let {tvShow: {episodes, seasons, tv_show_tag, tv_show_name, prev, next, index}} = this.props;
+    let {tvShow: {episodes, seasons, tv_show_tag, tv_show_name, prev, next, index}, currentTVShowInfo} = this.props;
     let {width} = getModalMeasures();
     if(customStyles.content)
     {
@@ -65,9 +68,12 @@ class TVShowModal extends Component {
             {next && <a style={{cursor:'pointer'}} className='fui-triangle-right-large' onClick={()=>this.props.navShow(next, index+1)}/>}
           </div>
           <div style={styles.imageContainer}>
-            <img id='modal_image' style={[styles.image,Images[tv_show_tag],ModalPosition[tv_show_tag]]} />
+            <img id='modal_image' 
+              style={Object.assign({},styles.image,Images[tv_show_tag],ModalPosition[tv_show_tag])} 
+            />
           </div>
           {seasons && <TVShowSeason showName={tv_show_name} seasons={seasons} />}
+          {currentTVShowInfo && <MetaData data={currentTVShowInfo} />}
           <div style={styles.close} onClick={()=>this.handleClose()}>&#10005;</div>
        </Modal>
     );
@@ -144,4 +150,15 @@ const styles={
   }
 };
 
-export default Radium(TVShowModal);
+const mapStateToProps = (state) =>{
+  let currentTVShowInfo = getCurrentTVShowInfo(state);
+  return {
+    currentTVShowInfo
+  };
+};
+
+export default Radium(connect(
+  mapStateToProps,
+  null
+)(TVShowModal));
+

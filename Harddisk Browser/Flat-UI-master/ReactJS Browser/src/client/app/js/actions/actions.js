@@ -20,22 +20,22 @@ export const fetchMovieError = () => {
   };
 };
 
-export const fetchTVShowStart = () => {
+export const fetchTVShowsStart = () => {
   return {
-    type: ActionTypes.FETCH_TVSHOW_START
+    type: ActionTypes.FETCH_TVSHOWS_START
   };
 };
 
-export const fetchTVShowSuccess = (data) => {
+export const fetchTVShowsSuccess = (data) => {
   return {
-    type: ActionTypes.FETCH_TVSHOW_SUCCESS,
+    type: ActionTypes.FETCH_TVSHOWS_SUCCESS,
     payload: data
   };
 };
 
-export const fetchTVShowError = () => {
+export const fetchTVShowsError = () => {
   return {
-    type: ActionTypes.FETCH_TVSHOW_ERROR
+    type: ActionTypes.FETCH_TVSHOWS_ERROR
   };
 };
 
@@ -58,9 +58,9 @@ export const fetchMovieData = (data) => {
   };
 };
 
-export const fetchTVShowData = (data) => {
+export const fetchTVShowsData = (data) => {
   return (dispatch) => {
-    dispatch(fetchTVShowStart());
+    dispatch(fetchTVShowsStart());
     let {url, isLocal, isInit} = data;
     let interval = isInit? 0: 1000;
     Services.fetchData(url)
@@ -68,11 +68,40 @@ export const fetchTVShowData = (data) => {
       let {error} = response;
       if(!error){
         setTimeout(() => {
-          dispatch(fetchTVShowSuccess({response, isLocal, isInit}));
+          dispatch(fetchTVShowsSuccess({response, isLocal, isInit}));
         }, interval);
       }
       else
-        dispatch(fetchTVShowError());
+        dispatch(fetchTVShowsError());
     });
   };
 };
+
+export const fetchTVShowInfoSuccess = (data) => {
+  return {
+    type: ActionTypes.FETCH_TVSHOW_INFO_SUCCESS,
+    payload: data
+  };
+};
+
+export const setCurrentTVShowSuccess = (tvShowName) => {
+  return {
+    type: ActionTypes.SET_CURRENT_TVSHOW_SUCCESS,
+    payload: {tvShowName}
+  };
+};
+
+export const fetchTVShowInfo = (tvShowName) => {
+  return (dispatch) => {
+    Services.fetchTVShowInfo(tvShowName)
+    .then((response)=>{
+      dispatch(fetchTVShowInfoSuccess({tvShowName,response}));
+    });
+  };
+};
+
+export const setCurrentTVShow = (tvShowName) =>{
+  return (dispatch) =>{
+    dispatch(setCurrentTVShowSuccess(tvShowName));
+  }
+}

@@ -5,12 +5,14 @@ import Header from './common/Header';
 import Link from './common/Link';
 import {TVSHOW_ONLINE_URL, TVSHOW_LOCAL_URL} from '../constants/apis';
 import Gap from './common/Gap';
-import {fetchData} from '../services/services';
 import {Images, ImagePosition} from '../constants/images';
 import TVShowModal from './TVShowModal';
 import {blurImage} from '../utils/utils';
-import {fetchTVShowData} from '../actions/actions'
-import {getTVShowData, isFetchingTVShow, getTVShowStatus} from '../selectors/selectors';
+import {fetchTVShowsData, fetchTVShowInfo, setCurrentTVShow} from '../actions/actions'
+import {  getTVShowData, 
+          isFetchingTVShow, 
+          getTVShowStatus,
+          getTVShowsInfo} from '../selectors/selectors';
 import isEmpty from 'lodash/isEmpty';
 
 class TVShow extends React.Component {
@@ -31,7 +33,7 @@ class TVShow extends React.Component {
       console.log('Accessing',isLocal?'local':'online');   
       let url = isLocal?TVSHOW_LOCAL_URL: TVSHOW_ONLINE_URL;
       let {isInit} = this.state;
-      this.props.fetchTVShowData({url, isLocal, isInit});
+      this.props.fetchTVShowsData({url, isLocal, isInit});
       !isInit && this.setState({
         isInit: true
       });
@@ -68,6 +70,18 @@ class TVShow extends React.Component {
 
     showModal(tvShow,index){
       let {records: tvShows} = this.state;
+      let {tvShowsInfo} = this.props;
+      let {tv_show_name} = tvShow;
+      
+      if(!tvShowsInfo[tv_show_name])
+      {
+        this.props.fetchTVShowInfo(tv_show_name);
+      }
+      else
+      {
+        this.props.setCurrentTVShow(tv_show_name);  
+      }
+
       tvShow.prev = tvShows[index-1];
       tvShow.next = tvShows[index+1];
       tvShow.index = index;
@@ -232,16 +246,20 @@ const mapStateToProps = (state) =>{
   let tvShows = getTVShowData(state);
   let isLoading = isFetchingTVShow(state);
   let isLocal = getTVShowStatus(state);
+  let tvShowsInfo = getTVShowsInfo(state);
   return {
     tvShows,
     isLoading,
-    isLocal
+    isLocal,
+    tvShowsInfo
   };
 };
 
 export default Radium(connect(
   mapStateToProps,
   {
-    fetchTVShowData
+    fetchTVShowsData,
+    fetchTVShowInfo,
+    setCurrentTVShow
   }
 )(TVShow));
