@@ -35550,7 +35550,7 @@
 	var fetchTVShowInfo = exports.fetchTVShowInfo = function fetchTVShowInfo(show) {
 	    console.log("fetching TVShowInfo " + show);
 	    return new _bluebird.Promise(function (resolve) {
-	        var url = 'http://api.tvmaze.com/singlesearch/shows?q=' + show;
+	        var url = 'https://api.tvmaze.com/singlesearch/shows?q=' + show;
 	        fetch(url).then(function (response) {
 	            return response.json();
 	        }).then(function (json) {

@@ -22,7 +22,7 @@ export const fetchData= (url) =>{
 export const fetchTVShowInfo= (show) =>{
     console.log("fetching TVShowInfo " + show);
     return new Promise( (resolve) => {
-        let url = 'http://api.tvmaze.com/singlesearch/shows?q=' + show;
+        let url = 'https://api.tvmaze.com/singlesearch/shows?q=' + show;
         fetch(url) 
         .then(response => response.json())
         .then(json => {
