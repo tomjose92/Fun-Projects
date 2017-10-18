@@ -17,10 +17,12 @@ class TVShowEpisodes extends React.Component {
     }
 
     let tvShowEpisodes = episodes.map(function(episode,k){
+      let {tv_show_episode, number, summary} = episode;
+      let episodeName = "Episode "+number+ " : " + tv_show_episode;
       return (
         <div key={"episode"+k} >
           <div style={styles.container} className="fui-arrow-right">
-            <Link title={episode.tooltip} style={{marginLeft:'10px', color:'white'}} content={episode.tv_show_episode} />
+            <Link title={summary} style={{marginLeft:'10px', color:'white'}} content={episodeName} />
             <Space space='space20' /><a href=""> <Icon src="img/icons/svg/tv.svg"/></a>
             <Space space='space20' /><a href=""> <Icon src="img/icons/svg/closed-captioning.svg"/></a>
           </div>

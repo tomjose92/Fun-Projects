@@ -4,8 +4,11 @@ import {
   FETCH_TVSHOWS_SUCCESS,
   FETCH_TVSHOWS_ERROR,
   FETCH_TVSHOW_INFO_SUCCESS,
+  FETCH_TVSHOW_EPISODES_SUCCESS,
   SET_CURRENT_TVSHOW_SUCCESS
 } from '../actions/actionTypes.js';
+
+import {getYear} from '../utils/utils';
 
 export const loading = (state = false, action) => {
 	if(action.type === FETCH_TVSHOWS_START){
@@ -20,7 +23,7 @@ export const loading = (state = false, action) => {
   	return state;
 };
 
-export const data = (state = [],action) => {
+export const tvShows = (state = [],action) => {
 	if(action.type === FETCH_TVSHOWS_SUCCESS){
 		let {response:{data}} = action.payload;
 		return data;
@@ -36,7 +39,7 @@ export const isLocal = (state=true, action) => {
 	return state;
 }
 
-export const showsInfo = (state={}, action) => {
+export const showsInfo = (state=[], action) => {
 	if(action.type === FETCH_TVSHOW_INFO_SUCCESS){
 		let {tvShowName, response} = action.payload;
 		if(response){
@@ -48,8 +51,42 @@ export const showsInfo = (state={}, action) => {
 	return state;	
 }
 
+export const episodes = (state=[], action) => {
+	if(action.type === FETCH_TVSHOW_EPISODES_SUCCESS){
+		let {tvShowName, response} = action.payload;
+		if(response){
+			let episodes = response.map(function(episode){
+				let {id, name, season, number, summary, airdate} = episode;
+				return {id, tv_show_episode:name, season, number, summary, airdate};
+			});
+			let seasons = [];
+			for(let i=0;i<episodes.length;i++)
+			{
+				let episode = episodes[i];
+				let {season:seasonNo, number, airdate} = episode;
+				
+				if(!seasons[seasonNo-1])
+				{
+					seasons[seasonNo-1] = {
+						tv_show_season: seasonNo, 
+						episodes:[],
+						year: getYear(airdate)
+					};
+				}
+				let {episodes: episodesData} = seasons[seasonNo-1];
+				episodesData[number-1] = episode;
+				seasons[seasonNo-1].episodes = episodesData;
+			}
+			let newState = state;
+			newState[tvShowName] = seasons;
+			return newState;
+		}
+	}
+	return state;	
+}
+
 export const currentTVShow = (state='', action) =>{
-	if(action.type === SET_CURRENT_TVSHOW_SUCCESS || action.type === FETCH_TVSHOW_INFO_SUCCESS){
+	if(action.type === SET_CURRENT_TVSHOW_SUCCESS || action.type === FETCH_TVSHOW_EPISODES_SUCCESS){
 		return action.payload.tvShowName;
 	}
 	return state;
@@ -57,9 +94,10 @@ export const currentTVShow = (state='', action) =>{
 
 export const tvshows = combineReducers({
   loading,
-  data,
+  tvShows,
   isLocal,
   showsInfo,
+  episodes,
   currentTVShow
 });
 

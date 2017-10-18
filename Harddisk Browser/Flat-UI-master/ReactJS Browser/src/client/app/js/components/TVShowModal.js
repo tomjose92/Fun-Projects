@@ -7,7 +7,7 @@ import TVShowSeason from './TVShowSeason';
 import TVShowEpisodes from './TVShowEpisodes';
 import Gap from './common/Gap';
 import {getModalMeasures} from '../utils/utils';
-import {getCurrentTVShowInfo} from '../selectors/selectors';
+import {getCurrentTVShowInfo, getCurrentTVShowEpisodes} from '../selectors/selectors';
 import MetaData from './MetaData';
 
 class TVShowModal extends Component {
@@ -50,7 +50,7 @@ class TVShowModal extends Component {
   }
 
   render(){
-    let {tvShow: {episodes, seasons, tv_show_tag, tv_show_name, prev, next, index}, currentTVShowInfo} = this.props;
+    let {tvShow: {episodes,  tv_show_tag, tv_show_name, prev, next, index}, currentTVShowInfo, currentTVShowEpisodes:seasons} = this.props;
     let {width} = getModalMeasures();
     if(customStyles.content)
     {
@@ -152,8 +152,10 @@ const styles={
 
 const mapStateToProps = (state) =>{
   let currentTVShowInfo = getCurrentTVShowInfo(state);
+  let currentTVShowEpisodes = getCurrentTVShowEpisodes(state);
   return {
-    currentTVShowInfo
+    currentTVShowInfo,
+    currentTVShowEpisodes
   };
 };
 

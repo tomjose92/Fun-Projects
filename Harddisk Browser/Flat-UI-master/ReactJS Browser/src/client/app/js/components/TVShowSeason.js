@@ -48,10 +48,12 @@ class TVShowSeason extends React.Component{
       let self=this,
       {seasons} = this.props;
       let tvShowSeasons = seasons.map(function(season,i){ 
+        let {tv_show_season, year, episodes, showEpisodes} = season;
+        let seasonName = 'Season ' + tv_show_season + ' - ' + year; 
         return (
-          <div key={"season"+i} style={styles.season} className={season.showEpisodes=='block'?'fui-radio-checked':'fui-radio-unchecked'}>
-            <Link style={{color:'white',marginLeft: '20px'}} onClick={()=>self.toggleEpisodes(i)} content={season.tv_show_season} />
-            <TVShowEpisodes episodes={season.episodes} displayEpisodes={season.showEpisodes}/>
+          <div key={"season"+i} style={styles.season} className={showEpisodes=='block'?'fui-radio-checked':'fui-radio-unchecked'}>
+            <Link style={{color:'white',marginLeft: '20px'}} onClick={()=>self.toggleEpisodes(i)} content={seasonName} />
+            <TVShowEpisodes episodes={episodes} displayEpisodes={showEpisodes}/>
           </div>
         );
       });
@@ -77,9 +79,10 @@ const styles={
     textAlign: 'left'
   },
   season:{
-    paddingTop: '20px',
+    paddingTop: '15px',
     marginLeft: '25px',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    paddingBottom: '5px'
   }
 }
 

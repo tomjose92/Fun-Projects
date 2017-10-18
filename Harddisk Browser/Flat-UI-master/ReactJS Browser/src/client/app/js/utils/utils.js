@@ -33,3 +33,8 @@ export const blurImage = (val) => {
 		modal.classList.remove('blur')
 	}
 }
+
+export const getYear = (date) => {
+  let values = date.split('-');
+  return values[0];
+}

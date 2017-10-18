@@ -91,14 +91,33 @@ export const setCurrentTVShowSuccess = (tvShowName) => {
   };
 };
 
+export const fetchTVShowEpisodesSuccess = (data) => {
+  return {
+    type: ActionTypes.FETCH_TVSHOW_EPISODES_SUCCESS,
+    payload: data
+  };
+};
+
 export const fetchTVShowInfo = (tvShowName) => {
   return (dispatch) => {
     Services.fetchTVShowInfo(tvShowName)
     .then((response)=>{
+      let {id} = response;
+      dispatch(fetchTVShowEpisodes({tvShowID:id ,tvShowName}));
       dispatch(fetchTVShowInfoSuccess({tvShowName,response}));
     });
   };
 };
+
+export const fetchTVShowEpisodes = (data) => {
+  return (dispatch) => {
+    let {tvShowID, tvShowName} = data;
+    Services.fetchTVShowEpisodes(tvShowID)
+    .then((response)=>{
+      dispatch(fetchTVShowEpisodesSuccess({tvShowName,response}));
+    });
+  };
+}
 
 export const setCurrentTVShow = (tvShowName) =>{
   return (dispatch) =>{

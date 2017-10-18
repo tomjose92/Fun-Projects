@@ -7,15 +7,13 @@ class MetaData extends Component {
 
   render(){
     let {data: {genres=[], status, runtime, name, rating}} = this.props;
-    let genresHTML = genres.map(function (genre) {
-      return (<span style={styles.value} key={genre}>&nbsp; {genre}, </span>);
-    });
+    genres = genres.join(', ').replace(/,(?!.*,)/gmi, ' and');
     return (
        <div style={styles.container}>
         {rating && <div>Rating: &nbsp; <span style={styles.value}>{rating.average}</span></div>}
         {status && <div>Status:&nbsp; <span style={styles.value}>{status}</span></div>}
         {runtime && <div>RunTime: &nbsp; <span style={styles.value}>{runtime} mins</span></div>}
-        {genresHTML && <div>Genre: <span>{genresHTML}</span></div>}
+        {genres && <div>Genre: <span style={styles.value}>{genres}</span></div>}
        </div>
     );
   }

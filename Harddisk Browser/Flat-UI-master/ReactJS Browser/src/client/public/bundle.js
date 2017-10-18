@@ -35336,8 +35336,11 @@
 	var MOVIE_ONLINE_URL = exports.MOVIE_ONLINE_URL = 'https://codingtj.000webhostapp.com/php/movie.php';
 	var MOVIE_LOCAL_URL = exports.MOVIE_LOCAL_URL = 'json/movie.json';
 	
-	var TVSHOW_ONLINE_URL = exports.TVSHOW_ONLINE_URL = 'https://codingtj.000webhostapp.com/php/tvshow.php';
+	var TVSHOW_ONLINE_URL = exports.TVSHOW_ONLINE_URL = 'https://codingtj.000webhostapp.com/php/tvshow.php?isShowOnly=true';
 	var TVSHOW_LOCAL_URL = exports.TVSHOW_LOCAL_URL = 'json/tvshow.json';
+	
+	var TVMAZE_SHOW_URL = exports.TVMAZE_SHOW_URL = 'https://api.tvmaze.com/singlesearch/shows?q=';
+	var TVMAZE_EPISODES_URL = exports.TVMAZE_EPISODES_URL = 'https://api.tvmaze.com/shows/id/episodes';
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "apis.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -35355,7 +35358,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.setCurrentTVShow = exports.fetchTVShowInfo = exports.setCurrentTVShowSuccess = exports.fetchTVShowInfoSuccess = exports.fetchTVShowsData = exports.fetchMovieData = exports.fetchTVShowsError = exports.fetchTVShowsSuccess = exports.fetchTVShowsStart = exports.fetchMovieError = exports.fetchMovieSuccess = exports.fetchMovieStart = undefined;
+	exports.setCurrentTVShow = exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchTVShowEpisodesSuccess = exports.setCurrentTVShowSuccess = exports.fetchTVShowInfoSuccess = exports.fetchTVShowsData = exports.fetchMovieData = exports.fetchTVShowsError = exports.fetchTVShowsSuccess = exports.fetchTVShowsStart = exports.fetchMovieError = exports.fetchMovieSuccess = exports.fetchMovieStart = undefined;
 	
 	var _actionTypes = __webpack_require__(/*! ./actionTypes.js */ 350);
 	
@@ -35459,10 +35462,31 @@
 	  };
 	};
 	
+	var fetchTVShowEpisodesSuccess = exports.fetchTVShowEpisodesSuccess = function fetchTVShowEpisodesSuccess(data) {
+	  return {
+	    type: ActionTypes.FETCH_TVSHOW_EPISODES_SUCCESS,
+	    payload: data
+	  };
+	};
+	
 	var fetchTVShowInfo = exports.fetchTVShowInfo = function fetchTVShowInfo(tvShowName) {
 	  return function (dispatch) {
 	    Services.fetchTVShowInfo(tvShowName).then(function (response) {
+	      var id = response.id;
+	
+	      dispatch(fetchTVShowEpisodes({ tvShowID: id, tvShowName: tvShowName }));
 	      dispatch(fetchTVShowInfoSuccess({ tvShowName: tvShowName, response: response }));
+	    });
+	  };
+	};
+	
+	var fetchTVShowEpisodes = exports.fetchTVShowEpisodes = function fetchTVShowEpisodes(data) {
+	  return function (dispatch) {
+	    var tvShowID = data.tvShowID,
+	        tvShowName = data.tvShowName;
+	
+	    Services.fetchTVShowEpisodes(tvShowID).then(function (response) {
+	      dispatch(fetchTVShowEpisodesSuccess({ tvShowName: tvShowName, response: response }));
 	    });
 	  };
 	};
@@ -35499,7 +35523,7 @@
 	
 	var FETCH_TVSHOW_INFO_SUCCESS = exports.FETCH_TVSHOW_INFO_SUCCESS = 'FETCH_TVSHOW_INFO_SUCCESS';
 	var FETCH_TVSHOW_INFO_ERROR = exports.FETCH_TVSHOW_INFO_ERROR = 'FETCH_TVSHOW_INFO_ERROR';
-	
+	var FETCH_TVSHOW_EPISODES_SUCCESS = exports.FETCH_TVSHOW_EPISODES_SUCCESS = 'FETCH_TVSHOW_EPISODES_SUCCESS';
 	var SET_CURRENT_TVSHOW_SUCCESS = exports.SET_CURRENT_TVSHOW_SUCCESS = 'SET_CURRENT_TVSHOW_SUCCESS';
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "actionTypes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -35518,13 +35542,15 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.fetchTVShowInfo = exports.fetchData = undefined;
+	exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchData = undefined;
 	
 	var _bluebird = __webpack_require__(/*! bluebird */ 352);
 	
 	var _recursiveLowercaseJson = __webpack_require__(/*! recursive-lowercase-json */ 390);
 	
 	var _recursiveLowercaseJson2 = _interopRequireDefault(_recursiveLowercaseJson);
+	
+	var _apis = __webpack_require__(/*! ../constants/apis */ 348);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -35550,13 +35576,27 @@
 	var fetchTVShowInfo = exports.fetchTVShowInfo = function fetchTVShowInfo(show) {
 	    console.log("fetching TVShowInfo " + show);
 	    return new _bluebird.Promise(function (resolve) {
-	        var url = 'https://api.tvmaze.com/singlesearch/shows?q=' + show;
+	        var url = _apis.TVMAZE_SHOW_URL + show;
 	        fetch(url).then(function (response) {
 	            return response.json();
 	        }).then(function (json) {
 	            resolve(json);
 	        }).catch(function (e) {
-	            console.log("fetchTVShow error", e);
+	            console.log("fetchTVShowInfo error", e);
+	        });
+	    });
+	};
+	
+	var fetchTVShowEpisodes = exports.fetchTVShowEpisodes = function fetchTVShowEpisodes(id) {
+	    console.log("fetching TVShowEpisodes " + id);
+	    return new _bluebird.Promise(function (resolve) {
+	        var url = _apis.TVMAZE_EPISODES_URL.replace('id', id);
+	        fetch(url).then(function (response) {
+	            return response.json();
+	        }).then(function (json) {
+	            resolve(json);
+	        }).catch(function (e) {
+	            console.log("fetchTVShowEpisodes error", e);
 	        });
 	    });
 	};
@@ -41718,7 +41758,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getCurrentTVShowInfo = exports.getCurrentTVShow = exports.getTVShowsInfo = exports.getTVShowStatus = exports.getTVShowData = exports.isFetchingTVShow = exports.getMovieStatus = exports.getMovieData = exports.isFetchingMovies = undefined;
+	exports.getCurrentTVShowEpisodes = exports.getCurrentTVShowInfo = exports.getCurrentTVShow = exports.getTVShowEpisodes = exports.getTVShowsInfo = exports.getTVShowStatus = exports.getTVShowData = exports.isFetchingTVShow = exports.getMovieStatus = exports.getMovieData = exports.isFetchingMovies = undefined;
 	
 	var _reselect = __webpack_require__(/*! reselect */ 392);
 	
@@ -41736,7 +41776,7 @@
 	  return state.tvshows && state.tvshows.loading;
 	};
 	var getTVShowData = exports.getTVShowData = function getTVShowData(state) {
-	  return state.tvshows && state.tvshows.data;
+	  return state.tvshows && state.tvshows.tvShows;
 	};
 	var getTVShowStatus = exports.getTVShowStatus = function getTVShowStatus(state) {
 	  return state.tvshows && state.tvshows.isLocal;
@@ -41744,12 +41784,19 @@
 	var getTVShowsInfo = exports.getTVShowsInfo = function getTVShowsInfo(state) {
 	  return state.tvshows && state.tvshows.showsInfo;
 	};
+	var getTVShowEpisodes = exports.getTVShowEpisodes = function getTVShowEpisodes(state) {
+	  return state.tvshows && state.tvshows.episodes;
+	};
 	var getCurrentTVShow = exports.getCurrentTVShow = function getCurrentTVShow(state) {
 	  return state.tvshows && state.tvshows.currentTVShow;
 	};
 	
 	var getCurrentTVShowInfo = exports.getCurrentTVShowInfo = (0, _reselect.createSelector)([getCurrentTVShow, getTVShowsInfo], function (tvShowName, tvShowsInfo) {
 	  return tvShowsInfo[tvShowName];
+	});
+	
+	var getCurrentTVShowEpisodes = exports.getCurrentTVShowEpisodes = (0, _reselect.createSelector)([getCurrentTVShow, getTVShowEpisodes], function (tvShowName, episodes) {
+	  return episodes[tvShowName];
 	});
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "selectors.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -43674,13 +43721,13 @@
 	      var _props = this.props,
 	          _props$tvShow = _props.tvShow,
 	          episodes = _props$tvShow.episodes,
-	          seasons = _props$tvShow.seasons,
 	          tv_show_tag = _props$tvShow.tv_show_tag,
 	          tv_show_name = _props$tvShow.tv_show_name,
 	          prev = _props$tvShow.prev,
 	          next = _props$tvShow.next,
 	          index = _props$tvShow.index,
-	          currentTVShowInfo = _props.currentTVShowInfo;
+	          currentTVShowInfo = _props.currentTVShowInfo,
+	          seasons = _props.currentTVShowEpisodes;
 	
 	      var _getModalMeasures = (0, _utils.getModalMeasures)(),
 	          width = _getModalMeasures.width;
@@ -43804,8 +43851,10 @@
 	
 	var mapStateToProps = function mapStateToProps(state) {
 	  var currentTVShowInfo = (0, _selectors.getCurrentTVShowInfo)(state);
+	  var currentTVShowEpisodes = (0, _selectors.getCurrentTVShowEpisodes)(state);
 	  return {
-	    currentTVShowInfo: currentTVShowInfo
+	    currentTVShowInfo: currentTVShowInfo,
+	    currentTVShowEpisodes: currentTVShowEpisodes
 	  };
 	};
 	
@@ -45564,13 +45613,19 @@
 	          seasons = this.props.seasons;
 	
 	      var tvShowSeasons = seasons.map(function (season, i) {
+	        var tv_show_season = season.tv_show_season,
+	            year = season.year,
+	            episodes = season.episodes,
+	            showEpisodes = season.showEpisodes;
+	
+	        var seasonName = 'Season ' + tv_show_season + ' - ' + year;
 	        return _react2.default.createElement(
 	          'div',
-	          { key: "season" + i, style: styles.season, className: season.showEpisodes == 'block' ? 'fui-radio-checked' : 'fui-radio-unchecked' },
+	          { key: "season" + i, style: styles.season, className: showEpisodes == 'block' ? 'fui-radio-checked' : 'fui-radio-unchecked' },
 	          _react2.default.createElement(_Link2.default, { style: { color: 'white', marginLeft: '20px' }, onClick: function onClick() {
 	              return self.toggleEpisodes(i);
-	            }, content: season.tv_show_season }),
-	          _react2.default.createElement(_TVShowEpisodes2.default, { episodes: season.episodes, displayEpisodes: season.showEpisodes })
+	            }, content: seasonName }),
+	          _react2.default.createElement(_TVShowEpisodes2.default, { episodes: episodes, displayEpisodes: showEpisodes })
 	        );
 	      });
 	      return _react2.default.createElement(
@@ -45605,9 +45660,10 @@
 	    textAlign: 'left'
 	  },
 	  season: {
-	    paddingTop: '20px',
+	    paddingTop: '15px',
 	    marginLeft: '25px',
-	    whiteSpace: 'nowrap'
+	    whiteSpace: 'nowrap',
+	    paddingBottom: '5px'
 	  }
 	};
 	
@@ -45681,13 +45737,18 @@
 	      }
 	
 	      var tvShowEpisodes = episodes.map(function (episode, k) {
+	        var tv_show_episode = episode.tv_show_episode,
+	            number = episode.number,
+	            summary = episode.summary;
+	
+	        var episodeName = "Episode " + number + " : " + tv_show_episode;
 	        return _react2.default.createElement(
 	          'div',
 	          { key: "episode" + k },
 	          _react2.default.createElement(
 	            'div',
 	            { style: styles.container, className: 'fui-arrow-right' },
-	            _react2.default.createElement(_Link2.default, { title: episode.tooltip, style: { marginLeft: '10px', color: 'white' }, content: episode.tv_show_episode }),
+	            _react2.default.createElement(_Link2.default, { title: summary, style: { marginLeft: '10px', color: 'white' }, content: episodeName }),
 	            _react2.default.createElement(_Space2.default, { space: 'space20' }),
 	            _react2.default.createElement(
 	              'a',
@@ -45784,6 +45845,11 @@
 	  } else {
 	    modal.classList.remove('blur');
 	  }
+	};
+	
+	var getYear = exports.getYear = function getYear(date) {
+	  var values = date.split('-');
+	  return values[0];
 	};
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "utils.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -45974,11 +46040,13 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.tvshows = exports.currentTVShow = exports.showsInfo = exports.isLocal = exports.data = exports.loading = undefined;
+	exports.tvshows = exports.currentTVShow = exports.episodes = exports.showsInfo = exports.isLocal = exports.tvShows = exports.loading = undefined;
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
 	var _actionTypes = __webpack_require__(/*! ../actions/actionTypes.js */ 350);
+	
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	var loading = exports.loading = function loading() {
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -45997,14 +46065,14 @@
 		return state;
 	};
 	
-	var data = exports.data = function data() {
+	var tvShows = exports.tvShows = function tvShows() {
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 		var action = arguments[1];
 	
 		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
-			var _data = action.payload.response.data;
+			var data = action.payload.response.data;
 	
-			return _data;
+			return data;
 		}
 		return state;
 	};
@@ -46022,7 +46090,7 @@
 	};
 	
 	var showsInfo = exports.showsInfo = function showsInfo() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 		var action = arguments[1];
 	
 		if (action.type === _actionTypes.FETCH_TVSHOW_INFO_SUCCESS) {
@@ -46039,11 +46107,59 @@
 		return state;
 	};
 	
+	var episodes = exports.episodes = function episodes() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_TVSHOW_EPISODES_SUCCESS) {
+			var _action$payload2 = action.payload,
+			    tvShowName = _action$payload2.tvShowName,
+			    response = _action$payload2.response;
+	
+			if (response) {
+				var _episodes = response.map(function (episode) {
+					var id = episode.id,
+					    name = episode.name,
+					    season = episode.season,
+					    number = episode.number,
+					    summary = episode.summary,
+					    airdate = episode.airdate;
+	
+					return { id: id, tv_show_episode: name, season: season, number: number, summary: summary, airdate: airdate };
+				});
+				var seasons = [];
+				for (var i = 0; i < _episodes.length; i++) {
+					var episode = _episodes[i];
+					var seasonNo = episode.season,
+					    number = episode.number,
+					    airdate = episode.airdate;
+	
+	
+					if (!seasons[seasonNo - 1]) {
+						seasons[seasonNo - 1] = {
+							tv_show_season: seasonNo,
+							episodes: [],
+							year: (0, _utils.getYear)(airdate)
+						};
+					}
+					var episodesData = seasons[seasonNo - 1].episodes;
+	
+					episodesData[number - 1] = episode;
+					seasons[seasonNo - 1].episodes = episodesData;
+				}
+				var newState = state;
+				newState[tvShowName] = seasons;
+				return newState;
+			}
+		}
+		return state;
+	};
+	
 	var currentTVShow = exports.currentTVShow = function currentTVShow() {
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 		var action = arguments[1];
 	
-		if (action.type === _actionTypes.SET_CURRENT_TVSHOW_SUCCESS || action.type === _actionTypes.FETCH_TVSHOW_INFO_SUCCESS) {
+		if (action.type === _actionTypes.SET_CURRENT_TVSHOW_SUCCESS || action.type === _actionTypes.FETCH_TVSHOW_EPISODES_SUCCESS) {
 			return action.payload.tvShowName;
 		}
 		return state;
@@ -46051,9 +46167,10 @@
 	
 	var tvshows = exports.tvshows = (0, _redux.combineReducers)({
 		loading: loading,
-		data: data,
+		tvShows: tvShows,
 		isLocal: isLocal,
 		showsInfo: showsInfo,
+		episodes: episodes,
 		currentTVShow: currentTVShow
 	});
 	
@@ -46108,15 +46225,7 @@
 	          name = _props$data.name,
 	          rating = _props$data.rating;
 	
-	      var genresHTML = genres.map(function (genre) {
-	        return _react2.default.createElement(
-	          'span',
-	          { style: styles.value, key: genre },
-	          '\xA0 ',
-	          genre,
-	          ', '
-	        );
-	      });
+	      genres = genres.join(', ').replace(/,(?!.*,)/gmi, ' and');
 	      return _react2.default.createElement(
 	        'div',
 	        { style: styles.container },
@@ -46151,14 +46260,14 @@
 	            ' mins'
 	          )
 	        ),
-	        genresHTML && _react2.default.createElement(
+	        genres && _react2.default.createElement(
 	          'div',
 	          null,
 	          'Genre: ',
 	          _react2.default.createElement(
 	            'span',
-	            null,
-	            genresHTML
+	            { style: styles.value },
+	            genres
 	          )
 	        )
 	      );
