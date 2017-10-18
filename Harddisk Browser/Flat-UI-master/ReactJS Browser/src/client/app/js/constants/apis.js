@@ -6,3 +6,4 @@ export const TVSHOW_LOCAL_URL = 'json/tvshow.json';
 
 export const TVMAZE_SHOW_URL = 'https://api.tvmaze.com/singlesearch/shows?q=';
 export const TVMAZE_EPISODES_URL = 'https://api.tvmaze.com/shows/id/episodes';
+export const TVMAZE_CAST_URL = 'https://api.tvmaze.com/shows/id/cast';

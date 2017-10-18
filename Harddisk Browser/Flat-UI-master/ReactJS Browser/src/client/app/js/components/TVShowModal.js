@@ -7,7 +7,9 @@ import TVShowSeason from './TVShowSeason';
 import TVShowEpisodes from './TVShowEpisodes';
 import Gap from './common/Gap';
 import {getModalMeasures} from '../utils/utils';
-import {getCurrentTVShowInfo, getCurrentTVShowEpisodes} from '../selectors/selectors';
+import {  getCurrentTVShowInfo, 
+          getCurrentTVShowEpisodes,
+          getCurrentTVShowCasts } from '../selectors/selectors';
 import MetaData from './MetaData';
 
 class TVShowModal extends Component {
@@ -50,15 +52,12 @@ class TVShowModal extends Component {
   }
 
   render(){
-    let {tvShow: {episodes,  tv_show_tag, tv_show_name, prev, next, index}, currentTVShowInfo, currentTVShowEpisodes:seasons} = this.props;
+    let {tvShow: {episodes,  tv_show_tag, tv_show_name, prev, next, index}, 
+    currentTVShowInfo, currentTVShowEpisodes:seasons, currentTVShowCasts} = this.props;
     let {width} = getModalMeasures();
     if(customStyles.content)
     {
       customStyles.content.width = width;
-    }
-    if(episodes && seasons.length==0)
-    {
-      seasons=[{episodes, tv_show_season:'All Episodes'}];  
     }
     return (
        <Modal className='tvShowModal' contentLabel='ShowModal' style={customStyles} isOpen={this.state.isOpen}>
@@ -73,7 +72,14 @@ class TVShowModal extends Component {
             />
           </div>
           {seasons && <TVShowSeason showName={tv_show_name} seasons={seasons} />}
-          {currentTVShowInfo && <MetaData data={currentTVShowInfo} />}
+          {currentTVShowInfo && 
+            <MetaData 
+              handleKey={()=>this.handleKeyPress()} 
+              tvShowName={tv_show_name} 
+              casts={currentTVShowCasts} 
+              data={currentTVShowInfo} 
+            />
+          }
           <div style={styles.close} onClick={()=>this.handleClose()}>&#10005;</div>
        </Modal>
     );
@@ -153,9 +159,11 @@ const styles={
 const mapStateToProps = (state) =>{
   let currentTVShowInfo = getCurrentTVShowInfo(state);
   let currentTVShowEpisodes = getCurrentTVShowEpisodes(state);
+  let currentTVShowCasts = getCurrentTVShowCasts(state);
   return {
     currentTVShowInfo,
-    currentTVShowEpisodes
+    currentTVShowEpisodes,
+    currentTVShowCasts
   };
 };
 

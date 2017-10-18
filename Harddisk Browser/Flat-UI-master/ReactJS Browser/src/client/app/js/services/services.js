@@ -1,6 +1,6 @@
 import {Promise} from 'bluebird';
 import recursivelyLowercaseJSONKeys from 'recursive-lowercase-json';
-import {TVMAZE_SHOW_URL, TVMAZE_EPISODES_URL} from '../constants/apis';
+import {TVMAZE_SHOW_URL, TVMAZE_EPISODES_URL, TVMAZE_CAST_URL} from '../constants/apis';
 
 export const fetchData= (url) =>{
     console.log("fetching url " + url);
@@ -44,6 +44,20 @@ export const fetchTVShowEpisodes = (id) =>{
             resolve(json);
         }).catch(function(e) {
             console.log("fetchTVShowEpisodes error", e);
+        });
+    });
+}
+
+export const fetchTVShowCast = (id) =>{
+    console.log("fetching fetchTVShowCast " + id);
+    return new Promise( (resolve) => {
+        let url = TVMAZE_CAST_URL.replace('id', id);
+        fetch(url) 
+        .then(response => response.json())
+        .then(json => {
+            resolve(json);
+        }).catch(function(e) {
+            console.log("fetchTVShowCast error", e);
         });
     });
 }

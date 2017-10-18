@@ -8,7 +8,7 @@ import Gap from './common/Gap';
 import {Images, ImagePosition} from '../constants/images';
 import TVShowModal from './TVShowModal';
 import {blurImage} from '../utils/utils';
-import {fetchTVShowsData, fetchTVShowInfo, setCurrentTVShow} from '../actions/actions'
+import {fetchTVShowsData, fetchTVShowInfo, setCurrentTVShow} from '../actions/tvshow';
 import {  getTVShowData, 
           isFetchingTVShow, 
           getTVShowStatus,

@@ -5,6 +5,7 @@ import {
   FETCH_TVSHOWS_ERROR,
   FETCH_TVSHOW_INFO_SUCCESS,
   FETCH_TVSHOW_EPISODES_SUCCESS,
+  FETCH_TVSHOW_CAST_SUCCESS,
   SET_CURRENT_TVSHOW_SUCCESS
 } from '../actions/actionTypes.js';
 
@@ -43,7 +44,7 @@ export const showsInfo = (state=[], action) => {
 	if(action.type === FETCH_TVSHOW_INFO_SUCCESS){
 		let {tvShowName, response} = action.payload;
 		if(response){
-			let newState = state;
+			let newState = {...state};
 			newState[tvShowName] = response;
 			return newState;
 		}
@@ -77,12 +78,31 @@ export const episodes = (state=[], action) => {
 				episodesData[number-1] = episode;
 				seasons[seasonNo-1].episodes = episodesData;
 			}
-			let newState = state;
+			let newState = {...state};
 			newState[tvShowName] = seasons;
 			return newState;
 		}
 	}
 	return state;	
+}
+
+export const casts = (state=[],action) =>{
+	if(action.type === FETCH_TVSHOW_CAST_SUCCESS){
+		let {tvShowName, response} = action.payload;
+		if(response){
+			let casts = response.map(function(cast){
+				let {person:{name: realName, image: real},
+					character:{name: characterName, image: character}} = cast;
+				let realImage = real && real.medium;
+				let characterImage = character && character.medium;
+				return {realName, realImage, characterName, characterImage};
+			});
+			let newState = {...state};
+			newState[tvShowName] = casts;
+			return newState;
+		}
+	}
+	return state;
 }
 
 export const currentTVShow = (state='', action) =>{
@@ -98,6 +118,7 @@ export const tvshows = combineReducers({
   isLocal,
   showsInfo,
   episodes,
+  casts,
   currentTVShow
 });
 

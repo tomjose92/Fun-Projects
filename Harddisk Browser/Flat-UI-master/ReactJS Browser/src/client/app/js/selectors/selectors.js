@@ -9,6 +9,7 @@ export const getTVShowData = (state) => state.tvshows && state.tvshows.tvShows;
 export const getTVShowStatus = (state) => state.tvshows && state.tvshows.isLocal;
 export const getTVShowsInfo = (state) => state.tvshows && state.tvshows.showsInfo;
 export const getTVShowEpisodes = (state) => state.tvshows && state.tvshows.episodes;
+export const getTVShowCasts = (state) => state.tvshows && state.tvshows.casts;
 export const getCurrentTVShow = (state) => state.tvshows && state.tvshows.currentTVShow;
 
 export const getCurrentTVShowInfo = createSelector(
@@ -19,4 +20,9 @@ export const getCurrentTVShowInfo = createSelector(
 export const getCurrentTVShowEpisodes = createSelector(
   [getCurrentTVShow, getTVShowEpisodes],
   (tvShowName, episodes) => episodes[tvShowName]
+);
+
+export const getCurrentTVShowCasts = createSelector(
+  [getCurrentTVShow, getTVShowCasts],
+  (tvShowName, casts) => casts[tvShowName]
 );
