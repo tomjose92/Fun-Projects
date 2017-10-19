@@ -27,12 +27,28 @@ class MetaData extends Component {
     genres = genres.join(', ').replace(/,(?!.*,)/gmi, ' and');
     return (
        <div style={styles.container}>
-        {rating && <div>Rating: &nbsp; <span style={styles.value}>{rating.average}</span></div>}
-        {status && <div>Status:&nbsp; <span style={styles.value}>{status}</span></div>}
-        {runtime && <div>RunTime: &nbsp; <span style={styles.value}>{runtime} mins</span></div>}
-        {genres && <div>Genre: &nbsp; <span style={styles.value}>{genres}</span></div>}
+        {rating && <div>
+          <span style={styles.label}>Rating:</span>
+          &nbsp; 
+          <span style={styles.value}>{rating.average}</span>
+        </div>}
+        {status && <div>
+          <span style={styles.label}>Status:</span>
+          &nbsp; 
+          <span style={styles.value}>{status}</span>
+        </div>}
+        {runtime && <div>
+          <span style={styles.label}>RunTime:</span>
+          &nbsp; 
+          <span style={styles.value}>{runtime} mins</span>
+        </div>}
+        {genres && <div>
+          <span style={styles.label}>Genre:</span>
+          &nbsp; 
+          <span style={styles.value}>{genres}</span>
+        </div>}
         {casts && 
-          <div><a onClick={()=>this.openModal()}>See Cast</a>: &nbsp; 
+          <div><a onClick={()=>this.openModal()}>See Cast</a>
             {this.state.open && <TVShowCastModal tvShowName={tvShowName} casts={casts} callback={()=>this.closeModal()}/>}
           </div>
         }
@@ -43,13 +59,16 @@ class MetaData extends Component {
 
 const styles={
   container:{
-    position: 'absolute',
-    right: '0px',
+    position: 'relative',
+    float: 'right',
     top: '150px',
-    paddingRight: '30px',
     fontSize: '20px',
     textAlign: 'left',
-    width: '30%'
+    width: '25%'
+  },
+  label: {
+    color: 'blue',
+    fontWeight: 'bold'
   },
   value:{
     color: 'white'

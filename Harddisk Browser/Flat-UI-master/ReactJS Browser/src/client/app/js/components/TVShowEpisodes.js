@@ -44,7 +44,9 @@ const styles={
     borderColor: 'white',
     borderRightWidth: '0px',  
     backgroundColor: 'black',
-    margin: '0px 20px'
+    margin: '0px 20px',
+    position: 'relative',
+    zIndex: '1000'
   },
   container:{
     paddingTop: '20px',

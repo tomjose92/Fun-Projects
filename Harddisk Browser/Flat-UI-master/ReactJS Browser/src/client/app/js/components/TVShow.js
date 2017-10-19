@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Radium from 'radium'
 import Header from './common/Header';
 import Link from './common/Link';
 import {TVSHOW_ONLINE_URL, TVSHOW_LOCAL_URL} from '../constants/apis';
@@ -155,7 +154,7 @@ class TVShow extends React.Component {
               {search && <input onChange={(e)=>this.setSearchText(e)} style={styles.inputText} type='text'></input>}
               <span style={{cursor:'pointer',paddingLeft:'10px'}} className={search?'fui-cross':'fui-search'} onClick={()=>this.toggleSearch()}/>
             </div>
-            <div style={styles.container}>
+            <div className='tvShowPage' style={styles.container}>
               {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
               {TVShowImages}
             </div>
@@ -187,15 +186,6 @@ class TVShow extends React.Component {
 
 };
 
-const rotateImage = Radium.keyframes({
-  '0%':  {transform: 'rotateY(-180deg)'},
-  '25%':  {transform: 'rotateY(-135deg)'},
-  '50%': {transform: 'rotateY(-90deg)'},
-  '75%': {transform: 'rotateY(-45deg)'},
-  '100%': {transform: 'rotateY(0deg)'},
-});
-
-
 const styles={
   inputText:{
     height:'25px',
@@ -217,11 +207,7 @@ const styles={
     position: 'absolute',
     marginTop: '100px',
     marginLeft: '100px',
-    marginRight: '100px',
-    '@media only screen and (max-width: 1023px)': {
-      marginLeft: '50px',
-      marginRight: '50px'
-    }
+    marginRight: '100px'
   },
   image:{
     height: '300px',
@@ -231,8 +217,6 @@ const styles={
     ':hover':{
       transform: 'translateY(-10px)'      
     },
-    animation: 'x 2s ease-in',
-    animationName: rotateImage,
     backgroundRepeat: 'no-repeat',
     backgroundClip : 'content-box',
     backgroundSize : '1275px 1420px'
@@ -255,11 +239,11 @@ const mapStateToProps = (state) =>{
   };
 };
 
-export default Radium(connect(
+export default connect(
   mapStateToProps,
   {
     fetchTVShowsData,
     fetchTVShowInfo,
     setCurrentTVShow
   }
-)(TVShow));
+)(TVShow);

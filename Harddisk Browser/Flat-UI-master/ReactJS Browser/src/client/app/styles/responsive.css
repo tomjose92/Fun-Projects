@@ -1,0 +1,19 @@
+@media only screen and (max-width:1023px){
+    .tvShowPage{
+        margin-left:  50px !important;
+        margin-right: 50px !important;
+    }
+    .tvShowModal{
+    	width: 100% !important;
+    	min-height: 32% !important;
+    }
+    .closeButton{
+    	right: 0px !important;
+    }
+    .showImage{
+    	margin-left: 0px !important;
+    }
+    .showTitle{
+    	margin-left: 0px !important;
+    }
+}

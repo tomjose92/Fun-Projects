@@ -68,15 +68,15 @@ class TVShowCastModal extends Component {
       customStyles.content.width = width;
     }   
     let castsHTML = finalCasts.map(function(cast, index){
-      let {image, realName, characterName, characterImage} = cast;
-      let finalImage = image || characterImage;
+      let {image, realName, characterName, characterImage, realImage} = cast;
+      let finalImage = image || characterImage || realImage;
       return (
         <span key={index} style={{paddingRight: '50px'}}> 
           <div style={styles.labelContainer}>
-            <span style={styles.label}>Name:</span> &nbsp; <span style={styles.value}>{realName}</span>
+            <span style={styles.label}>Character Name:</span> &nbsp; <span style={styles.value}>{characterName}</span>
           </div>
           <div style={styles.labelContainer}>
-            <span style={styles.label}>Character Name:</span> &nbsp; <span style={styles.value}>{characterName}</span>
+            <span style={styles.label}>Name:</span> &nbsp; <span style={styles.value}>{realName}</span>
           </div>
           <img src={finalImage} 
             onMouseOver={()=>self.changeImage(index, true)}
@@ -90,8 +90,8 @@ class TVShowCastModal extends Component {
           <div style={styles.titleContainer}>
             <span style={styles.title}>{tvShowName}</span>
           </div>
-          <div style={{display: 'inline-flex', paddingTop: '100px'}}>{castsHTML}</div>
-          <div style={styles.close} onClick={()=>this.handleClose()}>&#10005;</div>
+          <div style={styles.casts}>{castsHTML}</div>
+          <div className='closeButton' style={styles.close} onClick={()=>this.handleClose()}>&#10005;</div>
        </Modal>
     );
   }
@@ -124,6 +124,11 @@ const customStyles = {
 }
 
 const styles={
+  casts:{
+    display: 'inline-flex',
+    paddingTop: '100px',
+    paddingLeft: '20px'
+  },
   titleContainer: {
     position: 'fixed',
     width: '100%',
@@ -163,6 +168,9 @@ const styles={
     height: '30px',
     textAlign: 'center',
     textShadow: 'none',
+    '@media only screen and (max-width: 1023px)': {
+      right: '0px'
+    }
   }
 };
 

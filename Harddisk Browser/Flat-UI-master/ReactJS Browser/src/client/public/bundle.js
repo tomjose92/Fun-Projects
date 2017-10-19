@@ -42889,10 +42889,6 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
 	
-	var _radium = __webpack_require__(/*! radium */ 184);
-	
-	var _radium2 = _interopRequireDefault(_radium);
-	
 	var _Header = __webpack_require__(/*! ./common/Header */ 312);
 	
 	var _Header2 = _interopRequireDefault(_Header);
@@ -43119,7 +43115,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { style: styles.container },
+	            { className: 'tvShowPage', style: styles.container },
 	            open && _react2.default.createElement(_TVShowModal2.default, { tvShow: tvShow, navShow: function navShow(tvShow, index) {
 	                return _this2.showModal(tvShow, index);
 	              }, callback: function callback() {
@@ -43160,14 +43156,6 @@
 	
 	;
 	
-	var rotateImage = _radium2.default.keyframes({
-	  '0%': { transform: 'rotateY(-180deg)' },
-	  '25%': { transform: 'rotateY(-135deg)' },
-	  '50%': { transform: 'rotateY(-90deg)' },
-	  '75%': { transform: 'rotateY(-45deg)' },
-	  '100%': { transform: 'rotateY(0deg)' }
-	});
-	
 	var styles = {
 	  inputText: {
 	    height: '25px',
@@ -43189,11 +43177,7 @@
 	    position: 'absolute',
 	    marginTop: '100px',
 	    marginLeft: '100px',
-	    marginRight: '100px',
-	    '@media only screen and (max-width: 1023px)': {
-	      marginLeft: '50px',
-	      marginRight: '50px'
-	    }
+	    marginRight: '100px'
 	  },
 	  image: {
 	    height: '300px',
@@ -43203,8 +43187,6 @@
 	    ':hover': {
 	      transform: 'translateY(-10px)'
 	    },
-	    animation: 'x 2s ease-in',
-	    animationName: rotateImage,
 	    backgroundRepeat: 'no-repeat',
 	    backgroundClip: 'content-box',
 	    backgroundSize: '1275px 1420px'
@@ -43227,11 +43209,11 @@
 	  };
 	};
 	
-	exports.default = (0, _radium2.default)((0, _reactRedux.connect)(mapStateToProps, {
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, {
 	  fetchTVShowsData: _tvshow.fetchTVShowsData,
 	  fetchTVShowInfo: _tvshow.fetchTVShowInfo,
 	  setCurrentTVShow: _tvshow.setCurrentTVShow
-	})(TVShow));
+	})(TVShow);
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -43676,7 +43658,7 @@
 	        { className: 'tvShowModal', contentLabel: 'ShowModal', style: customStyles, isOpen: this.state.isOpen },
 	        _react2.default.createElement(
 	          'div',
-	          { style: styles.titleContainer },
+	          { className: 'showTitle', style: styles.titleContainer },
 	          prev && _react2.default.createElement('a', { style: { cursor: 'pointer' }, className: 'fui-triangle-left-large', onClick: function onClick() {
 	              return _this2.props.navShow(prev, index - 1);
 	            } }),
@@ -43691,7 +43673,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { style: styles.imageContainer },
+	          { className: 'showImage', style: styles.imageContainer },
 	          _react2.default.createElement('img', { id: 'modal_image',
 	            style: Object.assign({}, styles.image, _images.Images[tv_show_tag], _images.ModalPosition[tv_show_tag])
 	          })
@@ -43747,9 +43729,10 @@
 	
 	var styles = {
 	  titleContainer: {
-	    position: 'absolute',
+	    position: 'fixed',
 	    width: '100%',
-	    textAlign: 'center'
+	    textAlign: 'center',
+	    marginLeft: '-125px'
 	  },
 	  title: {
 	    padding: '0px 100px',
@@ -43761,8 +43744,9 @@
 	  imageContainer: {
 	    textAlign: 'center',
 	    width: '100%',
-	    position: 'absolute',
-	    marginTop: '50px'
+	    position: 'fixed',
+	    marginTop: '50px',
+	    marginLeft: '-125px'
 	  },
 	  image: {
 	    height: '498px',
@@ -45730,7 +45714,9 @@
 	    borderColor: 'white',
 	    borderRightWidth: '0px',
 	    backgroundColor: 'black',
-	    margin: '0px 20px'
+	    margin: '0px 20px',
+	    position: 'relative',
+	    zIndex: '1000'
 	  },
 	  container: {
 	    paddingTop: '20px',
@@ -45881,7 +45867,12 @@
 	        rating && _react2.default.createElement(
 	          'div',
 	          null,
-	          'Rating: \xA0 ',
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.label },
+	            'Rating:'
+	          ),
+	          '\xA0',
 	          _react2.default.createElement(
 	            'span',
 	            { style: styles.value },
@@ -45891,7 +45882,12 @@
 	        status && _react2.default.createElement(
 	          'div',
 	          null,
-	          'Status:\xA0 ',
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.label },
+	            'Status:'
+	          ),
+	          '\xA0',
 	          _react2.default.createElement(
 	            'span',
 	            { style: styles.value },
@@ -45901,7 +45897,12 @@
 	        runtime && _react2.default.createElement(
 	          'div',
 	          null,
-	          'RunTime: \xA0 ',
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.label },
+	            'RunTime:'
+	          ),
+	          '\xA0',
 	          _react2.default.createElement(
 	            'span',
 	            { style: styles.value },
@@ -45912,7 +45913,12 @@
 	        genres && _react2.default.createElement(
 	          'div',
 	          null,
-	          'Genre: \xA0 ',
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.label },
+	            'Genre:'
+	          ),
+	          '\xA0',
 	          _react2.default.createElement(
 	            'span',
 	            { style: styles.value },
@@ -45929,7 +45935,6 @@
 	              } },
 	            'See Cast'
 	          ),
-	          ': \xA0',
 	          this.state.open && _react2.default.createElement(_TVShowCastModal2.default, { tvShowName: tvShowName, casts: casts, callback: function callback() {
 	              return _this2.closeModal();
 	            } })
@@ -45943,13 +45948,16 @@
 	
 	var styles = {
 	  container: {
-	    position: 'absolute',
-	    right: '0px',
+	    position: 'relative',
+	    float: 'right',
 	    top: '150px',
-	    paddingRight: '30px',
 	    fontSize: '20px',
 	    textAlign: 'left',
-	    width: '30%'
+	    width: '25%'
+	  },
+	  label: {
+	    color: 'blue',
+	    fontWeight: 'bold'
 	  },
 	  value: {
 	    color: 'white'
@@ -46089,27 +46097,13 @@
 	        var image = cast.image,
 	            realName = cast.realName,
 	            characterName = cast.characterName,
-	            characterImage = cast.characterImage;
+	            characterImage = cast.characterImage,
+	            realImage = cast.realImage;
 	
-	        var finalImage = image || characterImage;
+	        var finalImage = image || characterImage || realImage;
 	        return _react2.default.createElement(
 	          'span',
 	          { key: index, style: { paddingRight: '50px' } },
-	          _react2.default.createElement(
-	            'div',
-	            { style: styles.labelContainer },
-	            _react2.default.createElement(
-	              'span',
-	              { style: styles.label },
-	              'Name:'
-	            ),
-	            ' \xA0 ',
-	            _react2.default.createElement(
-	              'span',
-	              { style: styles.value },
-	              realName
-	            )
-	          ),
 	          _react2.default.createElement(
 	            'div',
 	            { style: styles.labelContainer },
@@ -46123,6 +46117,21 @@
 	              'span',
 	              { style: styles.value },
 	              characterName
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { style: styles.labelContainer },
+	            _react2.default.createElement(
+	              'span',
+	              { style: styles.label },
+	              'Name:'
+	            ),
+	            ' \xA0 ',
+	            _react2.default.createElement(
+	              'span',
+	              { style: styles.value },
+	              realName
 	            )
 	          ),
 	          _react2.default.createElement('img', { src: finalImage,
@@ -46149,12 +46158,12 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { style: { display: 'inline-flex', paddingTop: '100px' } },
+	          { style: styles.casts },
 	          castsHTML
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { style: styles.close, onClick: function onClick() {
+	          { className: 'closeButton', style: styles.close, onClick: function onClick() {
 	              return _this2.handleClose();
 	            } },
 	          '\u2715'
@@ -46193,6 +46202,11 @@
 	};
 	
 	var styles = {
+	  casts: {
+	    display: 'inline-flex',
+	    paddingTop: '100px',
+	    paddingLeft: '20px'
+	  },
 	  titleContainer: {
 	    position: 'fixed',
 	    width: '100%',
@@ -46231,7 +46245,10 @@
 	    width: '30px',
 	    height: '30px',
 	    textAlign: 'center',
-	    textShadow: 'none'
+	    textShadow: 'none',
+	    '@media only screen and (max-width: 1023px)': {
+	      right: '0px'
+	    }
 	  }
 	};
 	

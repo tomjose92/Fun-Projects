@@ -61,12 +61,12 @@ class TVShowModal extends Component {
     }
     return (
        <Modal className='tvShowModal' contentLabel='ShowModal' style={customStyles} isOpen={this.state.isOpen}>
-          <div style={styles.titleContainer}>
+          <div className='showTitle' style={styles.titleContainer}>
             {prev && <a style={{cursor:'pointer'}} className='fui-triangle-left-large' onClick={()=>this.props.navShow(prev, index-1)}/>}
             <span style={styles.title}>{tv_show_name}</span>
             {next && <a style={{cursor:'pointer'}} className='fui-triangle-right-large' onClick={()=>this.props.navShow(next, index+1)}/>}
           </div>
-          <div style={styles.imageContainer}>
+          <div className='showImage' style={styles.imageContainer}>
             <img id='modal_image' 
               style={Object.assign({},styles.image,Images[tv_show_tag],ModalPosition[tv_show_tag])} 
             />
@@ -114,9 +114,10 @@ const customStyles = {
 
 const styles={
   titleContainer: {
-    position: 'absolute',
+    position: 'fixed',
     width: '100%',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginLeft: '-125px'
   },
   title: {
     padding: '0px 100px',
@@ -128,8 +129,9 @@ const styles={
   imageContainer: {
     textAlign: 'center',
     width: '100%',
-    position: 'absolute',
+    position: 'fixed',
     marginTop: '50px',
+    marginLeft: '-125px'
   },
   image:{
     height: '498px',
