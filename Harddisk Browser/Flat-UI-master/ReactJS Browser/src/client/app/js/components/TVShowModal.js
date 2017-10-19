@@ -98,7 +98,7 @@ const customStyles = {
   content: {
     outline: 'none',
     borderRadius: '5px',
-    backgroundColor: 'rgba(0,0,0,0.945)',
+    backgroundColor: 'rgba(0,0,0,0.85)',
     width: '1060px',
     left: '0px',
     height: '550px',

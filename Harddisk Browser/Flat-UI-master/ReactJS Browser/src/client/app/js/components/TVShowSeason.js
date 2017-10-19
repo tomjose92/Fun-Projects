@@ -76,7 +76,10 @@ const styles={
   container:{
     position: 'absolute',
     marginTop: '100px',
-    textAlign: 'left'
+    textAlign: 'left',
+    overflowY: 'auto',
+    maxHeight: '75%',
+    width: '100%'
   },
   season:{
     paddingTop: '15px',

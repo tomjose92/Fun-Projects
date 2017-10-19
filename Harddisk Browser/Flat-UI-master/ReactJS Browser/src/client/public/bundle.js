@@ -43713,7 +43713,7 @@
 	  content: {
 	    outline: 'none',
 	    borderRadius: '5px',
-	    backgroundColor: 'rgba(0,0,0,0.945)',
+	    backgroundColor: 'rgba(0,0,0,0.85)',
 	    width: '1060px',
 	    left: '0px',
 	    height: '550px',
@@ -45583,7 +45583,10 @@
 	  container: {
 	    position: 'absolute',
 	    marginTop: '100px',
-	    textAlign: 'left'
+	    textAlign: 'left',
+	    overflowY: 'auto',
+	    maxHeight: '75%',
+	    width: '100%'
 	  },
 	  season: {
 	    paddingTop: '15px',
@@ -45665,30 +45668,39 @@
 	      var tvShowEpisodes = episodes.map(function (episode, k) {
 	        var tv_show_episode = episode.tv_show_episode,
 	            number = episode.number,
-	            summary = episode.summary;
+	            summary = episode.summary,
+	            airdate = episode.airdate;
 	
-	        var episodeName = "Episode " + number + " : " + tv_show_episode;
+	        var _getDate = (0, _utils.getDate)(airdate),
+	            color = _getDate.color,
+	            date = _getDate.date;
+	
+	        var episodeName = _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(
+	            'span',
+	            { style: { color: color } },
+	            'Episode ',
+	            number,
+	            ' : \xA0'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            tv_show_episode,
+	            ' \xA0 (',
+	            date,
+	            ')'
+	          )
+	        );
 	        return _react2.default.createElement(
 	          'div',
 	          { key: "episode" + k },
 	          _react2.default.createElement(
 	            'div',
 	            { style: styles.container, className: 'fui-arrow-right' },
-	            _react2.default.createElement(_Link2.default, { title: summary, style: { marginLeft: '10px', color: 'white' }, content: episodeName }),
-	            _react2.default.createElement(_Space2.default, { space: 'space20' }),
-	            _react2.default.createElement(
-	              'a',
-	              { href: '' },
-	              ' ',
-	              _react2.default.createElement(_Icon2.default, { src: 'img/icons/svg/tv.svg' })
-	            ),
-	            _react2.default.createElement(_Space2.default, { space: 'space20' }),
-	            _react2.default.createElement(
-	              'a',
-	              { href: '' },
-	              ' ',
-	              _react2.default.createElement(_Icon2.default, { src: 'img/icons/svg/closed-captioning.svg' })
-	            )
+	            _react2.default.createElement(_Link2.default, { title: summary, style: { marginLeft: '10px', color: 'white' }, content: episodeName })
 	          )
 	        );
 	      });
@@ -45778,6 +45790,20 @@
 	var getYear = exports.getYear = function getYear(date) {
 	  var values = date.split('-');
 	  return values[0];
+	};
+	
+	var getDate = exports.getDate = function getDate(date) {
+	  var values = date.split('-');
+	  date = new Date(values[0], values[1] - 1, values[2]);
+	  var newDate = date.toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
+	  var currentDate = new Date().toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
+	  var color = void 0;
+	  if (new Date(newDate).getTime() == new Date(currentDate).getTime()) {
+	    color = 'yellow';
+	  } else {
+	    color = new Date(newDate).getTime() > new Date(currentDate).getTime() ? 'red' : 'green';
+	  }
+	  return { color: color, date: newDate };
 	};
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "utils.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -45953,7 +45979,8 @@
 	    top: '150px',
 	    fontSize: '20px',
 	    textAlign: 'left',
-	    width: '25%'
+	    width: '25%',
+	    paddingRight: '25px'
 	  },
 	  label: {
 	    color: 'blue',
@@ -46163,10 +46190,14 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'closeButton', style: styles.close, onClick: function onClick() {
-	              return _this2.handleClose();
-	            } },
-	          '\u2715'
+	          { style: { display: 'inline-block', marginTop: '20px' } },
+	          _react2.default.createElement(
+	            'div',
+	            { style: styles.close, onClick: function onClick() {
+	                return _this2.handleClose();
+	              } },
+	            'Close'
+	          )
 	        )
 	      );
 	    }
@@ -46237,18 +46268,8 @@
 	    fontFamily: 'times new roman',
 	    fontSize: '20px',
 	    lineHeight: '30px',
-	    fontWeight: 'bold',
-	    padding: '0px',
 	    position: 'fixed',
-	    right: '130px',
-	    top: '53px',
-	    width: '30px',
-	    height: '30px',
-	    textAlign: 'center',
-	    textShadow: 'none',
-	    '@media only screen and (max-width: 1023px)': {
-	      right: '0px'
-	    }
+	    width: '60px'
 	  }
 	};
 	

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from './common/Link';
 import Space from './common/Space';
 import Icon from './common/Icon';
-import {getEpisodesWidth} from '../utils/utils';
+import {getEpisodesWidth, getDate} from '../utils/utils';
 
 class TVShowEpisodes extends React.Component {
 
@@ -17,14 +17,20 @@ class TVShowEpisodes extends React.Component {
     }
 
     let tvShowEpisodes = episodes.map(function(episode,k){
-      let {tv_show_episode, number, summary} = episode;
-      let episodeName = "Episode "+number+ " : " + tv_show_episode;
+      let {tv_show_episode, number, summary,airdate} = episode;
+      let {color, date} = getDate(airdate);
+      let episodeName = (
+        <span>
+          <span style={{color}}>Episode {number} : &nbsp;</span>
+          <span>{tv_show_episode} &nbsp; ({date})</span>
+        </span>
+      );
       return (
         <div key={"episode"+k} >
           <div style={styles.container} className="fui-arrow-right">
             <Link title={summary} style={{marginLeft:'10px', color:'white'}} content={episodeName} />
-            <Space space='space20' /><a href=""> <Icon src="img/icons/svg/tv.svg"/></a>
-            <Space space='space20' /><a href=""> <Icon src="img/icons/svg/closed-captioning.svg"/></a>
+            {/*<Space space='space20' /><a href=""> <Icon src="img/icons/svg/tv.svg"/></a>
+            <Space space='space20' /><a href=""> <Icon src="img/icons/svg/closed-captioning.svg"/></a>*/}
           </div>
         </div>
       );

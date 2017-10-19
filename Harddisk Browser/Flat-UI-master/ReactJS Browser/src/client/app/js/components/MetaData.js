@@ -64,7 +64,8 @@ const styles={
     top: '150px',
     fontSize: '20px',
     textAlign: 'left',
-    width: '25%'
+    width: '25%',
+    paddingRight: '25px'
   },
   label: {
     color: 'blue',

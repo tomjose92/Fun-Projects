@@ -91,7 +91,9 @@ class TVShowCastModal extends Component {
             <span style={styles.title}>{tvShowName}</span>
           </div>
           <div style={styles.casts}>{castsHTML}</div>
-          <div className='closeButton' style={styles.close} onClick={()=>this.handleClose()}>&#10005;</div>
+          <div style={{display:'inline-block', marginTop: '20px'}}>
+            <div style={styles.close} onClick={()=>this.handleClose()}>Close</div>
+          </div>
        </Modal>
     );
   }
@@ -159,18 +161,8 @@ const styles={
     fontFamily: 'times new roman',
     fontSize: '20px',
     lineHeight: '30px',
-    fontWeight: 'bold',
-    padding: '0px',
     position: 'fixed',
-    right: '130px',
-    top: '53px',
-    width: '30px',
-    height: '30px',
-    textAlign: 'center',
-    textShadow: 'none',
-    '@media only screen and (max-width: 1023px)': {
-      right: '0px'
-    }
+    width: '60px'
   }
 };
 

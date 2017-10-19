@@ -38,3 +38,20 @@ export const getYear = (date) => {
   let values = date.split('-');
   return values[0];
 }
+
+export const getDate = (date) => {
+  let values = date.split('-');
+  date = new Date(values[0], values[1] - 1, values[2]);
+  let newDate = date.toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
+  let currentDate = new Date().toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
+  let color;
+  if(new Date(newDate).getTime() == new Date(currentDate).getTime())
+  {
+    color = 'yellow';
+  }
+  else
+  {
+    color = new Date(newDate).getTime() > new Date(currentDate).getTime() ? 'red': 'green';
+  }
+  return {color, date: newDate};
+}
