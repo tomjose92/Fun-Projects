@@ -40,6 +40,10 @@ export const getYear = (date) => {
 }
 
 export const getDate = (date) => {
+  if(!date)
+  {
+    return {color:'red', date:'TBA'};
+  }
   let values = date.split('-');
   date = new Date(values[0], values[1] - 1, values[2]);
   let newDate = date.toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');

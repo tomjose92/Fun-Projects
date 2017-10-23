@@ -2,7 +2,7 @@ import React from 'react';
 import Link from './common/Link';
 import Space from './common/Space';
 import Icon from './common/Icon';
-import {getEpisodesWidth, getDate} from '../utils/utils';
+import {getEpisodesWidth} from '../utils/utils';
 
 class TVShowEpisodes extends React.Component {
 
@@ -17,8 +17,7 @@ class TVShowEpisodes extends React.Component {
     }
 
     let tvShowEpisodes = episodes.map(function(episode,k){
-      let {tv_show_episode, number, summary,airdate} = episode;
-      let {color, date} = getDate(airdate);
+      let {tv_show_episode, number, summary, color, date} = episode;
       let episodeName = (
         <span>
           <span style={{color}}>Episode {number} : &nbsp;</span>
@@ -55,9 +54,10 @@ const styles={
     zIndex: '1000'
   },
   container:{
-    paddingTop: '20px',
+    paddingTop: '10px',
     marginLeft: '10px',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    paddingBottom: '10px',
   }
 
 }

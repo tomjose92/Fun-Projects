@@ -23,7 +23,7 @@ class TVShow extends React.Component {
         error:false,
         interval:2000,
         search: false,
-        isInit: false
+        isInit: true
       };
     }
 
@@ -41,7 +41,7 @@ class TVShow extends React.Component {
     componentWillMount() {
       let {tvShows} = this.props;
       if(isEmpty(tvShows)){
-        this.fetchTVShowData();
+        this.fetchTVShowData(false);
       }
       else
       {
@@ -164,14 +164,14 @@ class TVShow extends React.Component {
   	}
 
     componentDidMount() {
-      let self=this;
+      /*let self=this;
       let {records} = this.state;
       if(isEmpty(records))
       {
         setTimeout(function(){
           self.fetchTVShowData(false);
         },this.state.interval);
-      }
+      }*/
     }
 
     componentDidUpdate(prevProps, prevState)

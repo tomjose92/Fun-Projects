@@ -55,8 +55,13 @@ export const fetchTVShowsData = (data) => {
     let interval = isInit? 0: 1000;
     Services.fetchData(url)
     .then((response)=>{
-      let {error} = response;
+      let {error, data} = response;
       if(!error){
+        for(let tvShow of data)
+        {
+          dispatch(fetchTVShowInfo(tvShow.tv_show_name));
+        }
+        
         setTimeout(() => {
           dispatch(fetchTVShowsSuccess({response, isLocal, isInit}));
         }, interval);

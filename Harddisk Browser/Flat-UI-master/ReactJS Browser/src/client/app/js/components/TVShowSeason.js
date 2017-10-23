@@ -85,7 +85,7 @@ const styles={
     paddingTop: '15px',
     marginLeft: '25px',
     whiteSpace: 'nowrap',
-    paddingBottom: '5px'
+    paddingBottom: '15px'
   }
 }
 

@@ -9,7 +9,7 @@ import {
   SET_CURRENT_TVSHOW_SUCCESS
 } from '../actions/actionTypes.js';
 
-import {getYear} from '../utils/utils';
+import {getYear, getDate} from '../utils/utils';
 
 export const loading = (state = false, action) => {
 	if(action.type === FETCH_TVSHOWS_START){
@@ -58,8 +58,10 @@ export const episodes = (state=[], action) => {
 		if(response){
 			let episodes = response.map(function(episode){
 				let {id, name, season, number, summary, airdate} = episode;
-				return {id, tv_show_episode:name, season, number, summary, airdate};
+				let dateInfo = getDate(airdate);
+				return {id, tv_show_episode:name, season, number, summary, airdate, ...dateInfo};
 			});
+			
 			let seasons = [];
 			for(let i=0;i<episodes.length;i++)
 			{
