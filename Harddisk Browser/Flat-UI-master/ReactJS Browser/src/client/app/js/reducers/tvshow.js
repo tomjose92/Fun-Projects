@@ -55,10 +55,15 @@ export const showsInfo = (state=[], action) => {
 export const episodes = (state=[], action) => {
 	if(action.type === FETCH_TVSHOW_EPISODES_SUCCESS){
 		let {tvShowName, response} = action.payload;
+		let upcoming;
 		if(response){
 			let episodes = response.map(function(episode){
 				let {id, name, season, number, summary, airdate} = episode;
 				let dateInfo = getDate(airdate);
+				if(!upcoming && (dateInfo.color == 'yellow' || dateInfo.color == 'red'))
+				{
+					upcoming = {...episode, ...dateInfo};
+				}
 				return {id, tv_show_episode:name, season, number, summary, airdate, ...dateInfo};
 			});
 			
@@ -81,7 +86,7 @@ export const episodes = (state=[], action) => {
 				seasons[seasonNo-1].episodes = episodesData;
 			}
 			let newState = {...state};
-			newState[tvShowName] = seasons;
+			newState[tvShowName] = {seasons, upcoming};
 			return newState;
 		}
 	}

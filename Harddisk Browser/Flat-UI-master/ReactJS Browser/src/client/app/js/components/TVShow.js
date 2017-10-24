@@ -6,12 +6,14 @@ import {TVSHOW_ONLINE_URL, TVSHOW_LOCAL_URL} from '../constants/apis';
 import Gap from './common/Gap';
 import {Images, ImagePosition} from '../constants/images';
 import TVShowModal from './TVShowModal';
+import UpcomingEpisodes from './UpcomingEpisodes';
 import {blurImage} from '../utils/utils';
 import {fetchTVShowsData, fetchTVShowInfo, setCurrentTVShow} from '../actions/tvshow';
 import {  getTVShowData, 
           isFetchingTVShow, 
           getTVShowStatus,
-          getTVShowsInfo} from '../selectors/selectors';
+          getTVShowsInfo,
+          getUpcomingEpisodes} from '../selectors/selectors';
 import isEmpty from 'lodash/isEmpty';
 
 class TVShow extends React.Component {
@@ -80,10 +82,12 @@ class TVShow extends React.Component {
       {
         this.props.setCurrentTVShow(tv_show_name);  
       }
-
-      tvShow.prev = tvShows[index-1];
-      tvShow.next = tvShows[index+1];
-      tvShow.index = index;
+      if(index)
+      {
+        tvShow.prev = tvShows[index-1];
+        tvShow.next = tvShows[index+1];
+        tvShow.index = index;
+      }
       this.setState({
         tvShow,
         open: true
@@ -156,6 +160,7 @@ class TVShow extends React.Component {
             </div>
             <div className='tvShowPage' style={styles.container}>
               {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
+              <UpcomingEpisodes showModal={(tvShow)=>this.showModal(tvShow)}/>
               {TVShowImages}
             </div>
           </div>}

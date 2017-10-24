@@ -77,7 +77,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
 	
-	var _store = __webpack_require__(/*! ./js/store/store */ 445);
+	var _store = __webpack_require__(/*! ./js/store/store */ 446);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -41686,7 +41686,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getCurrentTVShowCasts = exports.getCurrentTVShowEpisodes = exports.getCurrentTVShowInfo = exports.getCurrentTVShow = exports.getTVShowCasts = exports.getTVShowEpisodes = exports.getTVShowsInfo = exports.getTVShowStatus = exports.getTVShowData = exports.isFetchingTVShow = exports.getMovieStatus = exports.getMovieData = exports.isFetchingMovies = undefined;
+	exports.getUpcomingEpisodes = exports.getCurrentTVShowCasts = exports.getCurrentTVShowEpisodes = exports.getCurrentTVShowInfo = exports.getCurrentTVShow = exports.getTVShowCasts = exports.getTVShowEpisodes = exports.getTVShowsInfo = exports.getTVShowStatus = exports.getTVShowData = exports.isFetchingTVShow = exports.getMovieStatus = exports.getMovieData = exports.isFetchingMovies = undefined;
 	
 	var _reselect = __webpack_require__(/*! reselect */ 392);
 	
@@ -41727,11 +41727,21 @@
 	});
 	
 	var getCurrentTVShowEpisodes = exports.getCurrentTVShowEpisodes = (0, _reselect.createSelector)([getCurrentTVShow, getTVShowEpisodes], function (tvShowName, episodes) {
-	  return episodes[tvShowName];
+	  return episodes[tvShowName] && episodes[tvShowName].seasons;
 	});
 	
 	var getCurrentTVShowCasts = exports.getCurrentTVShowCasts = (0, _reselect.createSelector)([getCurrentTVShow, getTVShowCasts], function (tvShowName, casts) {
 	  return casts[tvShowName];
+	});
+	
+	var getUpcomingEpisodes = exports.getUpcomingEpisodes = (0, _reselect.createSelector)([getTVShowEpisodes], function (episodes) {
+	  var upcoming = [];
+	  for (var show in episodes) {
+	    if (episodes[show].upcoming) {
+	      upcoming.push({ tvShowName: show, episode: episodes[show].upcoming });
+	    }
+	  }
+	  return upcoming;
 	});
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "selectors.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -42903,15 +42913,19 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _images = __webpack_require__(/*! ../constants/images */ 424);
+	var _images = __webpack_require__(/*! ../constants/images */ 423);
 	
-	var _TVShowModal = __webpack_require__(/*! ./TVShowModal */ 425);
+	var _TVShowModal = __webpack_require__(/*! ./TVShowModal */ 424);
 	
 	var _TVShowModal2 = _interopRequireDefault(_TVShowModal);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _UpcomingEpisodes = __webpack_require__(/*! ./UpcomingEpisodes */ 443);
 	
-	var _tvshow = __webpack_require__(/*! ../actions/tvshow */ 444);
+	var _UpcomingEpisodes2 = _interopRequireDefault(_UpcomingEpisodes);
+	
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
+	
+	var _tvshow = __webpack_require__(/*! ../actions/tvshow */ 445);
 	
 	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
 	
@@ -43005,10 +43019,11 @@
 	      } else {
 	        this.props.setCurrentTVShow(tv_show_name);
 	      }
-	
-	      tvShow.prev = tvShows[index - 1];
-	      tvShow.next = tvShows[index + 1];
-	      tvShow.index = index;
+	      if (index) {
+	        tvShow.prev = tvShows[index - 1];
+	        tvShow.next = tvShows[index + 1];
+	        tvShow.index = index;
+	      }
 	      this.setState({
 	        tvShow: tvShow,
 	        open: true
@@ -43121,6 +43136,9 @@
 	              }, callback: function callback() {
 	                return _this2.closeModal();
 	              } }),
+	            _react2.default.createElement(_UpcomingEpisodes2.default, { showModal: function showModal(tvShow) {
+	                return _this2.showModal(tvShow);
+	              } }),
 	            TVShowImages
 	          )
 	        )
@@ -43218,8 +43236,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 423 */,
-/* 424 */
+/* 423 */
 /*!***********************************************!*\
   !*** ./src/client/app/js/constants/images.js ***!
   \***********************************************/
@@ -43519,7 +43536,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "images.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 425 */
+/* 424 */
 /*!*****************************************************!*\
   !*** ./src/client/app/js/components/TVShowModal.js ***!
   \*****************************************************/
@@ -43539,7 +43556,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactModal = __webpack_require__(/*! react-modal */ 426);
+	var _reactModal = __webpack_require__(/*! react-modal */ 425);
 	
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 	
@@ -43549,13 +43566,13 @@
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _images = __webpack_require__(/*! ../constants/images */ 424);
+	var _images = __webpack_require__(/*! ../constants/images */ 423);
 	
-	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 439);
+	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 438);
 	
 	var _TVShowSeason2 = _interopRequireDefault(_TVShowSeason);
 	
-	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 440);
+	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 439);
 	
 	var _TVShowEpisodes2 = _interopRequireDefault(_TVShowEpisodes);
 	
@@ -43563,11 +43580,11 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
 	
-	var _MetaData = __webpack_require__(/*! ./MetaData */ 442);
+	var _MetaData = __webpack_require__(/*! ./MetaData */ 441);
 	
 	var _MetaData2 = _interopRequireDefault(_MetaData);
 	
@@ -43790,18 +43807,18 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowModal.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 426 */
+/* 425 */
 /*!************************************!*\
   !*** ./~/react-modal/lib/index.js ***!
   \************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./components/Modal */ 427);
+	module.exports = __webpack_require__(/*! ./components/Modal */ 426);
 	
 
 
 /***/ }),
-/* 427 */
+/* 426 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/components/Modal.js ***!
   \***********************************************/
@@ -43809,16 +43826,16 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 37);
-	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 428);
+	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 427);
 	var PropTypes = __webpack_require__(/*! prop-types */ 320);
-	var ExecutionEnvironment = __webpack_require__(/*! exenv */ 429);
-	var ModalPortal = React.createFactory(__webpack_require__(/*! ./ModalPortal */ 430));
-	var ariaAppHider = __webpack_require__(/*! ../helpers/ariaAppHider */ 436);
-	var refCount = __webpack_require__(/*! ../helpers/refCount */ 437);
-	var elementClass = __webpack_require__(/*! element-class */ 438);
+	var ExecutionEnvironment = __webpack_require__(/*! exenv */ 428);
+	var ModalPortal = React.createFactory(__webpack_require__(/*! ./ModalPortal */ 429));
+	var ariaAppHider = __webpack_require__(/*! ../helpers/ariaAppHider */ 435);
+	var refCount = __webpack_require__(/*! ../helpers/refCount */ 436);
+	var elementClass = __webpack_require__(/*! element-class */ 437);
 	var renderSubtreeIntoContainer = __webpack_require__(/*! react-dom */ 37).unstable_renderSubtreeIntoContainer;
-	var Assign = __webpack_require__(/*! lodash.assign */ 434);
-	var createReactClass = __webpack_require__(/*! create-react-class */ 435);
+	var Assign = __webpack_require__(/*! lodash.assign */ 433);
+	var createReactClass = __webpack_require__(/*! create-react-class */ 434);
 	
 	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
 	var AppElement = ExecutionEnvironment.canUseDOM ? document.body : {appendChild: function() {}};
@@ -43989,7 +44006,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../process/browser.js */ 3)))
 
 /***/ }),
-/* 428 */
+/* 427 */
 /*!****************************************!*\
   !*** ./~/react-dom-factories/index.js ***!
   \****************************************/
@@ -44193,7 +44210,7 @@
 
 
 /***/ }),
-/* 429 */
+/* 428 */
 /*!**************************!*\
   !*** ./~/exenv/index.js ***!
   \**************************/
@@ -44241,18 +44258,18 @@
 
 
 /***/ }),
-/* 430 */
+/* 429 */
 /*!*****************************************************!*\
   !*** ./~/react-modal/lib/components/ModalPortal.js ***!
   \*****************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(/*! react */ 1);
-	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 428);
-	var focusManager = __webpack_require__(/*! ../helpers/focusManager */ 431);
-	var scopeTab = __webpack_require__(/*! ../helpers/scopeTab */ 433);
-	var Assign = __webpack_require__(/*! lodash.assign */ 434);
-	var createReactClass = __webpack_require__(/*! create-react-class */ 435);
+	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 427);
+	var focusManager = __webpack_require__(/*! ../helpers/focusManager */ 430);
+	var scopeTab = __webpack_require__(/*! ../helpers/scopeTab */ 432);
+	var Assign = __webpack_require__(/*! lodash.assign */ 433);
+	var createReactClass = __webpack_require__(/*! create-react-class */ 434);
 	
 	var div = DOMFactories.div;
 	
@@ -44453,13 +44470,13 @@
 
 
 /***/ }),
-/* 431 */
+/* 430 */
 /*!***************************************************!*\
   !*** ./~/react-modal/lib/helpers/focusManager.js ***!
   \***************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 432);
+	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 431);
 	var focusLaterElements = [];
 	var modalElement = null;
 	var needToFocus = false;
@@ -44530,7 +44547,7 @@
 
 
 /***/ }),
-/* 432 */
+/* 431 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/helpers/tabbable.js ***!
   \***********************************************/
@@ -44589,13 +44606,13 @@
 
 
 /***/ }),
-/* 433 */
+/* 432 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/helpers/scopeTab.js ***!
   \***********************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 432);
+	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 431);
 	
 	module.exports = function(node, event) {
 	  var tabbable = findTabbable(node);
@@ -44617,7 +44634,7 @@
 
 
 /***/ }),
-/* 434 */
+/* 433 */
 /*!**********************************!*\
   !*** ./~/lodash.assign/index.js ***!
   \**********************************/
@@ -45263,7 +45280,7 @@
 
 
 /***/ }),
-/* 435 */
+/* 434 */
 /*!***************************************!*\
   !*** ./~/create-react-class/index.js ***!
   \***************************************/
@@ -45300,7 +45317,7 @@
 
 
 /***/ }),
-/* 436 */
+/* 435 */
 /*!***************************************************!*\
   !*** ./~/react-modal/lib/helpers/ariaAppHider.js ***!
   \***************************************************/
@@ -45351,7 +45368,7 @@
 
 
 /***/ }),
-/* 437 */
+/* 436 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/helpers/refCount.js ***!
   \***********************************************/
@@ -45379,7 +45396,7 @@
 
 
 /***/ }),
-/* 438 */
+/* 437 */
 /*!**********************************!*\
   !*** ./~/element-class/index.js ***!
   \**********************************/
@@ -45447,7 +45464,7 @@
 
 
 /***/ }),
-/* 439 */
+/* 438 */
 /*!******************************************************!*\
   !*** ./src/client/app/js/components/TVShowSeason.js ***!
   \******************************************************/
@@ -45467,7 +45484,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 440);
+	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 439);
 	
 	var _TVShowEpisodes2 = _interopRequireDefault(_TVShowEpisodes);
 	
@@ -45479,7 +45496,7 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -45602,7 +45619,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowSeason.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 440 */
+/* 439 */
 /*!********************************************************!*\
   !*** ./src/client/app/js/components/TVShowEpisodes.js ***!
   \********************************************************/
@@ -45634,7 +45651,7 @@
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -45742,7 +45759,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowEpisodes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 441 */
+/* 440 */
 /*!******************************************!*\
   !*** ./src/client/app/js/utils/utils.js ***!
   \******************************************/
@@ -45808,10 +45825,21 @@
 	  return { color: color, date: newDate };
 	};
 	
+	var sortEpisodesByDate = exports.sortEpisodesByDate = function sortEpisodesByDate(episodes) {
+	  return episodes.sort(function (a, b) {
+	    var aDate = a.episode.date,
+	        bDate = b.episode.date;
+	
+	    aDate = new Date(aDate).getTime();
+	    bDate = new Date(bDate).getTime();
+	    return aDate > bDate;
+	  });
+	};
+	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "utils.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 442 */
+/* 441 */
 /*!**************************************************!*\
   !*** ./src/client/app/js/components/MetaData.js ***!
   \**************************************************/
@@ -45831,7 +45859,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TVShowCastModal = __webpack_require__(/*! ./TVShowCastModal */ 443);
+	var _TVShowCastModal = __webpack_require__(/*! ./TVShowCastModal */ 442);
 	
 	var _TVShowCastModal2 = _interopRequireDefault(_TVShowCastModal);
 	
@@ -45998,7 +46026,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "MetaData.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 443 */
+/* 442 */
 /*!*********************************************************!*\
   !*** ./src/client/app/js/components/TVShowCastModal.js ***!
   \*********************************************************/
@@ -46020,7 +46048,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactModal = __webpack_require__(/*! react-modal */ 426);
+	var _reactModal = __webpack_require__(/*! react-modal */ 425);
 	
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 	
@@ -46032,7 +46060,7 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -46280,7 +46308,406 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowCastModal.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
+/* 443 */
+/*!**********************************************************!*\
+  !*** ./src/client/app/js/components/UpcomingEpisodes.js ***!
+  \**********************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
+	
+	var _reactTextMarquee = __webpack_require__(/*! react-text-marquee */ 444);
+	
+	var _reactTextMarquee2 = _interopRequireDefault(_reactTextMarquee);
+	
+	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
+	
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var UpcomingEpisodes = function (_React$Component) {
+	  _inherits(UpcomingEpisodes, _React$Component);
+	
+	  function UpcomingEpisodes() {
+	    _classCallCheck(this, UpcomingEpisodes);
+	
+	    return _possibleConstructorReturn(this, (UpcomingEpisodes.__proto__ || Object.getPrototypeOf(UpcomingEpisodes)).apply(this, arguments));
+	  }
+	
+	  _createClass(UpcomingEpisodes, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          upComingEpisodes = _props.upComingEpisodes,
+	          tvShows = _props.tvShows;
+	
+	      if (upComingEpisodes.length > 0) {
+	        upComingEpisodes = (0, _utils.sortEpisodesByDate)(upComingEpisodes);
+	      }
+	      var self = this;
+	      var html = upComingEpisodes.map(function (episode, index) {
+	        var tvShowName = episode.tvShowName,
+	            _episode$episode = episode.episode,
+	            summary = _episode$episode.summary,
+	            color = _episode$episode.color,
+	            date = _episode$episode.date,
+	            season = _episode$episode.season,
+	            number = _episode$episode.number,
+	            name = _episode$episode.name;
+	
+	        var displayName = tvShowName + ' : S' + season + 'E' + number + ' ' + name + ' (' + date + ')';
+	        var tvShow = tvShows.find(function (tvShow) {
+	          return tvShow.tv_show_name == tvShowName;
+	        });
+	        return _react2.default.createElement(
+	          'span',
+	          { style: { color: color, padding: '0px 30px' }, key: index, title: summary || '',
+	            onClick: function onClick() {
+	              return self.props.showModal(tvShow);
+	            } },
+	          displayName
+	        );
+	      });
+	      return _react2.default.createElement(
+	        'div',
+	        { style: styles.container },
+	        _react2.default.createElement(_reactTextMarquee2.default, { loop: true, hoverToStop: true, text: html })
+	      );
+	    }
+	  }]);
+	
+	  return UpcomingEpisodes;
+	}(_react2.default.Component);
+	
+	var styles = {
+	  container: {
+	    paddingBottom: '20px',
+	    display: 'grid',
+	    width: '100%'
+	  }
+	};
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  var upComingEpisodes = (0, _selectors.getUpcomingEpisodes)(state);
+	  var tvShows = (0, _selectors.getTVShowData)(state);
+	  return {
+	    upComingEpisodes: upComingEpisodes,
+	    tvShows: tvShows
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(UpcomingEpisodes);
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "UpcomingEpisodes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ }),
 /* 444 */
+/*!*******************************************!*\
+  !*** ./~/react-text-marquee/lib/index.js ***!
+  \*******************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(/*! react */ 1), __webpack_require__(/*! prop-types */ 320)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if (typeof exports !== "undefined") {
+	    factory(exports, require('react'), require('prop-types'));
+	  } else {
+	    var mod = {
+	      exports: {}
+	    };
+	    factory(mod.exports, global.React, global.propTypes);
+	    global.index = mod.exports;
+	  }
+	})(this, function (exports, _react, _propTypes) {
+	  'use strict';
+	
+	  Object.defineProperty(exports, "__esModule", {
+	    value: true
+	  });
+	
+	  var _react2 = _interopRequireDefault(_react);
+	
+	  var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	  function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : {
+	      default: obj
+	    };
+	  }
+	
+	  function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	      throw new TypeError("Cannot call a class as a function");
+	    }
+	  }
+	
+	  var _createClass = function () {
+	    function defineProperties(target, props) {
+	      for (var i = 0; i < props.length; i++) {
+	        var descriptor = props[i];
+	        descriptor.enumerable = descriptor.enumerable || false;
+	        descriptor.configurable = true;
+	        if ("value" in descriptor) descriptor.writable = true;
+	        Object.defineProperty(target, descriptor.key, descriptor);
+	      }
+	    }
+	
+	    return function (Constructor, protoProps, staticProps) {
+	      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	      if (staticProps) defineProperties(Constructor, staticProps);
+	      return Constructor;
+	    };
+	  }();
+	
+	  function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }
+	
+	    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+	  }
+	
+	  function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+	    }
+	
+	    subClass.prototype = Object.create(superClass && superClass.prototype, {
+	      constructor: {
+	        value: subClass,
+	        enumerable: false,
+	        writable: true,
+	        configurable: true
+	      }
+	    });
+	    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	  }
+	
+	  var FPS = 20;
+	  var STEP = 1;
+	  var TIMEOUT = 1 / FPS * 1000;
+	
+	  var Marquee = function (_Component) {
+	    _inherits(Marquee, _Component);
+	
+	    function Marquee() {
+	      var _ref;
+	
+	      var _temp, _this, _ret;
+	
+	      _classCallCheck(this, Marquee);
+	
+	      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	        args[_key] = arguments[_key];
+	      }
+	
+	      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Marquee.__proto__ || Object.getPrototypeOf(Marquee)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	        animatedWidth: 0,
+	        overflowWidth: 0
+	      }, _this.handleMouseEnter = function () {
+	        if (_this.props.hoverToStop) {
+	          clearTimeout(_this.marqueeTimer);
+	        } else if (_this.state.overflowWidth > 0) {
+	          _this.startAnimation();
+	        }
+	      }, _this.handleMouseLeave = function () {
+	        if (_this.props.hoverToStop && _this.state.overflowWidth > 0) {
+	          _this.startAnimation();
+	        } else {
+	          clearTimeout(_this.marqueeTimer);
+	          _this.setState({ animatedWidth: 0 });
+	        }
+	      }, _this.startAnimation = function () {
+	        clearTimeout(_this.marqueeTimer);
+	        var isLeading = _this.state.animatedWidth === 0;
+	        var timeout = isLeading ? _this.props.leading : TIMEOUT;
+	
+	        var animate = function animate() {
+	          var overflowWidth = _this.state.overflowWidth;
+	
+	          var animatedWidth = _this.state.animatedWidth + STEP;
+	          var isRoundOver = animatedWidth > overflowWidth;
+	
+	          if (isRoundOver) {
+	            if (_this.props.loop) {
+	              animatedWidth = 0;
+	            } else {
+	              return;
+	            }
+	          }
+	
+	          if (isRoundOver && _this.props.trailing) {
+	            _this.marqueeTimer = setTimeout(function () {
+	              _this.setState({ animatedWidth: animatedWidth });
+	              _this.marqueeTimer = setTimeout(animate, TIMEOUT);
+	            }, _this.props.trailing);
+	          } else {
+	            _this.setState({ animatedWidth: animatedWidth });
+	            _this.marqueeTimer = setTimeout(animate, TIMEOUT);
+	          }
+	        };
+	
+	        _this.marqueeTimer = setTimeout(animate, timeout);
+	      }, _this.measureText = function () {
+	        var container = _this.container;
+	        var node = _this.text;
+	
+	        if (container && node) {
+	          var containerWidth = container.offsetWidth;
+	          var textWidth = node.offsetWidth;
+	          var overflowWidth = textWidth - containerWidth;
+	
+	          if (overflowWidth !== _this.state.overflowWidth) {
+	            _this.setState({ overflowWidth: overflowWidth });
+	          }
+	        }
+	      }, _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	
+	    _createClass(Marquee, [{
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        this.measureText();
+	
+	        if (this.props.hoverToStop) {
+	          this.startAnimation();
+	        }
+	      }
+	    }, {
+	      key: 'componentDidUpdate',
+	      value: function componentDidUpdate() {
+	        this.measureText();
+	
+	        if (this.props.hoverToStop) {
+	          this.startAnimation();
+	        }
+	      }
+	    }, {
+	      key: 'componentWillUnmount',
+	      value: function componentWillUnmount() {
+	        var _this2 = this;
+	
+	        clearTimeout(this.marqueeTimer);
+	        setTimeout(function () {
+	          return clearTimeout(_this2.marqueeTimer);
+	        }, TIMEOUT);
+	      }
+	    }, {
+	      key: 'componentWillReceiveProps',
+	      value: function componentWillReceiveProps(nextProps) {
+	        if (this.props.text.length !== nextProps.text.length) {
+	          clearTimeout(this.marqueeTimer);
+	          this.setState({ animatedWidth: 0 });
+	        }
+	      }
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        var _this3 = this;
+	
+	        var style = {
+	          'position': 'relative',
+	          'right': this.state.animatedWidth,
+	          'whiteSpace': 'nowrap'
+	        };
+	
+	        if (this.state.overflowWidth < 0) {
+	          return _react2.default.createElement(
+	            'div',
+	            {
+	              ref: function ref(el) {
+	                _this3.container = el;
+	              },
+	              className: 'ui-marquee ' + this.props.className,
+	              style: { overflow: 'hidden' }
+	            },
+	            _react2.default.createElement(
+	              'span',
+	              {
+	                ref: function ref(el) {
+	                  _this3.text = el;
+	                },
+	                style: style,
+	                title: this.props.text
+	              },
+	              this.props.text
+	            )
+	          );
+	        }
+	
+	        return _react2.default.createElement(
+	          'div',
+	          {
+	            ref: function ref(el) {
+	              _this3.container = el;
+	            },
+	            className: ('ui-marquee ' + this.props.className).trim(),
+	            style: { overflow: 'hidden' },
+	            onMouseEnter: this.handleMouseEnter,
+	            onMouseLeave: this.handleMouseLeave
+	          },
+	          _react2.default.createElement(
+	            'span',
+	            {
+	              ref: function ref(el) {
+	                _this3.text = el;
+	              },
+	              style: style,
+	              title: this.props.text
+	            },
+	            this.props.text
+	          )
+	        );
+	      }
+	    }]);
+	
+	    return Marquee;
+	  }(_react.Component);
+	
+	  Marquee.displayName = 'Marquee';
+	  Marquee.propTypes = {
+	    text: _propTypes2.default.string,
+	    hoverToStop: _propTypes2.default.bool,
+	    loop: _propTypes2.default.bool,
+	    leading: _propTypes2.default.number,
+	    trailing: _propTypes2.default.number,
+	    className: _propTypes2.default.string
+	  };
+	  Marquee.defaultProps = {
+	    text: '',
+	    hoverToStop: false,
+	    loop: false,
+	    leading: 0,
+	    trailing: 0,
+	    className: ''
+	  };
+	  exports.default = Marquee;
+	});
+
+/***/ }),
+/* 445 */
 /*!*********************************************!*\
   !*** ./src/client/app/js/actions/tvshow.js ***!
   \*********************************************/
@@ -46359,7 +46786,7 @@
 	        isLocal = data.isLocal,
 	        isInit = data.isInit;
 	
-	    var interval = isInit ? 0 : 1000;
+	    var interval = 3000;
 	    Services.fetchData(url).then(function (response) {
 	      var error = response.error,
 	          data = response.data;
@@ -46441,7 +46868,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "tvshow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 445 */
+/* 446 */
 /*!******************************************!*\
   !*** ./src/client/app/js/store/store.js ***!
   \******************************************/
@@ -46458,11 +46885,11 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 446);
+	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 447);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 447);
+	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 448);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
@@ -46481,7 +46908,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "store.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 446 */
+/* 447 */
 /*!************************************!*\
   !*** ./~/redux-thunk/lib/index.js ***!
   \************************************/
@@ -46512,7 +46939,7 @@
 	exports['default'] = thunk;
 
 /***/ }),
-/* 447 */
+/* 448 */
 /*!************************************************!*\
   !*** ./src/client/app/js/reducers/reducers.js ***!
   \************************************************/
@@ -46529,9 +46956,9 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _movies = __webpack_require__(/*! ./movies */ 448);
+	var _movies = __webpack_require__(/*! ./movies */ 449);
 	
-	var _tvshow = __webpack_require__(/*! ./tvshow */ 449);
+	var _tvshow = __webpack_require__(/*! ./tvshow */ 450);
 	
 	var createReducer = exports.createReducer = function createReducer() {
 	  return (0, _redux.combineReducers)({
@@ -46545,7 +46972,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "reducers.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 448 */
+/* 449 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/movies.js ***!
   \**********************************************/
@@ -46613,7 +47040,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "movies.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 449 */
+/* 450 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/tvshow.js ***!
   \**********************************************/
@@ -46634,7 +47061,7 @@
 	
 	var _actionTypes = __webpack_require__(/*! ../actions/actionTypes.js */ 350);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	var loading = exports.loading = function loading() {
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -46704,6 +47131,7 @@
 			    tvShowName = _action$payload2.tvShowName,
 			    response = _action$payload2.response;
 	
+			var upcoming = void 0;
 			if (response) {
 				var _episodes = response.map(function (episode) {
 					var id = episode.id,
@@ -46714,6 +47142,9 @@
 					    airdate = episode.airdate;
 	
 					var dateInfo = (0, _utils.getDate)(airdate);
+					if (!upcoming && (dateInfo.color == 'yellow' || dateInfo.color == 'red')) {
+						upcoming = _extends({}, episode, dateInfo);
+					}
 					return _extends({ id: id, tv_show_episode: name, season: season, number: number, summary: summary, airdate: airdate }, dateInfo);
 				});
 	
@@ -46738,7 +47169,7 @@
 					seasons[seasonNo - 1].episodes = episodesData;
 				}
 				var newState = _extends({}, state);
-				newState[tvShowName] = seasons;
+				newState[tvShowName] = { seasons: seasons, upcoming: upcoming };
 				return newState;
 			}
 		}

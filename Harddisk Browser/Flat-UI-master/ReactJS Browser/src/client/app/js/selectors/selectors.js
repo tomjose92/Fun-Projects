@@ -19,10 +19,25 @@ export const getCurrentTVShowInfo = createSelector(
 
 export const getCurrentTVShowEpisodes = createSelector(
   [getCurrentTVShow, getTVShowEpisodes],
-  (tvShowName, episodes) => episodes[tvShowName]
+  (tvShowName, episodes) => episodes[tvShowName] && episodes[tvShowName].seasons
 );
 
 export const getCurrentTVShowCasts = createSelector(
   [getCurrentTVShow, getTVShowCasts],
   (tvShowName, casts) => casts[tvShowName]
+);
+
+export const getUpcomingEpisodes = createSelector(
+  [getTVShowEpisodes],
+  (episodes) => {
+  	let upcoming = [];
+  	for(let show in episodes)
+  	{
+  		if(episodes[show].upcoming)
+  		{
+  			upcoming.push({tvShowName:show,episode:episodes[show].upcoming});
+  		}
+  	}
+  	return upcoming;
+  }
 );

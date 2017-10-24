@@ -59,3 +59,13 @@ export const getDate = (date) => {
   }
   return {color, date: newDate};
 }
+
+export const sortEpisodesByDate = (episodes) => {
+  return episodes.sort(function(a,b){
+    let {episode:{date:aDate}} = a,
+    {episode:{date:bDate}} = b;
+    aDate = new Date(aDate).getTime();
+    bDate = new Date(bDate).getTime();
+    return aDate > bDate;
+  });
+}
