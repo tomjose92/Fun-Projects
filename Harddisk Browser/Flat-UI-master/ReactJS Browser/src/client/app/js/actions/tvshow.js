@@ -128,6 +128,7 @@ export const fetchTVShowCast = (data) => {
     Services.fetchTVShowCast(tvShowID)
     .then((response)=>{
       dispatch(fetchTVShowCastSuccess({tvShowName,response}));
+      dispatch(setCurrentTVShow(tvShowName));
     });
   };
 }

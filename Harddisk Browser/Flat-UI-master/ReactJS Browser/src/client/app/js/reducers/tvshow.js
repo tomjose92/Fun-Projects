@@ -146,7 +146,7 @@ export const casts = (state=[],action) =>{
 }
 
 export const currentTVShow = (state='', action) =>{
-	if(action.type === SET_CURRENT_TVSHOW_SUCCESS || action.type === FETCH_TVSHOW_EPISODES_SUCCESS){
+	if(action.type === SET_CURRENT_TVSHOW_SUCCESS){
 		return action.payload.tvShowName;
 	}
 	return state;

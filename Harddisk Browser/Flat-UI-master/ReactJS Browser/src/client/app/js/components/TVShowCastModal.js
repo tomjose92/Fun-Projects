@@ -16,10 +16,6 @@ class TVShowCastModal extends Component {
     this.handleKeyPress();
   }
 
-  componentWillUnmount(){
-    document.onkeydown = null;
-  }  
-
   handleKeyPress(){
     let self = this;
     document.onkeydown = function(evt) {

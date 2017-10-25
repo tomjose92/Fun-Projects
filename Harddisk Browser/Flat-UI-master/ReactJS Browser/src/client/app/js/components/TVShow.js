@@ -17,7 +17,9 @@ import {  fetchTVShowsData,
 import {  getTVShowData, 
           isFetchingTVShow, 
           getTVShowStatus,
-          getTVShowsInfo} from '../selectors/selectors';
+          getTVShowsInfo,
+          getTVShows,
+          getCurrentTVShow} from '../selectors/selectors';
 import isEmpty from 'lodash/isEmpty';
 
 class TVShow extends React.Component {
@@ -235,12 +237,15 @@ class TVShow extends React.Component {
 
     componentDidUpdate(prevProps, prevState)
     {
-      let {tvShows} = this.props;
-      let {tvShows: oldTVShows, isLoading:oldLoading} = prevProps;
+      let {tvShows, currentShow} = this.props;
+      let {tvShows: oldTVShows, currentShow: prevShow, isLoading:oldLoading} = prevProps;
+      if(currentShow!=prevShow)
+      {
+        this.toggleAddShow(false);
+      }
       if(tvShows!=oldTVShows)
       {
         this.setState({records: tvShows});
-        this.toggleAddShow(false);
       }      
     }
 
@@ -280,7 +285,8 @@ const styles={
     position: 'absolute',
     marginTop: '110px',
     marginLeft: '100px',
-    marginRight: '100px'
+    marginRight: '100px',
+    textAlign: 'left'
   },
   image:{
     height: '300px',
@@ -328,11 +334,13 @@ const mapStateToProps = (state) =>{
   let isLoading = isFetchingTVShow(state);
   let isLocal = getTVShowStatus(state);
   let tvShowsInfo = getTVShowsInfo(state);
+  let currentShow = getCurrentTVShow(state);
   return {
     tvShows,
     isLoading,
     isLocal,
-    tvShowsInfo
+    tvShowsInfo,
+    currentShow
   };
 };
 
