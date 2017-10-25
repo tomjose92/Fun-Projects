@@ -59,6 +59,7 @@ class TVShowModal extends Component {
     {
       customStyles.content.width = width;
     }
+    let image = currentTVShowInfo && currentTVShowInfo.image && currentTVShowInfo.image.medium;
     return (
        <Modal className='tvShowModal' contentLabel='ShowModal' style={customStyles} isOpen={this.state.isOpen}>
           <div className='showTitle' style={styles.titleContainer}>
@@ -67,9 +68,9 @@ class TVShowModal extends Component {
             {next && <a style={{cursor:'pointer'}} className='fui-triangle-right-large' onClick={()=>this.props.navShow(next, index+1)}/>}
           </div>
           <div className='showImage' style={styles.imageContainer}>
-            <img id='modal_image' 
-              style={Object.assign({},styles.image,Images[tv_show_tag],ModalPosition[tv_show_tag])} 
-            />
+            {Images[tv_show_tag]?
+              <img id='modal_image' style={Object.assign({},styles.image,Images[tv_show_tag],ModalPosition[tv_show_tag])}/> 
+              : <img id='modal_image' src={image} style={styles.image} />}
           </div>
           {seasons && <TVShowSeason showName={tv_show_name} seasons={seasons} />}
           {currentTVShowInfo && 
@@ -137,7 +138,8 @@ const styles={
     height: '498px',
     width: '450px',
     backgroundSize: '2292px 2536px',
-    backgroundRepeat: 'no-repeat'
+    backgroundRepeat: 'no-repeat',
+    border: '1px solid white'
   },
   close:{
     background: '#56544D',

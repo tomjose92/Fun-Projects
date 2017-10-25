@@ -7,13 +7,12 @@ import Gap from './common/Gap';
 import {Images, ImagePosition} from '../constants/images';
 import TVShowModal from './TVShowModal';
 import UpcomingEpisodes from './UpcomingEpisodes';
-import {blurImage} from '../utils/utils';
-import {fetchTVShowsData, fetchTVShowInfo, setCurrentTVShow} from '../actions/tvshow';
+import {blurImage, extractTVShowsFromURL, getBookmark} from '../utils/utils';
+import {fetchTVShowsData, fetchTVShowInfo, setCurrentTVShow, setTVShowData} from '../actions/tvshow';
 import {  getTVShowData, 
           isFetchingTVShow, 
           getTVShowStatus,
-          getTVShowsInfo,
-          getUpcomingEpisodes} from '../selectors/selectors';
+          getTVShowsInfo} from '../selectors/selectors';
 import isEmpty from 'lodash/isEmpty';
 
 class TVShow extends React.Component {
@@ -32,9 +31,18 @@ class TVShow extends React.Component {
     fetchTVShowData(isLocal=true){
       console.log('fetchTVShowData');
       console.log('Accessing',isLocal?'local':'online');   
+
+      let data = extractTVShowsFromURL();
       let url = isLocal?TVSHOW_LOCAL_URL: TVSHOW_ONLINE_URL;
       let {isInit} = this.state;
-      this.props.fetchTVShowsData({url, isLocal, isInit});
+      if(data.length>0)
+      {
+        this.props.setTVShowData(data);  
+      }
+      else
+      {
+        this.props.fetchTVShowsData({url, isLocal, isInit});
+      }
       !isInit && this.setState({
         isInit: true
       });
@@ -73,7 +81,6 @@ class TVShow extends React.Component {
       let {records: tvShows} = this.state;
       let {tvShowsInfo} = this.props;
       let {tv_show_name} = tvShow;
-      
       if(!tvShowsInfo[tv_show_name])
       {
         this.props.fetchTVShowInfo(tv_show_name);
@@ -82,7 +89,7 @@ class TVShow extends React.Component {
       {
         this.props.setCurrentTVShow(tv_show_name);  
       }
-      if(index)
+      if(index!=undefined)
       {
         tvShow.prev = tvShows[index-1];
         tvShow.next = tvShows[index+1];
@@ -133,14 +140,19 @@ class TVShow extends React.Component {
   	render() {
       let self=this,
     	{error, open, tvShow,search, records: tvShows} = this.state;
-      let {isLocal, isLoading} = this.props;
-
+      let {isLocal, isLoading, tvShowsInfo} = this.props;
+      let bookmark = getBookmark(tvShows);
     	let TVShowImages = isEmpty(tvShows)? null : tvShows.map(function(tvShow,i){
         let {tv_show_name, tv_show_tag} = tvShow;
+        let showInfo = tvShowsInfo && tvShowsInfo[tv_show_name];
+        let image = showInfo && showInfo.image && showInfo.image.medium;
         return (
           <span className='tvShow' title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
             <a onClick={()=>self.showModal(tvShow, i)}>
-              <img className='tvshow' key={"image"+i} style={Object.assign({},styles.image,Images[tv_show_tag], ImagePosition[tv_show_tag])}/>
+              {Images[tv_show_tag] ? 
+                <img className='tvshow' key={"image"+i} style={Object.assign({},styles.image,Images[tv_show_tag], ImagePosition[tv_show_tag])}/>
+                :<img className='tvshow' key={"image"+i} style={styles.image} src={image}/>
+              }
             </a>
           </span>
         )
@@ -158,6 +170,9 @@ class TVShow extends React.Component {
               {search && <input onChange={(e)=>this.setSearchText(e)} style={styles.inputText} type='text'></input>}
               <span style={{cursor:'pointer',paddingLeft:'10px'}} className={search?'fui-cross':'fui-search'} onClick={()=>this.toggleSearch()}/>
             </div>
+            {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
+                <a href={bookmark} style={styles.bookmark}>Bookmark</a>
+            </div>}
             <div className='tvShowPage' style={styles.container}>
               {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
               <UpcomingEpisodes showModal={(tvShow)=>this.showModal(tvShow)}/>
@@ -208,6 +223,19 @@ const styles={
     color:'white',
     height: '0px'
   },
+  bookmarkContainer:{
+    zIndex: 100,
+    position: 'fixed',
+    top: '10px',
+    textAlign: 'right',
+    right: '200px',
+    border: '2px solid white',
+    backgroundColor: 'black'
+  },
+  bookmark:{
+    padding: '0px 15px',
+    color: 'white'
+  },
   container:{
     position: 'absolute',
     marginTop: '100px',
@@ -249,6 +277,7 @@ export default connect(
   {
     fetchTVShowsData,
     fetchTVShowInfo,
-    setCurrentTVShow
+    setCurrentTVShow,
+    setTVShowData
   }
 )(TVShow);

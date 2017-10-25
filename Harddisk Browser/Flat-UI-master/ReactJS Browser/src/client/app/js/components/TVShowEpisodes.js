@@ -2,7 +2,7 @@ import React from 'react';
 import Link from './common/Link';
 import Space from './common/Space';
 import Icon from './common/Icon';
-import {getEpisodesWidth} from '../utils/utils';
+import {getEpisodesWidth, stripHTMLFromText} from '../utils/utils';
 
 class TVShowEpisodes extends React.Component {
 
@@ -27,7 +27,7 @@ class TVShowEpisodes extends React.Component {
       return (
         <div key={"episode"+k} >
           <div style={styles.container} className="fui-arrow-right">
-            <Link title={summary} style={{marginLeft:'10px', color:'white'}} content={episodeName} />
+            <Link title={stripHTMLFromText(summary)} style={{marginLeft:'10px', color:'white'}} content={episodeName} />
             {/*<Space space='space20' /><a href=""> <Icon src="img/icons/svg/tv.svg"/></a>
             <Space space='space20' /><a href=""> <Icon src="img/icons/svg/closed-captioning.svg"/></a>*/}
           </div>

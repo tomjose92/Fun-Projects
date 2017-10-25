@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Marquee from 'react-text-marquee';
 import {getUpcomingEpisodes, getTVShowData} from '../selectors/selectors';
-import {sortEpisodesByDate} from '../utils/utils';
+import {sortEpisodesByDate, stripHTMLFromText} from '../utils/utils';
 
 class UpcomingEpisodes extends React.Component {
   render(){
@@ -18,7 +18,8 @@ class UpcomingEpisodes extends React.Component {
         return tvShow.tv_show_name == tvShowName
       });
       return (
-        <span style={{color, padding:'0px 30px'}} key={index} title={summary || ''}
+        <span style={{color, padding:'0px 30px', cursor: 'pointer'}} 
+          key={index} title={stripHTMLFromText(summary) || ''}
           onClick={()=>self.props.showModal(tvShow)}>
           {displayName}
         </span>

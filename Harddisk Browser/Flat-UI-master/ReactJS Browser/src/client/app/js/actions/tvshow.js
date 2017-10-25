@@ -48,6 +48,20 @@ export const setCurrentTVShowSuccess = (tvShowName) => {
   };
 };
 
+export const setTVShowData = (data) => {
+  return (dispatch) => {
+    dispatch(fetchTVShowsStart());
+    let interval = 3000;
+    for(let tvShow of data)
+    {
+      dispatch(fetchTVShowInfo(tvShow.tv_show_name));
+    }
+    setTimeout(() => {
+      dispatch(fetchTVShowsSuccess({response: {data}, isLocal: false, isInit: true}));
+    }, interval);
+  }
+}
+
 export const fetchTVShowsData = (data) => {
   return (dispatch) => {
     dispatch(fetchTVShowsStart());

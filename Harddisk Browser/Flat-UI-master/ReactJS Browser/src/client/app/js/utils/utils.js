@@ -69,3 +69,34 @@ export const sortEpisodesByDate = (episodes) => {
     return aDate > bDate;
   });
 }
+
+export const stripHTMLFromText = (html) =>{
+  var rex = /(<([^>]+)>)/ig;
+  return html && (html.replace(rex , ""));
+}
+
+export const extractTVShowsFromURL = ()=>{
+  let location = window.location.href;
+  location = location.split('/TVShow/?')[1];
+  let data = location? location.split('&') :[]
+  let tvShows = [];
+  for (let i in data){
+    let values = data[i].split('=');
+
+    if(values[0]=='tvShow')
+    {
+      tvShows.push({tv_show_name: values[1], tv_show_tag: values[1].replace(/\s/g,'').toLowerCase()});
+    }
+  }
+  return tvShows;
+}
+
+export const getBookmark = (data) =>{
+  let location = window.location.href;
+  location = location.split('/TVShow')[0];
+  location += '/TVShow/?';
+  for(let i in data){
+    location += `tvShow=${data[i].tv_show_name}&`;
+  }
+  return location;
+}
