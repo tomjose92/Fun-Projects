@@ -35342,7 +35342,7 @@
 	var TVMAZE_SHOW_URL = exports.TVMAZE_SHOW_URL = 'https://api.tvmaze.com/singlesearch/shows?q=name&embed[]=episodes&embed[]=cast';
 	var TVMAZE_EPISODES_URL = exports.TVMAZE_EPISODES_URL = 'https://api.tvmaze.com/shows/id/episodes';
 	var TVMAZE_CAST_URL = exports.TVMAZE_CAST_URL = 'https://api.tvmaze.com/shows/id/cast';
-	var TVMAZE_SEARCH_URL = exports.TVMAZE_SEARCH_URL = 'http://api.tvmaze.com/search/shows?q=';
+	var TVMAZE_SEARCH_URL = exports.TVMAZE_SEARCH_URL = 'https://api.tvmaze.com/search/shows?q=';
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "apis.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
