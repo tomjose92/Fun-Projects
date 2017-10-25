@@ -160,29 +160,28 @@ class TVShow extends React.Component {
       let value = bool!=undefined? bool : !addShow;
       this.setState({
         addShow: value,
-        addShowText: ''
+        addShowText: null
       });
     }
 
-    addTVShow(){
-      let {addShowText} = this.state,
-      {tvShows} = this.props;
+    addTVShow(tvShowName){
+      let {tvShows} = this.props;
       let existingShow = tvShows.find(function(tvShow){
-        return addShowText==tvShow.tv_show_name
+        return tvShowName==tvShow.tv_show_name
       });
-      if(addShowText && addShowText.trim()!='' && !existingShow)
+      if(tvShowName && tvShowName.trim()!='' && !existingShow)
       {
-        this.props.addTVShow(addShowText);
+        this.props.addTVShow(tvShowName);
       }
     }
 
   	render() {
       let self=this,
-    	{error, open, tvShow,search, addShow, records: tvShows} = this.state;
+    	{error, open, tvShow,search, addShow, records: tvShows, addShowText} = this.state;
       let {isLocal, isLoading, tvShowsInfo, searchOptions} = this.props;
       let bookmark = getBookmark(tvShows);
       let options = [];
-      if(addShow){
+      if(addShowText){
         options = searchOptions.map(function(option, index){
           let {name, rating:{average: rating}, image, status} = option;
           return (
@@ -190,7 +189,7 @@ class TVShow extends React.Component {
               {name} &nbsp; &nbsp; 
               {rating && <span style={styles.showInfo}>Rating : {rating} &nbsp;|&nbsp;</span>}
               {status && <span style={styles.showInfo}>Status : {status} </span>}
-              <span title='Add' style={{cursor:'pointer',paddingLeft:'20px'}} className={'fui-plus'} onClick={()=>self.addTVShow()}/>
+              <span title={'Add TV Show : '+name} style={{cursor:'pointer',paddingLeft:'20px'}} className={'fui-plus'} onClick={()=>self.addTVShow(name)}/>
             </li>
           );
         });
@@ -227,7 +226,6 @@ class TVShow extends React.Component {
 
               <span style={{paddingLeft:'50px', paddingRight: '10px'}}>Add Show</span> 
               {addShow && <input onChange={(e)=>this.setAddShow(e)} style={styles.inputText} type='text'></input>}
-              {addShow && <span style={{cursor:'pointer',paddingLeft:'10px'}} className={'fui-plus'} onClick={()=>this.addTVShow()}/>}
               <span style={{cursor:'pointer',paddingLeft:'10px'}} className={addShow?'fui-cross':'fui-plus'} onClick={()=>this.toggleAddShow()}/>
               <div className='mediaBG' style={styles.searchBar}><ul>{options}</ul></div>
             </div>
@@ -352,7 +350,6 @@ const styles={
   },
   searchBar:{
     position:'absolute', 
-    textAlign: '-webkit-center',
     display: '-webkit-box',
     overflow: 'overlay',
     maxHeight: '150px',
@@ -395,4 +392,4 @@ export default connect(
     removeTVShow,
     searchTVShow
   }
-)(TVShow);
+)(TVShow);  

@@ -43101,20 +43101,19 @@
 	      var value = bool != undefined ? bool : !addShow;
 	      this.setState({
 	        addShow: value,
-	        addShowText: ''
+	        addShowText: null
 	      });
 	    }
 	  }, {
 	    key: 'addTVShow',
-	    value: function addTVShow() {
-	      var addShowText = this.state.addShowText,
-	          tvShows = this.props.tvShows;
+	    value: function addTVShow(tvShowName) {
+	      var tvShows = this.props.tvShows;
 	
 	      var existingShow = tvShows.find(function (tvShow) {
-	        return addShowText == tvShow.tv_show_name;
+	        return tvShowName == tvShow.tv_show_name;
 	      });
-	      if (addShowText && addShowText.trim() != '' && !existingShow) {
-	        this.props.addTVShow(addShowText);
+	      if (tvShowName && tvShowName.trim() != '' && !existingShow) {
+	        this.props.addTVShow(tvShowName);
 	      }
 	    }
 	  }, {
@@ -43129,7 +43128,8 @@
 	          tvShow = _state.tvShow,
 	          search = _state.search,
 	          addShow = _state.addShow,
-	          tvShows = _state.records;
+	          tvShows = _state.records,
+	          addShowText = _state.addShowText;
 	      var _props = this.props,
 	          isLocal = _props.isLocal,
 	          isLoading = _props.isLoading,
@@ -43138,7 +43138,7 @@
 	
 	      var bookmark = (0, _utils.getBookmark)(tvShows);
 	      var options = [];
-	      if (addShow) {
+	      if (addShowText) {
 	        options = searchOptions.map(function (option, index) {
 	          var name = option.name,
 	              rating = option.rating.average,
@@ -43164,8 +43164,8 @@
 	              status,
 	              ' '
 	            ),
-	            _react2.default.createElement('span', { title: 'Add', style: { cursor: 'pointer', paddingLeft: '20px' }, className: 'fui-plus', onClick: function onClick() {
-	                return self.addTVShow();
+	            _react2.default.createElement('span', { title: 'Add TV Show : ' + name, style: { cursor: 'pointer', paddingLeft: '20px' }, className: 'fui-plus', onClick: function onClick() {
+	                return self.addTVShow(name);
 	              } })
 	          );
 	        });
@@ -43232,9 +43232,6 @@
 	            addShow && _react2.default.createElement('input', { onChange: function onChange(e) {
 	                return _this2.setAddShow(e);
 	              }, style: styles.inputText, type: 'text' }),
-	            addShow && _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: 'fui-plus', onClick: function onClick() {
-	                return _this2.addTVShow();
-	              } }),
 	            _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: addShow ? 'fui-cross' : 'fui-plus', onClick: function onClick() {
 	                return _this2.toggleAddShow();
 	              } }),
@@ -43390,7 +43387,6 @@
 	  },
 	  searchBar: {
 	    position: 'absolute',
-	    textAlign: '-webkit-center',
 	    display: '-webkit-box',
 	    overflow: 'overlay',
 	    maxHeight: '150px',
