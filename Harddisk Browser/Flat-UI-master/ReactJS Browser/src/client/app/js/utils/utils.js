@@ -87,7 +87,9 @@ export const extractTVShowsFromURL = ()=>{
 
     if(values[0]=='tvShow')
     {
-      tvShows.push({tv_show_name: values[1], tv_show_tag: values[1].replace(/\s/g,'').toLowerCase()});
+      let tv_show_name = values[1].replace(/%20/g,' ');
+      let tv_show_tag = tv_show_name.replace(/\s/g,'').toLowerCase();
+      tvShows.push({tv_show_name, tv_show_tag});
     }
   }
   return tvShows;

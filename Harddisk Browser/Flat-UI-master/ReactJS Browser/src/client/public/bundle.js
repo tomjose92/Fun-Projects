@@ -77,7 +77,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
 	
-	var _store = __webpack_require__(/*! ./js/store/store */ 447);
+	var _store = __webpack_require__(/*! ./js/store/store */ 446);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -35339,9 +35339,10 @@
 	var TVSHOW_ONLINE_URL = exports.TVSHOW_ONLINE_URL = 'https://codingtj.000webhostapp.com/php/tvshow.php?isShowOnly=true';
 	var TVSHOW_LOCAL_URL = exports.TVSHOW_LOCAL_URL = 'json/tvshow.json';
 	
-	var TVMAZE_SHOW_URL = exports.TVMAZE_SHOW_URL = 'https://api.tvmaze.com/singlesearch/shows?q=';
+	var TVMAZE_SHOW_URL = exports.TVMAZE_SHOW_URL = 'https://api.tvmaze.com/singlesearch/shows?q=name&embed[]=episodes&embed[]=cast';
 	var TVMAZE_EPISODES_URL = exports.TVMAZE_EPISODES_URL = 'https://api.tvmaze.com/shows/id/episodes';
 	var TVMAZE_CAST_URL = exports.TVMAZE_CAST_URL = 'https://api.tvmaze.com/shows/id/cast';
+	var TVMAZE_SEARCH_URL = exports.TVMAZE_SEARCH_URL = 'http://api.tvmaze.com/search/shows?q=';
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "apis.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
@@ -35459,7 +35460,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.fetchTVShowCast = exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchData = undefined;
+	exports.searchTVShow = exports.fetchTVShowCast = exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchData = undefined;
 	
 	var _bluebird = __webpack_require__(/*! bluebird */ 352);
 	
@@ -35493,7 +35494,7 @@
 	var fetchTVShowInfo = exports.fetchTVShowInfo = function fetchTVShowInfo(show) {
 	    console.log("fetching TVShowInfo " + show);
 	    return new _bluebird.Promise(function (resolve) {
-	        var url = _apis.TVMAZE_SHOW_URL + show;
+	        var url = _apis.TVMAZE_SHOW_URL.replace('name', show);
 	        fetch(url).then(function (response) {
 	            return response.json();
 	        }).then(function (json) {
@@ -35528,6 +35529,20 @@
 	            resolve(json);
 	        }).catch(function (e) {
 	            console.log("fetchTVShowCast error", e);
+	        });
+	    });
+	};
+	
+	var searchTVShow = exports.searchTVShow = function searchTVShow(tvShowName) {
+	    console.log("fetching searchTVShow " + tvShowName);
+	    return new _bluebird.Promise(function (resolve) {
+	        var url = _apis.TVMAZE_SEARCH_URL + tvShowName;
+	        fetch(url).then(function (response) {
+	            return response.json();
+	        }).then(function (json) {
+	            resolve(json);
+	        }).catch(function (e) {
+	            console.log("searchTVShow error", e);
 	        });
 	    });
 	};
@@ -41689,7 +41704,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getCurrentTVShowCasts = exports.getCurrentTVShowEpisodes = exports.getCurrentTVShowInfo = exports.getCurrentTVShow = exports.getTVShowCasts = exports.getTVShowEpisodes = exports.getTVShowsInfo = exports.getTVShowStatus = exports.getTVShowData = exports.isFetchingTVShow = exports.getMovieStatus = exports.getMovieData = exports.isFetchingMovies = undefined;
+	exports.getCurrentTVShowCasts = exports.getCurrentTVShowEpisodes = exports.getCurrentTVShowInfo = exports.getSearchOptions = exports.getCurrentTVShow = exports.getTVShowCasts = exports.getTVShowEpisodes = exports.getTVShowsInfo = exports.getTVShowStatus = exports.getTVShowData = exports.isFetchingTVShow = exports.getMovieStatus = exports.getMovieData = exports.isFetchingMovies = undefined;
 	
 	var _reselect = __webpack_require__(/*! reselect */ 392);
 	
@@ -41723,6 +41738,9 @@
 	};
 	var getCurrentTVShow = exports.getCurrentTVShow = function getCurrentTVShow(state) {
 	  return state.tvshows && state.tvshows.currentTVShow;
+	};
+	var getSearchOptions = exports.getSearchOptions = function getSearchOptions(state) {
+	  return state.tvshows && state.tvshows.options;
 	};
 	
 	var getCurrentTVShowInfo = exports.getCurrentTVShowInfo = (0, _reselect.createSelector)([getCurrentTVShow, getTVShowsInfo], function (tvShowName, tvShowsInfo) {
@@ -43042,6 +43060,7 @@
 	        });
 	        return;
 	      }
+	
 	      tvShows = tvShows.filter(function (tvShow) {
 	        return tvShow.tv_show_name.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
 	      });
@@ -43069,6 +43088,7 @@
 	    key: 'setAddShow',
 	    value: function setAddShow(e) {
 	      var addShowText = e.target.value.trim();
+	      this.props.searchTVShow(addShowText);
 	      this.setState({
 	        addShowText: addShowText
 	      });
@@ -43081,7 +43101,7 @@
 	      var value = bool != undefined ? bool : !addShow;
 	      this.setState({
 	        addShow: value,
-	        toggleAddShow: ''
+	        addShowText: ''
 	      });
 	    }
 	  }, {
@@ -43113,9 +43133,44 @@
 	      var _props = this.props,
 	          isLocal = _props.isLocal,
 	          isLoading = _props.isLoading,
-	          tvShowsInfo = _props.tvShowsInfo;
+	          tvShowsInfo = _props.tvShowsInfo,
+	          searchOptions = _props.searchOptions;
 	
 	      var bookmark = (0, _utils.getBookmark)(tvShows);
+	      var options = [];
+	      if (addShow) {
+	        options = searchOptions.map(function (option, index) {
+	          var name = option.name,
+	              rating = option.rating.average,
+	              image = option.image,
+	              status = option.status;
+	
+	          return _react2.default.createElement(
+	            'li',
+	            { key: index, style: styles.option },
+	            name,
+	            ' \xA0 \xA0',
+	            rating && _react2.default.createElement(
+	              'span',
+	              { style: styles.showInfo },
+	              'Rating : ',
+	              rating,
+	              ' \xA0|\xA0'
+	            ),
+	            status && _react2.default.createElement(
+	              'span',
+	              { style: styles.showInfo },
+	              'Status : ',
+	              status,
+	              ' '
+	            ),
+	            _react2.default.createElement('span', { title: 'Add', style: { cursor: 'pointer', paddingLeft: '20px' }, className: 'fui-plus', onClick: function onClick() {
+	                return self.addTVShow();
+	              } })
+	          );
+	        });
+	      }
+	
 	      var TVShowImages = (0, _isEmpty2.default)(tvShows) ? null : tvShows.map(function (tvShow, i) {
 	        var tv_show_name = tvShow.tv_show_name,
 	            tv_show_tag = tvShow.tv_show_tag;
@@ -43182,7 +43237,16 @@
 	              } }),
 	            _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: addShow ? 'fui-cross' : 'fui-plus', onClick: function onClick() {
 	                return _this2.toggleAddShow();
-	              } })
+	              } }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'mediaBG', style: styles.searchBar },
+	              _react2.default.createElement(
+	                'ul',
+	                null,
+	                options
+	              )
+	            )
 	          ),
 	          bookmark && _react2.default.createElement(
 	            'div',
@@ -43319,7 +43383,25 @@
 	    textShadow: 'none',
 	    zIndex: '10',
 	    opacity: '0.7'
-	
+	  },
+	  showInfo: {
+	    color: 'grey',
+	    fontWeight: 100
+	  },
+	  searchBar: {
+	    position: 'absolute',
+	    textAlign: '-webkit-center',
+	    display: '-webkit-box',
+	    overflow: 'overlay',
+	    maxHeight: '150px',
+	    top: '50px',
+	    margin: '0px 500px',
+	    opacity: 0.8
+	  },
+	  option: {
+	    textAlign: 'left',
+	    fontWeight: 'bold',
+	    fontSize: '20px'
 	  }
 	};
 	
@@ -43329,12 +43411,14 @@
 	  var isLocal = (0, _selectors.getTVShowStatus)(state);
 	  var tvShowsInfo = (0, _selectors.getTVShowsInfo)(state);
 	  var currentShow = (0, _selectors.getCurrentTVShow)(state);
+	  var searchOptions = (0, _selectors.getSearchOptions)(state);
 	  return {
 	    tvShows: tvShows,
 	    isLoading: isLoading,
 	    isLocal: isLocal,
 	    tvShowsInfo: tvShowsInfo,
-	    currentShow: currentShow
+	    currentShow: currentShow,
+	    searchOptions: searchOptions
 	  };
 	};
 	
@@ -43344,7 +43428,8 @@
 	  setCurrentTVShow: _tvshow.setCurrentTVShow,
 	  setTVShowData: _tvshow.setTVShowData,
 	  addTVShow: _tvshow.addTVShow,
-	  removeTVShow: _tvshow.removeTVShow
+	  removeTVShow: _tvshow.removeTVShow,
+	  searchTVShow: _tvshow.searchTVShow
 	})(TVShow);
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -45966,7 +46051,9 @@
 	    var values = data[i].split('=');
 	
 	    if (values[0] == 'tvShow') {
-	      tvShows.push({ tv_show_name: values[1], tv_show_tag: values[1].replace(/\s/g, '').toLowerCase() });
+	      var tv_show_name = values[1].replace(/%20/g, ' ');
+	      var tv_show_tag = tv_show_name.replace(/\s/g, '').toLowerCase();
+	      tvShows.push({ tv_show_name: tv_show_name, tv_show_tag: tv_show_tag });
 	    }
 	  }
 	  return tvShows;
@@ -46878,7 +46965,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.removeTVShow = exports.addTVShow = exports.setCurrentTVShow = exports.fetchTVShowCast = exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchTVShowsData = exports.setTVShowData = exports.addTVShowSuccess = exports.removeTVShowSuccess = exports.setCurrentTVShowSuccess = exports.fetchTVShowCastSuccess = exports.fetchTVShowEpisodesSuccess = exports.fetchTVShowInfoSuccess = exports.fetchTVShowsError = exports.fetchTVShowsSuccess = exports.fetchTVShowsStart = undefined;
+	exports.searchTVShow = exports.removeTVShow = exports.addTVShow = exports.setCurrentTVShow = exports.fetchTVShowCast = exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchTVShowsData = exports.setTVShowData = exports.searchTVShowSuccess = exports.addTVShowSuccess = exports.removeTVShowSuccess = exports.setCurrentTVShowSuccess = exports.fetchTVShowCastSuccess = exports.fetchTVShowEpisodesSuccess = exports.fetchTVShowInfoSuccess = exports.fetchTVShowsError = exports.fetchTVShowsSuccess = exports.fetchTVShowsStart = undefined;
 	
 	var _actionTypes = __webpack_require__(/*! ./actionTypes.js */ 350);
 	
@@ -46951,10 +47038,17 @@
 	  };
 	};
 	
+	var searchTVShowSuccess = exports.searchTVShowSuccess = function searchTVShowSuccess(response) {
+	  return {
+	    type: 'SEARCH_TVSHOW_SUCCESS',
+	    payload: { response: response }
+	  };
+	};
+	
 	var setTVShowData = exports.setTVShowData = function setTVShowData(data) {
 	  return function (dispatch) {
 	    dispatch(fetchTVShowsStart());
-	    var interval = 3000;
+	    var interval = 1000;
 	    var _iteratorNormalCompletion = true;
 	    var _didIteratorError = false;
 	    var _iteratorError = undefined;
@@ -46993,7 +47087,7 @@
 	        isLocal = data.isLocal,
 	        isInit = data.isInit;
 	
-	    var interval = 3000;
+	    var interval = 1000;
 	    Services.fetchData(url).then(function (response) {
 	      var error = response.error,
 	          data = response.data;
@@ -47036,10 +47130,13 @@
 	  return function (dispatch) {
 	    Services.fetchTVShowInfo(tvShowName).then(function (response) {
 	      var id = response.id;
+	      //dispatch(fetchTVShowEpisodes({tvShowID:id , tvShowName}));
+	      //dispatch(fetchTVShowCast({tvShowID:id, tvShowName}));
 	
-	      dispatch(fetchTVShowEpisodes({ tvShowID: id, tvShowName: tvShowName }));
-	      dispatch(fetchTVShowCast({ tvShowID: id, tvShowName: tvShowName }));
 	      dispatch(fetchTVShowInfoSuccess({ tvShowName: tvShowName, response: response }));
+	      dispatch(fetchTVShowEpisodesSuccess({ tvShowName: tvShowName, response: response }));
+	      dispatch(fetchTVShowCastSuccess({ tvShowName: tvShowName, response: response }));
+	      dispatch(setCurrentTVShow(tvShowName));
 	    });
 	  };
 	};
@@ -47086,11 +47183,18 @@
 	  };
 	};
 	
+	var searchTVShow = exports.searchTVShow = function searchTVShow(tvShowName) {
+	  return function (dispatch) {
+	    Services.searchTVShow(tvShowName).then(function (response) {
+	      dispatch(searchTVShowSuccess(response));
+	    });
+	  };
+	};
+	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "tvshow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 446 */,
-/* 447 */
+/* 446 */
 /*!******************************************!*\
   !*** ./src/client/app/js/store/store.js ***!
   \******************************************/
@@ -47107,11 +47211,11 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 448);
+	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 447);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 449);
+	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 448);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
@@ -47130,7 +47234,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "store.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 448 */
+/* 447 */
 /*!************************************!*\
   !*** ./~/redux-thunk/lib/index.js ***!
   \************************************/
@@ -47161,7 +47265,7 @@
 	exports['default'] = thunk;
 
 /***/ }),
-/* 449 */
+/* 448 */
 /*!************************************************!*\
   !*** ./src/client/app/js/reducers/reducers.js ***!
   \************************************************/
@@ -47178,9 +47282,9 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _movies = __webpack_require__(/*! ./movies */ 450);
+	var _movies = __webpack_require__(/*! ./movies */ 449);
 	
-	var _tvshow = __webpack_require__(/*! ./tvshow */ 451);
+	var _tvshow = __webpack_require__(/*! ./tvshow */ 450);
 	
 	var createReducer = exports.createReducer = function createReducer() {
 	  return (0, _redux.combineReducers)({
@@ -47194,7 +47298,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "reducers.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 450 */
+/* 449 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/movies.js ***!
   \**********************************************/
@@ -47262,7 +47366,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "movies.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 451 */
+/* 450 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/tvshow.js ***!
   \**********************************************/
@@ -47275,7 +47379,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.tvshows = exports.currentTVShow = exports.casts = exports.episodes = exports.showsInfo = exports.isLocal = exports.tvShows = exports.loading = undefined;
+	exports.tvshows = exports.options = exports.currentTVShow = exports.casts = exports.episodes = exports.showsInfo = exports.isLocal = exports.tvShows = exports.loading = undefined;
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
@@ -47376,7 +47480,9 @@
 	
 			var upcoming = void 0;
 			if (response) {
-				var _episodes = response.map(function (episode) {
+				var responseEpisodes = response._embedded.episodes;
+	
+				var _episodes = responseEpisodes.map(function (episode) {
 					var id = episode.id,
 					    name = episode.name,
 					    season = episode.season,
@@ -47434,7 +47540,9 @@
 			    response = _action$payload3.response;
 	
 			if (response) {
-				var _casts = response.map(function (cast) {
+				var responseCast = response._embedded.cast;
+	
+				var _casts = responseCast.map(function (cast) {
 					var _cast$person = cast.person,
 					    realName = _cast$person.name,
 					    real = _cast$person.image,
@@ -47469,6 +47577,31 @@
 		return state;
 	};
 	
+	var options = exports.options = function options() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var action = arguments[1];
+	
+		if (action.type === 'CLEAR_SEARCH') {
+			return [];
+		}
+		if (action.type === 'SEARCH_TVSHOW_SUCCESS') {
+			var response = action.payload.response;
+	
+			var searchOptions = response.map(function (show) {
+				var _show$show = show.show,
+				    name = _show$show.name,
+				    status = _show$show.status,
+				    image = _show$show.image,
+				    rating = _show$show.rating,
+				    id = _show$show.id;
+	
+				return { name: name, status: status, image: image, rating: rating, id: id };
+			});
+			return searchOptions;
+		}
+		return state;
+	};
+	
 	var tvshows = exports.tvshows = (0, _redux.combineReducers)({
 		loading: loading,
 		tvShows: tvShows,
@@ -47476,7 +47609,8 @@
 		showsInfo: showsInfo,
 		episodes: episodes,
 		casts: casts,
-		currentTVShow: currentTVShow
+		currentTVShow: currentTVShow,
+		options: options
 	});
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "tvshow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }

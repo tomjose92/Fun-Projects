@@ -80,7 +80,8 @@ export const episodes = (state=[], action) => {
 		let {tvShowName, response} = action.payload;
 		let upcoming;
 		if(response){
-			let episodes = response.map(function(episode){
+			let {_embedded:{episodes: responseEpisodes}} = response;
+			let episodes = responseEpisodes.map(function(episode){
 				let {id, name, season, number, summary, airdate} = episode;
 				let dateInfo = getDate(airdate);
 				if(!upcoming && (dateInfo.color == 'yellow' || dateInfo.color == 'red'))
@@ -125,7 +126,8 @@ export const casts = (state=[],action) =>{
 	if(action.type === FETCH_TVSHOW_CAST_SUCCESS){
 		let {tvShowName, response} = action.payload;
 		if(response){
-			let casts = response.map(function(cast){
+			let {_embedded:{cast: responseCast}} = response;
+			let casts = responseCast.map(function(cast){
 				let {person:{name: realName, image: real},
 					character:{name: characterName, image: character}} = cast;
 				let realImage = real && real.medium;
@@ -152,6 +154,21 @@ export const currentTVShow = (state='', action) =>{
 	return state;
 }
 
+export const options = (state=[], action) =>{
+	if(action.type === 'CLEAR_SEARCH'){
+		return [];
+	}
+	if(action.type === 'SEARCH_TVSHOW_SUCCESS'){
+		let {response} = action.payload;
+		let searchOptions = response.map(function(show){
+			let {show: {name, status, image, rating, id}} = show;
+			return {name, status, image, rating, id}
+		});
+		return searchOptions;
+	}
+	return state;	
+}
+
 export const tvshows = combineReducers({
   loading,
   tvShows,
@@ -159,6 +176,7 @@ export const tvshows = combineReducers({
   showsInfo,
   episodes,
   casts,
-  currentTVShow
+  currentTVShow,
+  options
 });
 

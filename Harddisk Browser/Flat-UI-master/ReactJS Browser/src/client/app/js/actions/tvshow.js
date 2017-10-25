@@ -62,10 +62,17 @@ export const addTVShowSuccess = (tvShowName) => {
   };
 }
 
+export const searchTVShowSuccess = (response) =>{
+  return {
+    type: 'SEARCH_TVSHOW_SUCCESS',
+    payload: {response}
+  };
+}
+
 export const setTVShowData = (data) => {
   return (dispatch) => {
     dispatch(fetchTVShowsStart());
-    let interval = 3000;
+    let interval = 1000;
     for(let tvShow of data)
     {
       dispatch(fetchTVShowInfo(tvShow.tv_show_name));
@@ -80,7 +87,7 @@ export const fetchTVShowsData = (data) => {
   return (dispatch) => {
     dispatch(fetchTVShowsStart());
     let {url, isLocal, isInit} = data;
-    let interval = 3000;
+    let interval = 1000;
     Services.fetchData(url)
     .then((response)=>{
       let {error, data} = response;
@@ -105,9 +112,12 @@ export const fetchTVShowInfo = (tvShowName) => {
     Services.fetchTVShowInfo(tvShowName)
     .then((response)=>{
       let {id} = response;
-      dispatch(fetchTVShowEpisodes({tvShowID:id , tvShowName}));
-      dispatch(fetchTVShowCast({tvShowID:id, tvShowName}));
+      //dispatch(fetchTVShowEpisodes({tvShowID:id , tvShowName}));
+      //dispatch(fetchTVShowCast({tvShowID:id, tvShowName}));
       dispatch(fetchTVShowInfoSuccess({tvShowName,response}));
+      dispatch(fetchTVShowEpisodesSuccess({tvShowName,response}));
+      dispatch(fetchTVShowCastSuccess({tvShowName,response}));
+      dispatch(setCurrentTVShow(tvShowName)); 
     });
   };
 };
@@ -150,4 +160,13 @@ export const removeTVShow = (tvShowName) => {
   return (dispatch) =>{
     dispatch(removeTVShowSuccess(tvShowName));
   } 
+}
+
+export const searchTVShow = (tvShowName) => {
+  return (dispatch) =>{
+    Services.searchTVShow(tvShowName)
+    .then((response)=>{
+      dispatch(searchTVShowSuccess(response));
+    });
+  }
 }

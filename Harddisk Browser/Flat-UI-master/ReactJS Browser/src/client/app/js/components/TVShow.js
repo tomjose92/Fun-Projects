@@ -13,13 +13,15 @@ import {  fetchTVShowsData,
           setCurrentTVShow, 
           setTVShowData,
           addTVShow,
-          removeTVShow} from '../actions/tvshow';
+          removeTVShow,
+          searchTVShow} from '../actions/tvshow';
 import {  getTVShowData, 
           isFetchingTVShow, 
           getTVShowStatus,
           getTVShowsInfo,
           getTVShows,
-          getCurrentTVShow} from '../selectors/selectors';
+          getCurrentTVShow,
+          getSearchOptions} from '../selectors/selectors';
 import isEmpty from 'lodash/isEmpty';
 
 class TVShow extends React.Component {
@@ -121,6 +123,7 @@ class TVShow extends React.Component {
         });
         return;
       }
+
       tvShows = tvShows.filter((tvShow)=>{
         return (tvShow.tv_show_name.toLowerCase().indexOf(searchText.toLowerCase())>-1);
       });
@@ -146,6 +149,7 @@ class TVShow extends React.Component {
 
     setAddShow(e){
       let addShowText = e.target.value.trim();
+      this.props.searchTVShow(addShowText);
       this.setState({
         addShowText
       });
@@ -156,7 +160,7 @@ class TVShow extends React.Component {
       let value = bool!=undefined? bool : !addShow;
       this.setState({
         addShow: value,
-        toggleAddShow: ''
+        addShowText: ''
       });
     }
 
@@ -175,8 +179,23 @@ class TVShow extends React.Component {
   	render() {
       let self=this,
     	{error, open, tvShow,search, addShow, records: tvShows} = this.state;
-      let {isLocal, isLoading, tvShowsInfo} = this.props;
+      let {isLocal, isLoading, tvShowsInfo, searchOptions} = this.props;
       let bookmark = getBookmark(tvShows);
+      let options = [];
+      if(addShow){
+        options = searchOptions.map(function(option, index){
+          let {name, rating:{average: rating}, image, status} = option;
+          return (
+            <li key={index} style={styles.option}>
+              {name} &nbsp; &nbsp; 
+              {rating && <span style={styles.showInfo}>Rating : {rating} &nbsp;|&nbsp;</span>}
+              {status && <span style={styles.showInfo}>Status : {status} </span>}
+              <span title='Add' style={{cursor:'pointer',paddingLeft:'20px'}} className={'fui-plus'} onClick={()=>self.addTVShow()}/>
+            </li>
+          );
+        });
+      }
+
     	let TVShowImages = isEmpty(tvShows)? null : tvShows.map(function(tvShow,i){
         let {tv_show_name, tv_show_tag} = tvShow;
         let showInfo = tvShowsInfo && tvShowsInfo[tv_show_name];
@@ -210,6 +229,7 @@ class TVShow extends React.Component {
               {addShow && <input onChange={(e)=>this.setAddShow(e)} style={styles.inputText} type='text'></input>}
               {addShow && <span style={{cursor:'pointer',paddingLeft:'10px'}} className={'fui-plus'} onClick={()=>this.addTVShow()}/>}
               <span style={{cursor:'pointer',paddingLeft:'10px'}} className={addShow?'fui-cross':'fui-plus'} onClick={()=>this.toggleAddShow()}/>
+              <div className='mediaBG' style={styles.searchBar}><ul>{options}</ul></div>
             </div>
             {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
                 <a href={bookmark} style={styles.bookmark}>Bookmark</a>
@@ -325,7 +345,25 @@ const styles={
     textShadow: 'none',
     zIndex: '10',
     opacity: '0.7'
-
+  },
+  showInfo:{
+    color: 'grey',
+    fontWeight: 100
+  },
+  searchBar:{
+    position:'absolute', 
+    textAlign: '-webkit-center',
+    display: '-webkit-box',
+    overflow: 'overlay',
+    maxHeight: '150px',
+    top: '50px',
+    margin: '0px 500px',
+    opacity: 0.8
+  },
+  option:{
+    textAlign: 'left', 
+    fontWeight: 'bold', 
+    fontSize: '20px'
   }
 }
 
@@ -335,12 +373,14 @@ const mapStateToProps = (state) =>{
   let isLocal = getTVShowStatus(state);
   let tvShowsInfo = getTVShowsInfo(state);
   let currentShow = getCurrentTVShow(state);
+  let searchOptions = getSearchOptions(state);
   return {
     tvShows,
     isLoading,
     isLocal,
     tvShowsInfo,
-    currentShow
+    currentShow,
+    searchOptions
   };
 };
 
@@ -352,6 +392,7 @@ export default connect(
     setCurrentTVShow,
     setTVShowData,
     addTVShow,
-    removeTVShow
+    removeTVShow,
+    searchTVShow
   }
 )(TVShow);

@@ -11,18 +11,19 @@ export const getTVShowsInfo = (state) => state.tvshows && state.tvshows.showsInf
 export const getTVShowEpisodes = (state) => state.tvshows && state.tvshows.episodes;
 export const getTVShowCasts = (state) => state.tvshows && state.tvshows.casts;
 export const getCurrentTVShow = (state) => state.tvshows && state.tvshows.currentTVShow;
+export const getSearchOptions = (state) => state.tvshows && state.tvshows.options;
 
 export const getCurrentTVShowInfo = createSelector(
-  [getCurrentTVShow, getTVShowsInfo],
-  (tvShowName, tvShowsInfo) => tvShowsInfo[tvShowName]
+  	[getCurrentTVShow, getTVShowsInfo],
+  	(tvShowName, tvShowsInfo) => tvShowsInfo[tvShowName]
 );
 
 export const getCurrentTVShowEpisodes = createSelector(
-  [getCurrentTVShow, getTVShowEpisodes],
-  (tvShowName, episodes) => episodes[tvShowName] && episodes[tvShowName].seasons
+  	[getCurrentTVShow, getTVShowEpisodes],
+  	(tvShowName, episodes) => episodes[tvShowName] && episodes[tvShowName].seasons
 );
 
 export const getCurrentTVShowCasts = createSelector(
-  [getCurrentTVShow, getTVShowCasts],
-  (tvShowName, casts) => casts[tvShowName]
+  	[getCurrentTVShow, getTVShowCasts],
+  	(tvShowName, casts) => casts[tvShowName]
 );
