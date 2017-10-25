@@ -35440,6 +35440,9 @@
 	var FETCH_TVSHOW_CAST_SUCCESS = exports.FETCH_TVSHOW_CAST_SUCCESS = 'FETCH_TVSHOW_CAST_SUCCESS';
 	var SET_CURRENT_TVSHOW_SUCCESS = exports.SET_CURRENT_TVSHOW_SUCCESS = 'SET_CURRENT_TVSHOW_SUCCESS';
 	
+	var ADD_TVSHOW_SUCCESS = exports.ADD_TVSHOW_SUCCESS = 'ADD_TVSHOW_SUCCESS';
+	var REMOVE_TVSHOW_SUCCESS = exports.REMOVE_TVSHOW_SUCCESS = 'REMOVE_TVSHOW_SUCCESS';
+	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "actionTypes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
@@ -42955,6 +42958,7 @@
 	      error: false,
 	      interval: 2000,
 	      search: false,
+	      addShow: false,
 	      isInit: true
 	    };
 	    return _this;
@@ -43072,6 +43076,24 @@
 	      });
 	    }
 	  }, {
+	    key: 'setAddShow',
+	    value: function setAddShow(e) {
+	      var addShowText = e.target.value.trim();
+	      this.setState({
+	        addShowText: addShowText
+	      });
+	    }
+	  }, {
+	    key: 'toggleAddShow',
+	    value: function toggleAddShow() {
+	      var addShow = this.state.addShow;
+	
+	      this.setState({
+	        addShow: !addShow,
+	        toggleAddShow: ''
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
@@ -43082,6 +43104,7 @@
 	          open = _state.open,
 	          tvShow = _state.tvShow,
 	          search = _state.search,
+	          addShow = _state.addShow,
 	          tvShows = _state.records;
 	      var _props = this.props,
 	          isLocal = _props.isLocal,
@@ -43127,13 +43150,27 @@
 	            _react2.default.createElement(
 	              'span',
 	              { style: { paddingRight: '10px' } },
-	              'Search'
+	              'Search Show'
 	            ),
 	            search && _react2.default.createElement('input', { onChange: function onChange(e) {
 	                return _this2.setSearchText(e);
 	              }, style: styles.inputText, type: 'text' }),
 	            _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: search ? 'fui-cross' : 'fui-search', onClick: function onClick() {
 	                return _this2.toggleSearch();
+	              } }),
+	            _react2.default.createElement(
+	              'span',
+	              { style: { paddingLeft: '50px', paddingRight: '10px' } },
+	              'Add Show'
+	            ),
+	            addShow && _react2.default.createElement('input', { onChange: function onChange(e) {
+	                return _this2.setAddShow(e);
+	              }, style: styles.inputText, type: 'text' }),
+	            addShow && _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: 'fui-plus', onClick: function onClick() {
+	                return _this2.props.addTVShow(_this2.state.addShowText);
+	              } }),
+	            _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: addShow ? 'fui-cross' : 'fui-plus', onClick: function onClick() {
+	                return _this2.toggleAddShow();
 	              } })
 	          ),
 	          bookmark && _react2.default.createElement(
@@ -43145,6 +43182,9 @@
 	              'Bookmark'
 	            )
 	          ),
+	          _react2.default.createElement(_UpcomingEpisodes2.default, { showModal: function showModal(tvShow) {
+	              return _this2.showModal(tvShow);
+	            } }),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'tvShowPage', style: styles.container },
@@ -43152,9 +43192,6 @@
 	                return _this2.showModal(tvShow, index);
 	              }, callback: function callback() {
 	                return _this2.closeModal();
-	              } }),
-	            _react2.default.createElement(_UpcomingEpisodes2.default, { showModal: function showModal(tvShow) {
-	                return _this2.showModal(tvShow);
 	              } }),
 	            TVShowImages
 	          )
@@ -43213,7 +43250,7 @@
 	    position: 'fixed',
 	    top: '10px',
 	    textAlign: 'right',
-	    right: '200px',
+	    right: '150px',
 	    border: '2px solid white',
 	    backgroundColor: 'black'
 	  },
@@ -43223,7 +43260,7 @@
 	  },
 	  container: {
 	    position: 'absolute',
-	    marginTop: '100px',
+	    marginTop: '110px',
 	    marginLeft: '100px',
 	    marginRight: '100px'
 	  },
@@ -43240,7 +43277,27 @@
 	    backgroundSize: '1275px 1420px'
 	  },
 	  imageBox: {
-	    paddingLeft: '20px'
+	    paddingLeft: '20px',
+	    position: 'relative'
+	  },
+	  close: {
+	    background: '#56544D',
+	    color: '#CEC9BE',
+	    cursor: 'pointer',
+	    fontFamily: 'times new roman',
+	    fontSize: '20px',
+	    lineHeight: '30px',
+	    fontWeight: 'bold',
+	    padding: '0px',
+	    position: 'relative',
+	    left: '30px',
+	    top: '30px',
+	    width: '30px',
+	    height: '30px',
+	    textAlign: 'center',
+	    textShadow: 'none',
+	    display: 'inline-block',
+	    zIndex: '100'
 	  }
 	};
 	
@@ -43261,7 +43318,9 @@
 	  fetchTVShowsData: _tvshow.fetchTVShowsData,
 	  fetchTVShowInfo: _tvshow.fetchTVShowInfo,
 	  setCurrentTVShow: _tvshow.setCurrentTVShow,
-	  setTVShowData: _tvshow.setTVShowData
+	  setTVShowData: _tvshow.setTVShowData,
+	  addTVShow: _tvshow.addTVShow,
+	  removeTVShow: _tvshow.removeTVShow
 	})(TVShow);
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -46383,7 +46442,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.setCurrentTVShow = exports.fetchTVShowCast = exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchTVShowsData = exports.setTVShowData = exports.setCurrentTVShowSuccess = exports.fetchTVShowCastSuccess = exports.fetchTVShowEpisodesSuccess = exports.fetchTVShowInfoSuccess = exports.fetchTVShowsError = exports.fetchTVShowsSuccess = exports.fetchTVShowsStart = undefined;
+	exports.removeTVShow = exports.addTVShow = exports.setCurrentTVShow = exports.fetchTVShowCast = exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchTVShowsData = exports.setTVShowData = exports.addTVShowSuccess = exports.removeTVShowSuccess = exports.setCurrentTVShowSuccess = exports.fetchTVShowCastSuccess = exports.fetchTVShowEpisodesSuccess = exports.fetchTVShowInfoSuccess = exports.fetchTVShowsError = exports.fetchTVShowsSuccess = exports.fetchTVShowsStart = undefined;
 	
 	var _actionTypes = __webpack_require__(/*! ./actionTypes.js */ 350);
 	
@@ -46438,6 +46497,20 @@
 	var setCurrentTVShowSuccess = exports.setCurrentTVShowSuccess = function setCurrentTVShowSuccess(tvShowName) {
 	  return {
 	    type: ActionTypes.SET_CURRENT_TVSHOW_SUCCESS,
+	    payload: { tvShowName: tvShowName }
+	  };
+	};
+	
+	var removeTVShowSuccess = exports.removeTVShowSuccess = function removeTVShowSuccess(tvShowName) {
+	  return {
+	    type: ActionTypes.REMOVE_TVSHOW_SUCCESS,
+	    payload: { tvShowName: tvShowName }
+	  };
+	};
+	
+	var addTVShowSuccess = exports.addTVShowSuccess = function addTVShowSuccess(tvShowName) {
+	  return {
+	    type: ActionTypes.ADD_TVSHOW_SUCCESS,
 	    payload: { tvShowName: tvShowName }
 	  };
 	};
@@ -46560,6 +46633,19 @@
 	var setCurrentTVShow = exports.setCurrentTVShow = function setCurrentTVShow(tvShowName) {
 	  return function (dispatch) {
 	    dispatch(setCurrentTVShowSuccess(tvShowName));
+	  };
+	};
+	
+	var addTVShow = exports.addTVShow = function addTVShow(tvShowName) {
+	  return function (dispatch) {
+	    dispatch(fetchTVShowInfo(tvShowName));
+	    dispatch(addTVShowSuccess(tvShowName));
+	  };
+	};
+	
+	var removeTVShow = exports.removeTVShow = function removeTVShow(tvShowName) {
+	  return function (dispatch) {
+	    dispatch(removeTVShowSuccess(tvShowName));
 	  };
 	};
 	
@@ -46787,6 +46873,24 @@
 	
 			return data;
 		}
+		if (action.type === _actionTypes.ADD_TVSHOW_SUCCESS) {
+			var tvShowName = action.payload.tvShowName;
+	
+			var existingShow = state.find(function (tvShow) {
+				return tvShowName == tvShow.tv_show_name;
+			});
+			!existingShow && state.push({
+				tv_show_name: tvShowName,
+				tv_show_tag: tvShowName.replace(/\s/g, '').toLowerCase()
+			});
+		}
+		if (action.type === _actionTypes.REMOVE_TVSHOW_SUCCESS) {
+			var _tvShowName = action.payload.tvShowName;
+	
+			state = state.filter(function (tvShow) {
+				return _tvShowName != tvShow.tv_show_name;
+			});
+		}
 		return state;
 	};
 	
@@ -47011,7 +47115,7 @@
 	      });
 	      return _react2.default.createElement(
 	        'div',
-	        { style: styles.container },
+	        { className: 'mediaBG', style: styles.container },
 	        _react2.default.createElement(_reactTextMarquee2.default, { loop: true, hoverToStop: true, text: html })
 	      );
 	    }
@@ -47022,9 +47126,13 @@
 	
 	var styles = {
 	  container: {
-	    paddingBottom: '20px',
+	    paddingTop: '70px',
+	    paddingBottom: '10px',
 	    display: 'grid',
-	    width: '100%'
+	    width: '90%',
+	    marginLeft: '100px',
+	    zIndex: 99,
+	    position: 'fixed'
 	  }
 	};
 	

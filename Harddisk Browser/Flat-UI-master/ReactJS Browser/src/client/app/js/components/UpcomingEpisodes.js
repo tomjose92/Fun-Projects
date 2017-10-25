@@ -26,7 +26,7 @@ class UpcomingEpisodes extends React.Component {
       );
     });
     return (
-      <div style={styles.container}>
+      <div className='mediaBG' style={styles.container}>
         <Marquee loop={true} hoverToStop={true} text={html}/>
       </div>
     )
@@ -35,9 +35,13 @@ class UpcomingEpisodes extends React.Component {
 
 const styles = {
   container:{
-    paddingBottom: '20px', 
+    paddingTop: '70px',
+    paddingBottom: '10px', 
     display:'grid',
-    width:'100%'
+    width:'90%',
+    marginLeft: '100px',
+    zIndex: 99,
+    position: 'fixed'
   }
 }
 

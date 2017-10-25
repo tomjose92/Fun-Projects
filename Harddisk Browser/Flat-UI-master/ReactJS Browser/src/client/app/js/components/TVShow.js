@@ -8,7 +8,12 @@ import {Images, ImagePosition} from '../constants/images';
 import TVShowModal from './TVShowModal';
 import UpcomingEpisodes from './UpcomingEpisodes';
 import {blurImage, extractTVShowsFromURL, getBookmark} from '../utils/utils';
-import {fetchTVShowsData, fetchTVShowInfo, setCurrentTVShow, setTVShowData} from '../actions/tvshow';
+import {  fetchTVShowsData, 
+          fetchTVShowInfo, 
+          setCurrentTVShow, 
+          setTVShowData,
+          addTVShow,
+          removeTVShow} from '../actions/tvshow';
 import {  getTVShowData, 
           isFetchingTVShow, 
           getTVShowStatus,
@@ -24,6 +29,7 @@ class TVShow extends React.Component {
         error:false,
         interval:2000,
         search: false,
+        addShow: false,
         isInit: true
       };
     }
@@ -134,12 +140,27 @@ class TVShow extends React.Component {
       this.setState({
         search: !search
       });
+    }
+
+    setAddShow(e){
+      let addShowText = e.target.value.trim();
+      this.setState({
+        addShowText
+      });
+    }
+
+    toggleAddShow(){
+      let {addShow} = this.state;
+      this.setState({
+        addShow: !addShow,
+        toggleAddShow: ''
+      });
 
     }
 
   	render() {
       let self=this,
-    	{error, open, tvShow,search, records: tvShows} = this.state;
+    	{error, open, tvShow,search, addShow, records: tvShows} = this.state;
       let {isLocal, isLoading, tvShowsInfo} = this.props;
       let bookmark = getBookmark(tvShows);
     	let TVShowImages = isEmpty(tvShows)? null : tvShows.map(function(tvShow,i){
@@ -166,16 +187,21 @@ class TVShow extends React.Component {
           {!isLoading && 
           <div style={styles.outerContainer}>
             <div style={styles.searchContainer}>
-              <span style={{paddingRight:'10px'}}>Search</span> 
+              <span style={{paddingRight:'10px'}}>Search Show</span> 
               {search && <input onChange={(e)=>this.setSearchText(e)} style={styles.inputText} type='text'></input>}
               <span style={{cursor:'pointer',paddingLeft:'10px'}} className={search?'fui-cross':'fui-search'} onClick={()=>this.toggleSearch()}/>
+
+              <span style={{paddingLeft:'50px', paddingRight: '10px'}}>Add Show</span> 
+              {addShow && <input onChange={(e)=>this.setAddShow(e)} style={styles.inputText} type='text'></input>}
+              {addShow && <span style={{cursor:'pointer',paddingLeft:'10px'}} className={'fui-plus'} onClick={()=>this.props.addTVShow(this.state.addShowText)}/>}
+              <span style={{cursor:'pointer',paddingLeft:'10px'}} className={addShow?'fui-cross':'fui-plus'} onClick={()=>this.toggleAddShow()}/>
             </div>
             {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
                 <a href={bookmark} style={styles.bookmark}>Bookmark</a>
             </div>}
+            <UpcomingEpisodes showModal={(tvShow)=>this.showModal(tvShow)}/>
             <div className='tvShowPage' style={styles.container}>
               {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
-              <UpcomingEpisodes showModal={(tvShow)=>this.showModal(tvShow)}/>
               {TVShowImages}
             </div>
           </div>}
@@ -228,7 +254,7 @@ const styles={
     position: 'fixed',
     top: '10px',
     textAlign: 'right',
-    right: '200px',
+    right: '150px',
     border: '2px solid white',
     backgroundColor: 'black'
   },
@@ -238,7 +264,7 @@ const styles={
   },
   container:{
     position: 'absolute',
-    marginTop: '100px',
+    marginTop: '110px',
     marginLeft: '100px',
     marginRight: '100px'
   },
@@ -255,7 +281,27 @@ const styles={
     backgroundSize : '1275px 1420px'
   },
   imageBox: {
-    paddingLeft: '20px'
+    paddingLeft: '20px',
+    position: 'relative'
+  },
+  close:{
+    background: '#56544D',
+    color: '#CEC9BE',
+    cursor: 'pointer',
+    fontFamily: 'times new roman',
+    fontSize: '20px',
+    lineHeight: '30px',
+    fontWeight: 'bold',
+    padding: '0px',
+    position: 'relative',
+    left: '30px',
+    top: '30px',
+    width: '30px',
+    height: '30px',
+    textAlign: 'center',
+    textShadow: 'none',
+    display: 'inline-block',
+    zIndex: '100'
   }
 }
 
@@ -278,6 +324,8 @@ export default connect(
     fetchTVShowsData,
     fetchTVShowInfo,
     setCurrentTVShow,
-    setTVShowData
+    setTVShowData,
+    addTVShow,
+    removeTVShow
   }
 )(TVShow);

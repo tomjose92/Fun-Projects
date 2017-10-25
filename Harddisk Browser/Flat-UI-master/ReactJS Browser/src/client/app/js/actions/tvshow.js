@@ -48,6 +48,20 @@ export const setCurrentTVShowSuccess = (tvShowName) => {
   };
 };
 
+export const removeTVShowSuccess = (tvShowName) => {
+  return {
+    type: ActionTypes.REMOVE_TVSHOW_SUCCESS,
+    payload: {tvShowName}
+  };
+}
+
+export const addTVShowSuccess = (tvShowName) => {
+  return {
+    type: ActionTypes.ADD_TVSHOW_SUCCESS,
+    payload: {tvShowName}
+  };
+}
+
 export const setTVShowData = (data) => {
   return (dispatch) => {
     dispatch(fetchTVShowsStart());
@@ -122,4 +136,17 @@ export const setCurrentTVShow = (tvShowName) =>{
   return (dispatch) =>{
     dispatch(setCurrentTVShowSuccess(tvShowName));
   }
+}
+
+export const addTVShow = (tvShowName) => {
+  return (dispatch) =>{
+    dispatch(fetchTVShowInfo(tvShowName));
+    dispatch(addTVShowSuccess(tvShowName)); 
+  } 
+}
+
+export const removeTVShow = (tvShowName) => {
+  return (dispatch) =>{
+    dispatch(removeTVShowSuccess(tvShowName));
+  } 
 }

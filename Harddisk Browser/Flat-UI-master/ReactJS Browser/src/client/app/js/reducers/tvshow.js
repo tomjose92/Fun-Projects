@@ -6,7 +6,9 @@ import {
   FETCH_TVSHOW_INFO_SUCCESS,
   FETCH_TVSHOW_EPISODES_SUCCESS,
   FETCH_TVSHOW_CAST_SUCCESS,
-  SET_CURRENT_TVSHOW_SUCCESS
+  SET_CURRENT_TVSHOW_SUCCESS,
+  ADD_TVSHOW_SUCCESS,
+  REMOVE_TVSHOW_SUCCESS
 } from '../actions/actionTypes.js';
 
 import {getYear, getDate} from '../utils/utils';
@@ -28,6 +30,24 @@ export const tvShows = (state = [],action) => {
 	if(action.type === FETCH_TVSHOWS_SUCCESS){
 		let {response:{data}} = action.payload;
 		return data;
+	}
+	if(action.type === ADD_TVSHOW_SUCCESS)
+	{
+		let {tvShowName} = action.payload;
+		let existingShow = state.find(function(tvShow){
+			return tvShowName==tvShow.tv_show_name
+		});
+		!existingShow && state.push({
+			tv_show_name: tvShowName, 
+			tv_show_tag: tvShowName.replace(/\s/g,'').toLowerCase()
+		});
+	}
+	if(action.type === REMOVE_TVSHOW_SUCCESS)
+	{
+		let {tvShowName} = action.payload;
+		state = state.filter(function(tvShow){
+			return tvShowName!=tvShow.tv_show_name
+		});
 	}
 	return state;
 }
