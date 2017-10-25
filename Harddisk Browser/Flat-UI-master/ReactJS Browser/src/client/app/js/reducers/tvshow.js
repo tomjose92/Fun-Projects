@@ -34,10 +34,7 @@ export const tvShows = (state = [],action) => {
 	if(action.type === ADD_TVSHOW_SUCCESS)
 	{
 		let {tvShowName} = action.payload;
-		let existingShow = state.find(function(tvShow){
-			return tvShowName==tvShow.tv_show_name
-		});
-		!existingShow && state.push({
+		state.unshift({
 			tv_show_name: tvShowName, 
 			tv_show_tag: tvShowName.replace(/\s/g,'').toLowerCase()
 		});
@@ -68,6 +65,12 @@ export const showsInfo = (state=[], action) => {
 			newState[tvShowName] = response;
 			return newState;
 		}
+	}
+
+	if(action.type === REMOVE_TVSHOW_SUCCESS)
+	{
+		let {tvShowName} = action.payload;
+		delete state[tvShowName];
 	}
 	return state;	
 }
@@ -110,6 +113,11 @@ export const episodes = (state=[], action) => {
 			return newState;
 		}
 	}
+	if(action.type === REMOVE_TVSHOW_SUCCESS)
+	{
+		let {tvShowName} = action.payload;
+		delete state[tvShowName];
+	}
 	return state;	
 }
 
@@ -128,6 +136,11 @@ export const casts = (state=[],action) =>{
 			newState[tvShowName] = casts;
 			return newState;
 		}
+	}
+	if(action.type === REMOVE_TVSHOW_SUCCESS)
+	{
+		let {tvShowName} = action.payload;
+		delete state[tvShowName];
 	}
 	return state;
 }

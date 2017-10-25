@@ -59,7 +59,7 @@ class TVShowModal extends Component {
     {
       customStyles.content.width = width;
     }
-    let image = currentTVShowInfo && currentTVShowInfo.image && currentTVShowInfo.image.medium;
+    let image = currentTVShowInfo && currentTVShowInfo.image && currentTVShowInfo.image.original;
     return (
        <Modal className='tvShowModal' contentLabel='ShowModal' style={customStyles} isOpen={this.state.isOpen}>
           <div className='showTitle' style={styles.titleContainer}>
@@ -68,7 +68,7 @@ class TVShowModal extends Component {
             {next && <a style={{cursor:'pointer'}} className='fui-triangle-right-large' onClick={()=>this.props.navShow(next, index+1)}/>}
           </div>
           <div className='showImage' style={styles.imageContainer}>
-            {Images[tv_show_tag]?
+            {false?
               <img id='modal_image' style={Object.assign({},styles.image,Images[tv_show_tag],ModalPosition[tv_show_tag])}/> 
               : <img id='modal_image' src={image} style={styles.image} />}
           </div>

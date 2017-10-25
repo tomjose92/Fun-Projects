@@ -149,13 +149,25 @@ class TVShow extends React.Component {
       });
     }
 
-    toggleAddShow(){
+    toggleAddShow(bool){
       let {addShow} = this.state;
+      let value = bool!=undefined? bool : !addShow;
       this.setState({
-        addShow: !addShow,
+        addShow: value,
         toggleAddShow: ''
       });
+    }
 
+    addTVShow(){
+      let {addShowText} = this.state,
+      {tvShows} = this.props;
+      let existingShow = tvShows.find(function(tvShow){
+        return addShowText==tvShow.tv_show_name
+      });
+      if(addShowText && addShowText.trim()!='' && !existingShow)
+      {
+        this.props.addTVShow(addShowText);
+      }
     }
 
   	render() {
@@ -169,8 +181,9 @@ class TVShow extends React.Component {
         let image = showInfo && showInfo.image && showInfo.image.medium;
         return (
           <span className='tvShow' title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
+            <div style={styles.close} onClick={()=>self.props.removeTVShow(tv_show_name)}>&#10005;</div>
             <a onClick={()=>self.showModal(tvShow, i)}>
-              {Images[tv_show_tag] ? 
+              {false ? 
                 <img className='tvshow' key={"image"+i} style={Object.assign({},styles.image,Images[tv_show_tag], ImagePosition[tv_show_tag])}/>
                 :<img className='tvshow' key={"image"+i} style={styles.image} src={image}/>
               }
@@ -193,7 +206,7 @@ class TVShow extends React.Component {
 
               <span style={{paddingLeft:'50px', paddingRight: '10px'}}>Add Show</span> 
               {addShow && <input onChange={(e)=>this.setAddShow(e)} style={styles.inputText} type='text'></input>}
-              {addShow && <span style={{cursor:'pointer',paddingLeft:'10px'}} className={'fui-plus'} onClick={()=>this.props.addTVShow(this.state.addShowText)}/>}
+              {addShow && <span style={{cursor:'pointer',paddingLeft:'10px'}} className={'fui-plus'} onClick={()=>this.addTVShow()}/>}
               <span style={{cursor:'pointer',paddingLeft:'10px'}} className={addShow?'fui-cross':'fui-plus'} onClick={()=>this.toggleAddShow()}/>
             </div>
             {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
@@ -227,6 +240,7 @@ class TVShow extends React.Component {
       if(tvShows!=oldTVShows)
       {
         this.setState({records: tvShows});
+        this.toggleAddShow(false);
       }      
     }
 
@@ -282,7 +296,10 @@ const styles={
   },
   imageBox: {
     paddingLeft: '20px',
-    position: 'relative'
+    position: 'relative',
+    width: '270px',
+    height: '300px',
+    display: 'inline-block'
   },
   close:{
     background: '#56544D',
@@ -293,15 +310,16 @@ const styles={
     lineHeight: '30px',
     fontWeight: 'bold',
     padding: '0px',
-    position: 'relative',
-    left: '30px',
-    top: '30px',
+    position: 'absolute',
+    right: '0px',
+    top: '0px',
     width: '30px',
     height: '30px',
     textAlign: 'center',
     textShadow: 'none',
-    display: 'inline-block',
-    zIndex: '100'
+    zIndex: '10',
+    opacity: '0.7'
+
   }
 }
 

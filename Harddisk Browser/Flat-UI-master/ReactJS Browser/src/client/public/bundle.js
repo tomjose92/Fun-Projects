@@ -77,7 +77,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
 	
-	var _store = __webpack_require__(/*! ./js/store/store */ 445);
+	var _store = __webpack_require__(/*! ./js/store/store */ 446);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -41689,7 +41689,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getUpcomingEpisodes = exports.getCurrentTVShowCasts = exports.getCurrentTVShowEpisodes = exports.getCurrentTVShowInfo = exports.getCurrentTVShow = exports.getTVShowCasts = exports.getTVShowEpisodes = exports.getTVShowsInfo = exports.getTVShowStatus = exports.getTVShowData = exports.isFetchingTVShow = exports.getMovieStatus = exports.getMovieData = exports.isFetchingMovies = undefined;
+	exports.getCurrentTVShowCasts = exports.getCurrentTVShowEpisodes = exports.getCurrentTVShowInfo = exports.getCurrentTVShow = exports.getTVShowCasts = exports.getTVShowEpisodes = exports.getTVShowsInfo = exports.getTVShowStatus = exports.getTVShowData = exports.isFetchingTVShow = exports.getMovieStatus = exports.getMovieData = exports.isFetchingMovies = undefined;
 	
 	var _reselect = __webpack_require__(/*! reselect */ 392);
 	
@@ -41735,16 +41735,6 @@
 	
 	var getCurrentTVShowCasts = exports.getCurrentTVShowCasts = (0, _reselect.createSelector)([getCurrentTVShow, getTVShowCasts], function (tvShowName, casts) {
 	  return casts[tvShowName];
-	});
-	
-	var getUpcomingEpisodes = exports.getUpcomingEpisodes = (0, _reselect.createSelector)([getTVShowEpisodes], function (episodes) {
-	  var upcoming = [];
-	  for (var show in episodes) {
-	    if (episodes[show].upcoming) {
-	      upcoming.push({ tvShowName: show, episode: episodes[show].upcoming });
-	    }
-	  }
-	  return upcoming;
 	});
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "selectors.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -42916,19 +42906,19 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _images = __webpack_require__(/*! ../constants/images */ 424);
+	var _images = __webpack_require__(/*! ../constants/images */ 423);
 	
-	var _TVShowModal = __webpack_require__(/*! ./TVShowModal */ 425);
+	var _TVShowModal = __webpack_require__(/*! ./TVShowModal */ 424);
 	
 	var _TVShowModal2 = _interopRequireDefault(_TVShowModal);
 	
-	var _UpcomingEpisodes = __webpack_require__(/*! ./UpcomingEpisodes */ 450);
+	var _UpcomingEpisodes = __webpack_require__(/*! ./UpcomingEpisodes */ 443);
 	
 	var _UpcomingEpisodes2 = _interopRequireDefault(_UpcomingEpisodes);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
-	var _tvshow = __webpack_require__(/*! ../actions/tvshow */ 444);
+	var _tvshow = __webpack_require__(/*! ../actions/tvshow */ 445);
 	
 	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
 	
@@ -43085,13 +43075,27 @@
 	    }
 	  }, {
 	    key: 'toggleAddShow',
-	    value: function toggleAddShow() {
+	    value: function toggleAddShow(bool) {
 	      var addShow = this.state.addShow;
 	
+	      var value = bool != undefined ? bool : !addShow;
 	      this.setState({
-	        addShow: !addShow,
+	        addShow: value,
 	        toggleAddShow: ''
 	      });
+	    }
+	  }, {
+	    key: 'addTVShow',
+	    value: function addTVShow() {
+	      var addShowText = this.state.addShowText,
+	          tvShows = this.props.tvShows;
+	
+	      var existingShow = tvShows.find(function (tvShow) {
+	        return addShowText == tvShow.tv_show_name;
+	      });
+	      if (addShowText && addShowText.trim() != '' && !existingShow) {
+	        this.props.addTVShow(addShowText);
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -43122,11 +43126,18 @@
 	          'span',
 	          { className: 'tvShow', title: tv_show_name, style: styles.imageBox, key: "tvShow" + i },
 	          _react2.default.createElement(
+	            'div',
+	            { style: styles.close, onClick: function onClick() {
+	                return self.props.removeTVShow(tv_show_name);
+	              } },
+	            '\u2715'
+	          ),
+	          _react2.default.createElement(
 	            'a',
 	            { onClick: function onClick() {
 	                return self.showModal(tvShow, i);
 	              } },
-	            _images.Images[tv_show_tag] ? _react2.default.createElement('img', { className: 'tvshow', key: "image" + i, style: Object.assign({}, styles.image, _images.Images[tv_show_tag], _images.ImagePosition[tv_show_tag]) }) : _react2.default.createElement('img', { className: 'tvshow', key: "image" + i, style: styles.image, src: image })
+	            false ? _react2.default.createElement('img', { className: 'tvshow', key: "image" + i, style: Object.assign({}, styles.image, _images.Images[tv_show_tag], _images.ImagePosition[tv_show_tag]) }) : _react2.default.createElement('img', { className: 'tvshow', key: "image" + i, style: styles.image, src: image })
 	          )
 	        );
 	      });
@@ -43167,7 +43178,7 @@
 	                return _this2.setAddShow(e);
 	              }, style: styles.inputText, type: 'text' }),
 	            addShow && _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: 'fui-plus', onClick: function onClick() {
-	                return _this2.props.addTVShow(_this2.state.addShowText);
+	                return _this2.addTVShow();
 	              } }),
 	            _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: addShow ? 'fui-cross' : 'fui-plus', onClick: function onClick() {
 	                return _this2.toggleAddShow();
@@ -43219,6 +43230,7 @@
 	
 	      if (tvShows != oldTVShows) {
 	        this.setState({ records: tvShows });
+	        this.toggleAddShow(false);
 	      }
 	    }
 	  }]);
@@ -43278,7 +43290,10 @@
 	  },
 	  imageBox: {
 	    paddingLeft: '20px',
-	    position: 'relative'
+	    position: 'relative',
+	    width: '270px',
+	    height: '300px',
+	    display: 'inline-block'
 	  },
 	  close: {
 	    background: '#56544D',
@@ -43289,15 +43304,16 @@
 	    lineHeight: '30px',
 	    fontWeight: 'bold',
 	    padding: '0px',
-	    position: 'relative',
-	    left: '30px',
-	    top: '30px',
+	    position: 'absolute',
+	    right: '0px',
+	    top: '0px',
 	    width: '30px',
 	    height: '30px',
 	    textAlign: 'center',
 	    textShadow: 'none',
-	    display: 'inline-block',
-	    zIndex: '100'
+	    zIndex: '10',
+	    opacity: '0.7'
+	
 	  }
 	};
 	
@@ -43326,8 +43342,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 423 */,
-/* 424 */
+/* 423 */
 /*!***********************************************!*\
   !*** ./src/client/app/js/constants/images.js ***!
   \***********************************************/
@@ -43627,7 +43642,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "images.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 425 */
+/* 424 */
 /*!*****************************************************!*\
   !*** ./src/client/app/js/components/TVShowModal.js ***!
   \*****************************************************/
@@ -43647,7 +43662,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactModal = __webpack_require__(/*! react-modal */ 426);
+	var _reactModal = __webpack_require__(/*! react-modal */ 425);
 	
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 	
@@ -43657,13 +43672,13 @@
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _images = __webpack_require__(/*! ../constants/images */ 424);
+	var _images = __webpack_require__(/*! ../constants/images */ 423);
 	
-	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 439);
+	var _TVShowSeason = __webpack_require__(/*! ./TVShowSeason */ 438);
 	
 	var _TVShowSeason2 = _interopRequireDefault(_TVShowSeason);
 	
-	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 440);
+	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 439);
 	
 	var _TVShowEpisodes2 = _interopRequireDefault(_TVShowEpisodes);
 	
@@ -43671,11 +43686,11 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
 	
-	var _MetaData = __webpack_require__(/*! ./MetaData */ 442);
+	var _MetaData = __webpack_require__(/*! ./MetaData */ 441);
 	
 	var _MetaData2 = _interopRequireDefault(_MetaData);
 	
@@ -43762,7 +43777,7 @@
 	      if (customStyles.content) {
 	        customStyles.content.width = width;
 	      }
-	      var image = currentTVShowInfo && currentTVShowInfo.image && currentTVShowInfo.image.medium;
+	      var image = currentTVShowInfo && currentTVShowInfo.image && currentTVShowInfo.image.original;
 	      return _react2.default.createElement(
 	        _reactModal2.default,
 	        { className: 'tvShowModal', contentLabel: 'ShowModal', style: customStyles, isOpen: this.state.isOpen },
@@ -43784,7 +43799,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'showImage', style: styles.imageContainer },
-	          _images.Images[tv_show_tag] ? _react2.default.createElement('img', { id: 'modal_image', style: Object.assign({}, styles.image, _images.Images[tv_show_tag], _images.ModalPosition[tv_show_tag]) }) : _react2.default.createElement('img', { id: 'modal_image', src: image, style: styles.image })
+	          false ? _react2.default.createElement('img', { id: 'modal_image', style: Object.assign({}, styles.image, _images.Images[tv_show_tag], _images.ModalPosition[tv_show_tag]) }) : _react2.default.createElement('img', { id: 'modal_image', src: image, style: styles.image })
 	        ),
 	        seasons && _react2.default.createElement(_TVShowSeason2.default, { showName: tv_show_name, seasons: seasons }),
 	        currentTVShowInfo && _react2.default.createElement(_MetaData2.default, {
@@ -43898,18 +43913,18 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowModal.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 426 */
+/* 425 */
 /*!************************************!*\
   !*** ./~/react-modal/lib/index.js ***!
   \************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./components/Modal */ 427);
+	module.exports = __webpack_require__(/*! ./components/Modal */ 426);
 	
 
 
 /***/ }),
-/* 427 */
+/* 426 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/components/Modal.js ***!
   \***********************************************/
@@ -43917,16 +43932,16 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {var React = __webpack_require__(/*! react */ 1);
 	var ReactDOM = __webpack_require__(/*! react-dom */ 37);
-	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 428);
+	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 427);
 	var PropTypes = __webpack_require__(/*! prop-types */ 320);
-	var ExecutionEnvironment = __webpack_require__(/*! exenv */ 429);
-	var ModalPortal = React.createFactory(__webpack_require__(/*! ./ModalPortal */ 430));
-	var ariaAppHider = __webpack_require__(/*! ../helpers/ariaAppHider */ 436);
-	var refCount = __webpack_require__(/*! ../helpers/refCount */ 437);
-	var elementClass = __webpack_require__(/*! element-class */ 438);
+	var ExecutionEnvironment = __webpack_require__(/*! exenv */ 428);
+	var ModalPortal = React.createFactory(__webpack_require__(/*! ./ModalPortal */ 429));
+	var ariaAppHider = __webpack_require__(/*! ../helpers/ariaAppHider */ 435);
+	var refCount = __webpack_require__(/*! ../helpers/refCount */ 436);
+	var elementClass = __webpack_require__(/*! element-class */ 437);
 	var renderSubtreeIntoContainer = __webpack_require__(/*! react-dom */ 37).unstable_renderSubtreeIntoContainer;
-	var Assign = __webpack_require__(/*! lodash.assign */ 434);
-	var createReactClass = __webpack_require__(/*! create-react-class */ 435);
+	var Assign = __webpack_require__(/*! lodash.assign */ 433);
+	var createReactClass = __webpack_require__(/*! create-react-class */ 434);
 	
 	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
 	var AppElement = ExecutionEnvironment.canUseDOM ? document.body : {appendChild: function() {}};
@@ -44097,7 +44112,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../process/browser.js */ 3)))
 
 /***/ }),
-/* 428 */
+/* 427 */
 /*!****************************************!*\
   !*** ./~/react-dom-factories/index.js ***!
   \****************************************/
@@ -44301,7 +44316,7 @@
 
 
 /***/ }),
-/* 429 */
+/* 428 */
 /*!**************************!*\
   !*** ./~/exenv/index.js ***!
   \**************************/
@@ -44349,18 +44364,18 @@
 
 
 /***/ }),
-/* 430 */
+/* 429 */
 /*!*****************************************************!*\
   !*** ./~/react-modal/lib/components/ModalPortal.js ***!
   \*****************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(/*! react */ 1);
-	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 428);
-	var focusManager = __webpack_require__(/*! ../helpers/focusManager */ 431);
-	var scopeTab = __webpack_require__(/*! ../helpers/scopeTab */ 433);
-	var Assign = __webpack_require__(/*! lodash.assign */ 434);
-	var createReactClass = __webpack_require__(/*! create-react-class */ 435);
+	var DOMFactories = __webpack_require__(/*! react-dom-factories */ 427);
+	var focusManager = __webpack_require__(/*! ../helpers/focusManager */ 430);
+	var scopeTab = __webpack_require__(/*! ../helpers/scopeTab */ 432);
+	var Assign = __webpack_require__(/*! lodash.assign */ 433);
+	var createReactClass = __webpack_require__(/*! create-react-class */ 434);
 	
 	var div = DOMFactories.div;
 	
@@ -44561,13 +44576,13 @@
 
 
 /***/ }),
-/* 431 */
+/* 430 */
 /*!***************************************************!*\
   !*** ./~/react-modal/lib/helpers/focusManager.js ***!
   \***************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 432);
+	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 431);
 	var focusLaterElements = [];
 	var modalElement = null;
 	var needToFocus = false;
@@ -44638,7 +44653,7 @@
 
 
 /***/ }),
-/* 432 */
+/* 431 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/helpers/tabbable.js ***!
   \***********************************************/
@@ -44697,13 +44712,13 @@
 
 
 /***/ }),
-/* 433 */
+/* 432 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/helpers/scopeTab.js ***!
   \***********************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 432);
+	var findTabbable = __webpack_require__(/*! ../helpers/tabbable */ 431);
 	
 	module.exports = function(node, event) {
 	  var tabbable = findTabbable(node);
@@ -44725,7 +44740,7 @@
 
 
 /***/ }),
-/* 434 */
+/* 433 */
 /*!**********************************!*\
   !*** ./~/lodash.assign/index.js ***!
   \**********************************/
@@ -45371,7 +45386,7 @@
 
 
 /***/ }),
-/* 435 */
+/* 434 */
 /*!***************************************!*\
   !*** ./~/create-react-class/index.js ***!
   \***************************************/
@@ -45408,7 +45423,7 @@
 
 
 /***/ }),
-/* 436 */
+/* 435 */
 /*!***************************************************!*\
   !*** ./~/react-modal/lib/helpers/ariaAppHider.js ***!
   \***************************************************/
@@ -45459,7 +45474,7 @@
 
 
 /***/ }),
-/* 437 */
+/* 436 */
 /*!***********************************************!*\
   !*** ./~/react-modal/lib/helpers/refCount.js ***!
   \***********************************************/
@@ -45487,7 +45502,7 @@
 
 
 /***/ }),
-/* 438 */
+/* 437 */
 /*!**********************************!*\
   !*** ./~/element-class/index.js ***!
   \**********************************/
@@ -45555,7 +45570,7 @@
 
 
 /***/ }),
-/* 439 */
+/* 438 */
 /*!******************************************************!*\
   !*** ./src/client/app/js/components/TVShowSeason.js ***!
   \******************************************************/
@@ -45575,7 +45590,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 440);
+	var _TVShowEpisodes = __webpack_require__(/*! ./TVShowEpisodes */ 439);
 	
 	var _TVShowEpisodes2 = _interopRequireDefault(_TVShowEpisodes);
 	
@@ -45587,7 +45602,7 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -45710,7 +45725,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowSeason.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 440 */
+/* 439 */
 /*!********************************************************!*\
   !*** ./src/client/app/js/components/TVShowEpisodes.js ***!
   \********************************************************/
@@ -45742,7 +45757,7 @@
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -45850,7 +45865,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowEpisodes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 441 */
+/* 440 */
 /*!******************************************!*\
   !*** ./src/client/app/js/utils/utils.js ***!
   \******************************************/
@@ -45906,7 +45921,9 @@
 	  var values = date.split('-');
 	  date = new Date(values[0], values[1] - 1, values[2]);
 	  var newDate = date.toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
-	  var currentDate = new Date().toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
+	  var currentDate = new Date();
+	  currentDate = currentDate.setDate(currentDate.getDate() - 1);
+	  currentDate = new Date(currentDate).toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
 	  var color = void 0;
 	  if (new Date(newDate).getTime() == new Date(currentDate).getTime()) {
 	    color = 'yellow';
@@ -45957,10 +45974,20 @@
 	  return location;
 	};
 	
+	var getUpcomingShows = exports.getUpcomingShows = function getUpcomingShows(episodes) {
+	  var upcoming = [];
+	  for (var show in episodes) {
+	    if (episodes[show].upcoming) {
+	      upcoming.push({ tvShowName: show, episode: episodes[show].upcoming });
+	    }
+	  }
+	  return upcoming;
+	};
+	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "utils.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 442 */
+/* 441 */
 /*!**************************************************!*\
   !*** ./src/client/app/js/components/MetaData.js ***!
   \**************************************************/
@@ -45980,7 +46007,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TVShowCastModal = __webpack_require__(/*! ./TVShowCastModal */ 443);
+	var _TVShowCastModal = __webpack_require__(/*! ./TVShowCastModal */ 442);
 	
 	var _TVShowCastModal2 = _interopRequireDefault(_TVShowCastModal);
 	
@@ -46147,7 +46174,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "MetaData.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 443 */
+/* 442 */
 /*!*********************************************************!*\
   !*** ./src/client/app/js/components/TVShowCastModal.js ***!
   \*********************************************************/
@@ -46169,7 +46196,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactModal = __webpack_require__(/*! react-modal */ 426);
+	var _reactModal = __webpack_require__(/*! react-modal */ 425);
 	
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 	
@@ -46181,7 +46208,7 @@
 	
 	var _Gap2 = _interopRequireDefault(_Gap);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -46429,609 +46456,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShowCastModal.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 444 */
-/*!*********************************************!*\
-  !*** ./src/client/app/js/actions/tvshow.js ***!
-  \*********************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-	
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.removeTVShow = exports.addTVShow = exports.setCurrentTVShow = exports.fetchTVShowCast = exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchTVShowsData = exports.setTVShowData = exports.addTVShowSuccess = exports.removeTVShowSuccess = exports.setCurrentTVShowSuccess = exports.fetchTVShowCastSuccess = exports.fetchTVShowEpisodesSuccess = exports.fetchTVShowInfoSuccess = exports.fetchTVShowsError = exports.fetchTVShowsSuccess = exports.fetchTVShowsStart = undefined;
-	
-	var _actionTypes = __webpack_require__(/*! ./actionTypes.js */ 350);
-	
-	var ActionTypes = _interopRequireWildcard(_actionTypes);
-	
-	var _services = __webpack_require__(/*! ../services/services.js */ 351);
-	
-	var Services = _interopRequireWildcard(_services);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	var fetchTVShowsStart = exports.fetchTVShowsStart = function fetchTVShowsStart() {
-	  return {
-	    type: ActionTypes.FETCH_TVSHOWS_START
-	  };
-	};
-	
-	var fetchTVShowsSuccess = exports.fetchTVShowsSuccess = function fetchTVShowsSuccess(data) {
-	  return {
-	    type: ActionTypes.FETCH_TVSHOWS_SUCCESS,
-	    payload: data
-	  };
-	};
-	
-	var fetchTVShowsError = exports.fetchTVShowsError = function fetchTVShowsError() {
-	  return {
-	    type: ActionTypes.FETCH_TVSHOWS_ERROR
-	  };
-	};
-	
-	var fetchTVShowInfoSuccess = exports.fetchTVShowInfoSuccess = function fetchTVShowInfoSuccess(data) {
-	  return {
-	    type: ActionTypes.FETCH_TVSHOW_INFO_SUCCESS,
-	    payload: data
-	  };
-	};
-	
-	var fetchTVShowEpisodesSuccess = exports.fetchTVShowEpisodesSuccess = function fetchTVShowEpisodesSuccess(data) {
-	  return {
-	    type: ActionTypes.FETCH_TVSHOW_EPISODES_SUCCESS,
-	    payload: data
-	  };
-	};
-	
-	var fetchTVShowCastSuccess = exports.fetchTVShowCastSuccess = function fetchTVShowCastSuccess(data) {
-	  return {
-	    type: ActionTypes.FETCH_TVSHOW_CAST_SUCCESS,
-	    payload: data
-	  };
-	};
-	
-	var setCurrentTVShowSuccess = exports.setCurrentTVShowSuccess = function setCurrentTVShowSuccess(tvShowName) {
-	  return {
-	    type: ActionTypes.SET_CURRENT_TVSHOW_SUCCESS,
-	    payload: { tvShowName: tvShowName }
-	  };
-	};
-	
-	var removeTVShowSuccess = exports.removeTVShowSuccess = function removeTVShowSuccess(tvShowName) {
-	  return {
-	    type: ActionTypes.REMOVE_TVSHOW_SUCCESS,
-	    payload: { tvShowName: tvShowName }
-	  };
-	};
-	
-	var addTVShowSuccess = exports.addTVShowSuccess = function addTVShowSuccess(tvShowName) {
-	  return {
-	    type: ActionTypes.ADD_TVSHOW_SUCCESS,
-	    payload: { tvShowName: tvShowName }
-	  };
-	};
-	
-	var setTVShowData = exports.setTVShowData = function setTVShowData(data) {
-	  return function (dispatch) {
-	    dispatch(fetchTVShowsStart());
-	    var interval = 3000;
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-	
-	    try {
-	      for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	        var tvShow = _step.value;
-	
-	        dispatch(fetchTVShowInfo(tvShow.tv_show_name));
-	      }
-	    } catch (err) {
-	      _didIteratorError = true;
-	      _iteratorError = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion && _iterator.return) {
-	          _iterator.return();
-	        }
-	      } finally {
-	        if (_didIteratorError) {
-	          throw _iteratorError;
-	        }
-	      }
-	    }
-	
-	    setTimeout(function () {
-	      dispatch(fetchTVShowsSuccess({ response: { data: data }, isLocal: false, isInit: true }));
-	    }, interval);
-	  };
-	};
-	
-	var fetchTVShowsData = exports.fetchTVShowsData = function fetchTVShowsData(data) {
-	  return function (dispatch) {
-	    dispatch(fetchTVShowsStart());
-	    var url = data.url,
-	        isLocal = data.isLocal,
-	        isInit = data.isInit;
-	
-	    var interval = 3000;
-	    Services.fetchData(url).then(function (response) {
-	      var error = response.error,
-	          data = response.data;
-	
-	      if (!error) {
-	        var _iteratorNormalCompletion2 = true;
-	        var _didIteratorError2 = false;
-	        var _iteratorError2 = undefined;
-	
-	        try {
-	          for (var _iterator2 = data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var tvShow = _step2.value;
-	
-	            dispatch(fetchTVShowInfo(tvShow.tv_show_name));
-	          }
-	        } catch (err) {
-	          _didIteratorError2 = true;
-	          _iteratorError2 = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	              _iterator2.return();
-	            }
-	          } finally {
-	            if (_didIteratorError2) {
-	              throw _iteratorError2;
-	            }
-	          }
-	        }
-	
-	        setTimeout(function () {
-	          dispatch(fetchTVShowsSuccess({ response: response, isLocal: isLocal, isInit: isInit }));
-	        }, interval);
-	      } else dispatch(fetchTVShowsError());
-	    });
-	  };
-	};
-	
-	var fetchTVShowInfo = exports.fetchTVShowInfo = function fetchTVShowInfo(tvShowName) {
-	  return function (dispatch) {
-	    Services.fetchTVShowInfo(tvShowName).then(function (response) {
-	      var id = response.id;
-	
-	      dispatch(fetchTVShowEpisodes({ tvShowID: id, tvShowName: tvShowName }));
-	      dispatch(fetchTVShowCast({ tvShowID: id, tvShowName: tvShowName }));
-	      dispatch(fetchTVShowInfoSuccess({ tvShowName: tvShowName, response: response }));
-	    });
-	  };
-	};
-	
-	var fetchTVShowEpisodes = exports.fetchTVShowEpisodes = function fetchTVShowEpisodes(data) {
-	  return function (dispatch) {
-	    var tvShowID = data.tvShowID,
-	        tvShowName = data.tvShowName;
-	
-	    Services.fetchTVShowEpisodes(tvShowID).then(function (response) {
-	      dispatch(fetchTVShowEpisodesSuccess({ tvShowName: tvShowName, response: response }));
-	    });
-	  };
-	};
-	
-	var fetchTVShowCast = exports.fetchTVShowCast = function fetchTVShowCast(data) {
-	  return function (dispatch) {
-	    var tvShowID = data.tvShowID,
-	        tvShowName = data.tvShowName;
-	
-	    Services.fetchTVShowCast(tvShowID).then(function (response) {
-	      dispatch(fetchTVShowCastSuccess({ tvShowName: tvShowName, response: response }));
-	    });
-	  };
-	};
-	
-	var setCurrentTVShow = exports.setCurrentTVShow = function setCurrentTVShow(tvShowName) {
-	  return function (dispatch) {
-	    dispatch(setCurrentTVShowSuccess(tvShowName));
-	  };
-	};
-	
-	var addTVShow = exports.addTVShow = function addTVShow(tvShowName) {
-	  return function (dispatch) {
-	    dispatch(fetchTVShowInfo(tvShowName));
-	    dispatch(addTVShowSuccess(tvShowName));
-	  };
-	};
-	
-	var removeTVShow = exports.removeTVShow = function removeTVShow(tvShowName) {
-	  return function (dispatch) {
-	    dispatch(removeTVShowSuccess(tvShowName));
-	  };
-	};
-	
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "tvshow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-
-/***/ }),
-/* 445 */
-/*!******************************************!*\
-  !*** ./src/client/app/js/store/store.js ***!
-  \******************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-	
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.configureStore = undefined;
-	
-	var _redux = __webpack_require__(/*! redux */ 327);
-	
-	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 446);
-	
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-	
-	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 447);
-	
-	var _reducers2 = _interopRequireDefault(_reducers);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var configureStore = exports.configureStore = function configureStore(initialState) {
-	  var reducer = (0, _reducers2.default)();
-	  var middlwares = [_reduxThunk2.default];
-	  return (0, _redux.createStore)(reducer, initialState, (0, _redux.compose)(_redux.applyMiddleware.apply(undefined, middlwares), window.devToolsExtension ? window.devToolsExtension() : function (f) {
-	    return f;
-	  }));
-	};
-	
-	exports.default = configureStore;
-	
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "store.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-
-/***/ }),
-/* 446 */
-/*!************************************!*\
-  !*** ./~/redux-thunk/lib/index.js ***!
-  \************************************/
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	function createThunkMiddleware(extraArgument) {
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        if (typeof action === 'function') {
-	          return action(dispatch, getState, extraArgument);
-	        }
-	
-	        return next(action);
-	      };
-	    };
-	  };
-	}
-	
-	var thunk = createThunkMiddleware();
-	thunk.withExtraArgument = createThunkMiddleware;
-	
-	exports['default'] = thunk;
-
-/***/ }),
-/* 447 */
-/*!************************************************!*\
-  !*** ./src/client/app/js/reducers/reducers.js ***!
-  \************************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-	
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.createReducer = undefined;
-	
-	var _redux = __webpack_require__(/*! redux */ 327);
-	
-	var _movies = __webpack_require__(/*! ./movies */ 448);
-	
-	var _tvshow = __webpack_require__(/*! ./tvshow */ 449);
-	
-	var createReducer = exports.createReducer = function createReducer() {
-	  return (0, _redux.combineReducers)({
-	    movies: _movies.movies,
-	    tvshows: _tvshow.tvshows
-	  });
-	};
-	
-	exports.default = createReducer;
-	
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "reducers.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-
-/***/ }),
-/* 448 */
-/*!**********************************************!*\
-  !*** ./src/client/app/js/reducers/movies.js ***!
-  \**********************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-	
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.movies = exports.isLocal = exports.data = exports.loading = undefined;
-	
-	var _redux = __webpack_require__(/*! redux */ 327);
-	
-	var _actionTypes = __webpack_require__(/*! ../actions/actionTypes.js */ 350);
-	
-	var loading = exports.loading = function loading() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.FETCH_MOVIE_START) {
-			return true;
-		} else if (action.type === _actionTypes.FETCH_MOVIE_SUCCESS) {
-			var isInit = action.payload.isInit;
-	
-			return !isInit;
-		} else if (action.type === _actionTypes.FETCH_MOVIE_ERROR) {
-			return false;
-		}
-		return state;
-	};
-	
-	var data = exports.data = function data() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.FETCH_MOVIE_SUCCESS) {
-			var _data = action.payload.response.data;
-	
-			return _data;
-		}
-		return state;
-	};
-	
-	var isLocal = exports.isLocal = function isLocal() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.FETCH_MOVIE_SUCCESS) {
-			var _isLocal = action.payload.isLocal;
-	
-			return _isLocal;
-		}
-		return state;
-	};
-	
-	var movies = exports.movies = (0, _redux.combineReducers)({
-		loading: loading,
-		data: data,
-		isLocal: isLocal
-	});
-	
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "movies.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-
-/***/ }),
-/* 449 */
-/*!**********************************************!*\
-  !*** ./src/client/app/js/reducers/tvshow.js ***!
-  \**********************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-	
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.tvshows = exports.currentTVShow = exports.casts = exports.episodes = exports.showsInfo = exports.isLocal = exports.tvShows = exports.loading = undefined;
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _redux = __webpack_require__(/*! redux */ 327);
-	
-	var _actionTypes = __webpack_require__(/*! ../actions/actionTypes.js */ 350);
-	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
-	
-	var loading = exports.loading = function loading() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.FETCH_TVSHOWS_START) {
-			return true;
-		}
-		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
-			var isInit = action.payload.isInit;
-	
-			return !isInit;
-		} else if (action.type === _actionTypes.FETCH_TVSHOWS_ERROR) {
-			return false;
-		}
-		return state;
-	};
-	
-	var tvShows = exports.tvShows = function tvShows() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
-			var data = action.payload.response.data;
-	
-			return data;
-		}
-		if (action.type === _actionTypes.ADD_TVSHOW_SUCCESS) {
-			var tvShowName = action.payload.tvShowName;
-	
-			var existingShow = state.find(function (tvShow) {
-				return tvShowName == tvShow.tv_show_name;
-			});
-			!existingShow && state.push({
-				tv_show_name: tvShowName,
-				tv_show_tag: tvShowName.replace(/\s/g, '').toLowerCase()
-			});
-		}
-		if (action.type === _actionTypes.REMOVE_TVSHOW_SUCCESS) {
-			var _tvShowName = action.payload.tvShowName;
-	
-			state = state.filter(function (tvShow) {
-				return _tvShowName != tvShow.tv_show_name;
-			});
-		}
-		return state;
-	};
-	
-	var isLocal = exports.isLocal = function isLocal() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
-			var _isLocal = action.payload.isLocal;
-	
-			return _isLocal;
-		}
-		return state;
-	};
-	
-	var showsInfo = exports.showsInfo = function showsInfo() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.FETCH_TVSHOW_INFO_SUCCESS) {
-			var _action$payload = action.payload,
-			    tvShowName = _action$payload.tvShowName,
-			    response = _action$payload.response;
-	
-			if (response) {
-				var newState = _extends({}, state);
-				newState[tvShowName] = response;
-				return newState;
-			}
-		}
-		return state;
-	};
-	
-	var episodes = exports.episodes = function episodes() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.FETCH_TVSHOW_EPISODES_SUCCESS) {
-			var _action$payload2 = action.payload,
-			    tvShowName = _action$payload2.tvShowName,
-			    response = _action$payload2.response;
-	
-			var upcoming = void 0;
-			if (response) {
-				var _episodes = response.map(function (episode) {
-					var id = episode.id,
-					    name = episode.name,
-					    season = episode.season,
-					    number = episode.number,
-					    summary = episode.summary,
-					    airdate = episode.airdate;
-	
-					var dateInfo = (0, _utils.getDate)(airdate);
-					if (!upcoming && (dateInfo.color == 'yellow' || dateInfo.color == 'red')) {
-						upcoming = _extends({}, episode, dateInfo);
-					}
-					return _extends({ id: id, tv_show_episode: name, season: season, number: number, summary: summary, airdate: airdate }, dateInfo);
-				});
-	
-				var seasons = [];
-				for (var i = 0; i < _episodes.length; i++) {
-					var episode = _episodes[i];
-					var seasonNo = episode.season,
-					    number = episode.number,
-					    airdate = episode.airdate;
-	
-	
-					if (!seasons[seasonNo - 1]) {
-						seasons[seasonNo - 1] = {
-							tv_show_season: seasonNo,
-							episodes: [],
-							year: (0, _utils.getYear)(airdate)
-						};
-					}
-					var episodesData = seasons[seasonNo - 1].episodes;
-	
-					episodesData[number - 1] = episode;
-					seasons[seasonNo - 1].episodes = episodesData;
-				}
-				var newState = _extends({}, state);
-				newState[tvShowName] = { seasons: seasons, upcoming: upcoming };
-				return newState;
-			}
-		}
-		return state;
-	};
-	
-	var casts = exports.casts = function casts() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.FETCH_TVSHOW_CAST_SUCCESS) {
-			var _action$payload3 = action.payload,
-			    tvShowName = _action$payload3.tvShowName,
-			    response = _action$payload3.response;
-	
-			if (response) {
-				var _casts = response.map(function (cast) {
-					var _cast$person = cast.person,
-					    realName = _cast$person.name,
-					    real = _cast$person.image,
-					    _cast$character = cast.character,
-					    characterName = _cast$character.name,
-					    character = _cast$character.image;
-	
-					var realImage = real && real.medium;
-					var characterImage = character && character.medium;
-					return { realName: realName, realImage: realImage, characterName: characterName, characterImage: characterImage };
-				});
-				var newState = _extends({}, state);
-				newState[tvShowName] = _casts;
-				return newState;
-			}
-		}
-		return state;
-	};
-	
-	var currentTVShow = exports.currentTVShow = function currentTVShow() {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-		var action = arguments[1];
-	
-		if (action.type === _actionTypes.SET_CURRENT_TVSHOW_SUCCESS || action.type === _actionTypes.FETCH_TVSHOW_EPISODES_SUCCESS) {
-			return action.payload.tvShowName;
-		}
-		return state;
-	};
-	
-	var tvshows = exports.tvshows = (0, _redux.combineReducers)({
-		loading: loading,
-		tvShows: tvShows,
-		isLocal: isLocal,
-		showsInfo: showsInfo,
-		episodes: episodes,
-		casts: casts,
-		currentTVShow: currentTVShow
-	});
-	
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "tvshow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-
-/***/ }),
-/* 450 */
+/* 443 */
 /*!**********************************************************!*\
   !*** ./src/client/app/js/components/UpcomingEpisodes.js ***!
   \**********************************************************/
@@ -47053,13 +46478,13 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
 	
-	var _reactTextMarquee = __webpack_require__(/*! react-text-marquee */ 451);
+	var _reactTextMarquee = __webpack_require__(/*! react-text-marquee */ 444);
 	
 	var _reactTextMarquee2 = _interopRequireDefault(_reactTextMarquee);
 	
 	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
 	
-	var _utils = __webpack_require__(/*! ../utils/utils */ 441);
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -47137,7 +46562,9 @@
 	};
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  var upComingEpisodes = (0, _selectors.getUpcomingEpisodes)(state);
+	
+	  var tvShowEpisodes = (0, _selectors.getTVShowEpisodes)(state);
+	  var upComingEpisodes = (0, _utils.getUpcomingShows)(tvShowEpisodes);
 	  var tvShows = (0, _selectors.getTVShowData)(state);
 	  return {
 	    upComingEpisodes: upComingEpisodes,
@@ -47150,7 +46577,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "UpcomingEpisodes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 451 */
+/* 444 */
 /*!*******************************************!*\
   !*** ./~/react-text-marquee/lib/index.js ***!
   \*******************************************/
@@ -47433,6 +46860,621 @@
 	  };
 	  exports.default = Marquee;
 	});
+
+/***/ }),
+/* 445 */
+/*!*********************************************!*\
+  !*** ./src/client/app/js/actions/tvshow.js ***!
+  \*********************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.removeTVShow = exports.addTVShow = exports.setCurrentTVShow = exports.fetchTVShowCast = exports.fetchTVShowEpisodes = exports.fetchTVShowInfo = exports.fetchTVShowsData = exports.setTVShowData = exports.addTVShowSuccess = exports.removeTVShowSuccess = exports.setCurrentTVShowSuccess = exports.fetchTVShowCastSuccess = exports.fetchTVShowEpisodesSuccess = exports.fetchTVShowInfoSuccess = exports.fetchTVShowsError = exports.fetchTVShowsSuccess = exports.fetchTVShowsStart = undefined;
+	
+	var _actionTypes = __webpack_require__(/*! ./actionTypes.js */ 350);
+	
+	var ActionTypes = _interopRequireWildcard(_actionTypes);
+	
+	var _services = __webpack_require__(/*! ../services/services.js */ 351);
+	
+	var Services = _interopRequireWildcard(_services);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	var fetchTVShowsStart = exports.fetchTVShowsStart = function fetchTVShowsStart() {
+	  return {
+	    type: ActionTypes.FETCH_TVSHOWS_START
+	  };
+	};
+	
+	var fetchTVShowsSuccess = exports.fetchTVShowsSuccess = function fetchTVShowsSuccess(data) {
+	  return {
+	    type: ActionTypes.FETCH_TVSHOWS_SUCCESS,
+	    payload: data
+	  };
+	};
+	
+	var fetchTVShowsError = exports.fetchTVShowsError = function fetchTVShowsError() {
+	  return {
+	    type: ActionTypes.FETCH_TVSHOWS_ERROR
+	  };
+	};
+	
+	var fetchTVShowInfoSuccess = exports.fetchTVShowInfoSuccess = function fetchTVShowInfoSuccess(data) {
+	  return {
+	    type: ActionTypes.FETCH_TVSHOW_INFO_SUCCESS,
+	    payload: data
+	  };
+	};
+	
+	var fetchTVShowEpisodesSuccess = exports.fetchTVShowEpisodesSuccess = function fetchTVShowEpisodesSuccess(data) {
+	  return {
+	    type: ActionTypes.FETCH_TVSHOW_EPISODES_SUCCESS,
+	    payload: data
+	  };
+	};
+	
+	var fetchTVShowCastSuccess = exports.fetchTVShowCastSuccess = function fetchTVShowCastSuccess(data) {
+	  return {
+	    type: ActionTypes.FETCH_TVSHOW_CAST_SUCCESS,
+	    payload: data
+	  };
+	};
+	
+	var setCurrentTVShowSuccess = exports.setCurrentTVShowSuccess = function setCurrentTVShowSuccess(tvShowName) {
+	  return {
+	    type: ActionTypes.SET_CURRENT_TVSHOW_SUCCESS,
+	    payload: { tvShowName: tvShowName }
+	  };
+	};
+	
+	var removeTVShowSuccess = exports.removeTVShowSuccess = function removeTVShowSuccess(tvShowName) {
+	  return {
+	    type: ActionTypes.REMOVE_TVSHOW_SUCCESS,
+	    payload: { tvShowName: tvShowName }
+	  };
+	};
+	
+	var addTVShowSuccess = exports.addTVShowSuccess = function addTVShowSuccess(tvShowName) {
+	  return {
+	    type: ActionTypes.ADD_TVSHOW_SUCCESS,
+	    payload: { tvShowName: tvShowName }
+	  };
+	};
+	
+	var setTVShowData = exports.setTVShowData = function setTVShowData(data) {
+	  return function (dispatch) {
+	    dispatch(fetchTVShowsStart());
+	    var interval = 3000;
+	    var _iteratorNormalCompletion = true;
+	    var _didIteratorError = false;
+	    var _iteratorError = undefined;
+	
+	    try {
+	      for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        var tvShow = _step.value;
+	
+	        dispatch(fetchTVShowInfo(tvShow.tv_show_name));
+	      }
+	    } catch (err) {
+	      _didIteratorError = true;
+	      _iteratorError = err;
+	    } finally {
+	      try {
+	        if (!_iteratorNormalCompletion && _iterator.return) {
+	          _iterator.return();
+	        }
+	      } finally {
+	        if (_didIteratorError) {
+	          throw _iteratorError;
+	        }
+	      }
+	    }
+	
+	    setTimeout(function () {
+	      dispatch(fetchTVShowsSuccess({ response: { data: data }, isLocal: false, isInit: true }));
+	    }, interval);
+	  };
+	};
+	
+	var fetchTVShowsData = exports.fetchTVShowsData = function fetchTVShowsData(data) {
+	  return function (dispatch) {
+	    dispatch(fetchTVShowsStart());
+	    var url = data.url,
+	        isLocal = data.isLocal,
+	        isInit = data.isInit;
+	
+	    var interval = 3000;
+	    Services.fetchData(url).then(function (response) {
+	      var error = response.error,
+	          data = response.data;
+	
+	      if (!error) {
+	        var _iteratorNormalCompletion2 = true;
+	        var _didIteratorError2 = false;
+	        var _iteratorError2 = undefined;
+	
+	        try {
+	          for (var _iterator2 = data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var tvShow = _step2.value;
+	
+	            dispatch(fetchTVShowInfo(tvShow.tv_show_name));
+	          }
+	        } catch (err) {
+	          _didIteratorError2 = true;
+	          _iteratorError2 = err;
+	        } finally {
+	          try {
+	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	              _iterator2.return();
+	            }
+	          } finally {
+	            if (_didIteratorError2) {
+	              throw _iteratorError2;
+	            }
+	          }
+	        }
+	
+	        setTimeout(function () {
+	          dispatch(fetchTVShowsSuccess({ response: response, isLocal: isLocal, isInit: isInit }));
+	        }, interval);
+	      } else dispatch(fetchTVShowsError());
+	    });
+	  };
+	};
+	
+	var fetchTVShowInfo = exports.fetchTVShowInfo = function fetchTVShowInfo(tvShowName) {
+	  return function (dispatch) {
+	    Services.fetchTVShowInfo(tvShowName).then(function (response) {
+	      var id = response.id;
+	
+	      dispatch(fetchTVShowEpisodes({ tvShowID: id, tvShowName: tvShowName }));
+	      dispatch(fetchTVShowCast({ tvShowID: id, tvShowName: tvShowName }));
+	      dispatch(fetchTVShowInfoSuccess({ tvShowName: tvShowName, response: response }));
+	    });
+	  };
+	};
+	
+	var fetchTVShowEpisodes = exports.fetchTVShowEpisodes = function fetchTVShowEpisodes(data) {
+	  return function (dispatch) {
+	    var tvShowID = data.tvShowID,
+	        tvShowName = data.tvShowName;
+	
+	    Services.fetchTVShowEpisodes(tvShowID).then(function (response) {
+	      dispatch(fetchTVShowEpisodesSuccess({ tvShowName: tvShowName, response: response }));
+	    });
+	  };
+	};
+	
+	var fetchTVShowCast = exports.fetchTVShowCast = function fetchTVShowCast(data) {
+	  return function (dispatch) {
+	    var tvShowID = data.tvShowID,
+	        tvShowName = data.tvShowName;
+	
+	    Services.fetchTVShowCast(tvShowID).then(function (response) {
+	      dispatch(fetchTVShowCastSuccess({ tvShowName: tvShowName, response: response }));
+	    });
+	  };
+	};
+	
+	var setCurrentTVShow = exports.setCurrentTVShow = function setCurrentTVShow(tvShowName) {
+	  return function (dispatch) {
+	    dispatch(setCurrentTVShowSuccess(tvShowName));
+	  };
+	};
+	
+	var addTVShow = exports.addTVShow = function addTVShow(tvShowName) {
+	  return function (dispatch) {
+	    dispatch(fetchTVShowInfo(tvShowName));
+	    dispatch(addTVShowSuccess(tvShowName));
+	  };
+	};
+	
+	var removeTVShow = exports.removeTVShow = function removeTVShow(tvShowName) {
+	  return function (dispatch) {
+	    dispatch(removeTVShowSuccess(tvShowName));
+	  };
+	};
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "tvshow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ }),
+/* 446 */
+/*!******************************************!*\
+  !*** ./src/client/app/js/store/store.js ***!
+  \******************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.configureStore = undefined;
+	
+	var _redux = __webpack_require__(/*! redux */ 327);
+	
+	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 447);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
+	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 448);
+	
+	var _reducers2 = _interopRequireDefault(_reducers);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var configureStore = exports.configureStore = function configureStore(initialState) {
+	  var reducer = (0, _reducers2.default)();
+	  var middlwares = [_reduxThunk2.default];
+	  return (0, _redux.createStore)(reducer, initialState, (0, _redux.compose)(_redux.applyMiddleware.apply(undefined, middlwares), window.devToolsExtension ? window.devToolsExtension() : function (f) {
+	    return f;
+	  }));
+	};
+	
+	exports.default = configureStore;
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "store.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ }),
+/* 447 */
+/*!************************************!*\
+  !*** ./~/redux-thunk/lib/index.js ***!
+  \************************************/
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+	
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+	
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+	
+	exports['default'] = thunk;
+
+/***/ }),
+/* 448 */
+/*!************************************************!*\
+  !*** ./src/client/app/js/reducers/reducers.js ***!
+  \************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.createReducer = undefined;
+	
+	var _redux = __webpack_require__(/*! redux */ 327);
+	
+	var _movies = __webpack_require__(/*! ./movies */ 449);
+	
+	var _tvshow = __webpack_require__(/*! ./tvshow */ 450);
+	
+	var createReducer = exports.createReducer = function createReducer() {
+	  return (0, _redux.combineReducers)({
+	    movies: _movies.movies,
+	    tvshows: _tvshow.tvshows
+	  });
+	};
+	
+	exports.default = createReducer;
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "reducers.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ }),
+/* 449 */
+/*!**********************************************!*\
+  !*** ./src/client/app/js/reducers/movies.js ***!
+  \**********************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.movies = exports.isLocal = exports.data = exports.loading = undefined;
+	
+	var _redux = __webpack_require__(/*! redux */ 327);
+	
+	var _actionTypes = __webpack_require__(/*! ../actions/actionTypes.js */ 350);
+	
+	var loading = exports.loading = function loading() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_MOVIE_START) {
+			return true;
+		} else if (action.type === _actionTypes.FETCH_MOVIE_SUCCESS) {
+			var isInit = action.payload.isInit;
+	
+			return !isInit;
+		} else if (action.type === _actionTypes.FETCH_MOVIE_ERROR) {
+			return false;
+		}
+		return state;
+	};
+	
+	var data = exports.data = function data() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_MOVIE_SUCCESS) {
+			var _data = action.payload.response.data;
+	
+			return _data;
+		}
+		return state;
+	};
+	
+	var isLocal = exports.isLocal = function isLocal() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_MOVIE_SUCCESS) {
+			var _isLocal = action.payload.isLocal;
+	
+			return _isLocal;
+		}
+		return state;
+	};
+	
+	var movies = exports.movies = (0, _redux.combineReducers)({
+		loading: loading,
+		data: data,
+		isLocal: isLocal
+	});
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "movies.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ }),
+/* 450 */
+/*!**********************************************!*\
+  !*** ./src/client/app/js/reducers/tvshow.js ***!
+  \**********************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.tvshows = exports.currentTVShow = exports.casts = exports.episodes = exports.showsInfo = exports.isLocal = exports.tvShows = exports.loading = undefined;
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _redux = __webpack_require__(/*! redux */ 327);
+	
+	var _actionTypes = __webpack_require__(/*! ../actions/actionTypes.js */ 350);
+	
+	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
+	
+	var loading = exports.loading = function loading() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_TVSHOWS_START) {
+			return true;
+		}
+		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
+			var isInit = action.payload.isInit;
+	
+			return !isInit;
+		} else if (action.type === _actionTypes.FETCH_TVSHOWS_ERROR) {
+			return false;
+		}
+		return state;
+	};
+	
+	var tvShows = exports.tvShows = function tvShows() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
+			var data = action.payload.response.data;
+	
+			return data;
+		}
+		if (action.type === _actionTypes.ADD_TVSHOW_SUCCESS) {
+			var tvShowName = action.payload.tvShowName;
+	
+			state.unshift({
+				tv_show_name: tvShowName,
+				tv_show_tag: tvShowName.replace(/\s/g, '').toLowerCase()
+			});
+		}
+		if (action.type === _actionTypes.REMOVE_TVSHOW_SUCCESS) {
+			var _tvShowName = action.payload.tvShowName;
+	
+			state = state.filter(function (tvShow) {
+				return _tvShowName != tvShow.tv_show_name;
+			});
+		}
+		return state;
+	};
+	
+	var isLocal = exports.isLocal = function isLocal() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_TVSHOWS_SUCCESS) {
+			var _isLocal = action.payload.isLocal;
+	
+			return _isLocal;
+		}
+		return state;
+	};
+	
+	var showsInfo = exports.showsInfo = function showsInfo() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_TVSHOW_INFO_SUCCESS) {
+			var _action$payload = action.payload,
+			    tvShowName = _action$payload.tvShowName,
+			    response = _action$payload.response;
+	
+			if (response) {
+				var newState = _extends({}, state);
+				newState[tvShowName] = response;
+				return newState;
+			}
+		}
+	
+		if (action.type === _actionTypes.REMOVE_TVSHOW_SUCCESS) {
+			var _tvShowName2 = action.payload.tvShowName;
+	
+			delete state[_tvShowName2];
+		}
+		return state;
+	};
+	
+	var episodes = exports.episodes = function episodes() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_TVSHOW_EPISODES_SUCCESS) {
+			var _action$payload2 = action.payload,
+			    tvShowName = _action$payload2.tvShowName,
+			    response = _action$payload2.response;
+	
+			var upcoming = void 0;
+			if (response) {
+				var _episodes = response.map(function (episode) {
+					var id = episode.id,
+					    name = episode.name,
+					    season = episode.season,
+					    number = episode.number,
+					    summary = episode.summary,
+					    airdate = episode.airdate;
+	
+					var dateInfo = (0, _utils.getDate)(airdate);
+					if (!upcoming && (dateInfo.color == 'yellow' || dateInfo.color == 'red')) {
+						upcoming = _extends({}, episode, dateInfo);
+					}
+					return _extends({ id: id, tv_show_episode: name, season: season, number: number, summary: summary, airdate: airdate }, dateInfo);
+				});
+	
+				var seasons = [];
+				for (var i = 0; i < _episodes.length; i++) {
+					var episode = _episodes[i];
+					var seasonNo = episode.season,
+					    number = episode.number,
+					    airdate = episode.airdate;
+	
+	
+					if (!seasons[seasonNo - 1]) {
+						seasons[seasonNo - 1] = {
+							tv_show_season: seasonNo,
+							episodes: [],
+							year: (0, _utils.getYear)(airdate)
+						};
+					}
+					var episodesData = seasons[seasonNo - 1].episodes;
+	
+					episodesData[number - 1] = episode;
+					seasons[seasonNo - 1].episodes = episodesData;
+				}
+				var newState = _extends({}, state);
+				newState[tvShowName] = { seasons: seasons, upcoming: upcoming };
+				return newState;
+			}
+		}
+		if (action.type === _actionTypes.REMOVE_TVSHOW_SUCCESS) {
+			var _tvShowName3 = action.payload.tvShowName;
+	
+			delete state[_tvShowName3];
+		}
+		return state;
+	};
+	
+	var casts = exports.casts = function casts() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.FETCH_TVSHOW_CAST_SUCCESS) {
+			var _action$payload3 = action.payload,
+			    tvShowName = _action$payload3.tvShowName,
+			    response = _action$payload3.response;
+	
+			if (response) {
+				var _casts = response.map(function (cast) {
+					var _cast$person = cast.person,
+					    realName = _cast$person.name,
+					    real = _cast$person.image,
+					    _cast$character = cast.character,
+					    characterName = _cast$character.name,
+					    character = _cast$character.image;
+	
+					var realImage = real && real.medium;
+					var characterImage = character && character.medium;
+					return { realName: realName, realImage: realImage, characterName: characterName, characterImage: characterImage };
+				});
+				var newState = _extends({}, state);
+				newState[tvShowName] = _casts;
+				return newState;
+			}
+		}
+		if (action.type === _actionTypes.REMOVE_TVSHOW_SUCCESS) {
+			var _tvShowName4 = action.payload.tvShowName;
+	
+			delete state[_tvShowName4];
+		}
+		return state;
+	};
+	
+	var currentTVShow = exports.currentTVShow = function currentTVShow() {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+		var action = arguments[1];
+	
+		if (action.type === _actionTypes.SET_CURRENT_TVSHOW_SUCCESS || action.type === _actionTypes.FETCH_TVSHOW_EPISODES_SUCCESS) {
+			return action.payload.tvShowName;
+		}
+		return state;
+	};
+	
+	var tvshows = exports.tvshows = (0, _redux.combineReducers)({
+		loading: loading,
+		tvShows: tvShows,
+		isLocal: isLocal,
+		showsInfo: showsInfo,
+		episodes: episodes,
+		casts: casts,
+		currentTVShow: currentTVShow
+	});
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "tvshow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ })
 /******/ ]);

@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Marquee from 'react-text-marquee';
-import {getUpcomingEpisodes, getTVShowData} from '../selectors/selectors';
-import {sortEpisodesByDate, stripHTMLFromText} from '../utils/utils';
+import {getTVShowEpisodes, getTVShowData} from '../selectors/selectors';
+import {sortEpisodesByDate, stripHTMLFromText, getUpcomingShows} from '../utils/utils';
 
 class UpcomingEpisodes extends React.Component {
   render(){
@@ -46,7 +46,9 @@ const styles = {
 }
 
 const mapStateToProps = (state) =>{
-  let upComingEpisodes = getUpcomingEpisodes(state);
+
+  let tvShowEpisodes = getTVShowEpisodes(state);
+  let upComingEpisodes = getUpcomingShows(tvShowEpisodes);
   let tvShows = getTVShowData(state);
   return {
     upComingEpisodes,

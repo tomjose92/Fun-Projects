@@ -26,18 +26,3 @@ export const getCurrentTVShowCasts = createSelector(
   [getCurrentTVShow, getTVShowCasts],
   (tvShowName, casts) => casts[tvShowName]
 );
-
-export const getUpcomingEpisodes = createSelector(
-  [getTVShowEpisodes],
-  (episodes) => {
-  	let upcoming = [];
-  	for(let show in episodes)
-  	{
-  		if(episodes[show].upcoming)
-  		{
-  			upcoming.push({tvShowName:show,episode:episodes[show].upcoming});
-  		}
-  	}
-  	return upcoming;
-  }
-);
