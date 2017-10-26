@@ -12,6 +12,7 @@ import {
 } from '../actions/actionTypes.js';
 
 import {getYear, getDate} from '../utils/utils';
+import includes from 'lodash/includes';
 
 export const loading = (state = false, action) => {
 	if(action.type === FETCH_TVSHOWS_START){
@@ -147,6 +148,24 @@ export const casts = (state=[],action) =>{
 	return state;
 }
 
+export const genres = (state=[], action) =>{
+	if(action.type === FETCH_TVSHOW_INFO_SUCCESS){
+		let {response} = action.payload;
+		if(response){
+			let {genres} = response;
+			genres = state.concat(genres);
+			let newGenres = [];
+			for(let i in genres) {
+		        if(!includes(newGenres, genres[i])) {
+		            newGenres.push(genres[i]);
+		        }
+		    }
+			return newGenres;
+		}
+	}
+	return state;
+}
+
 export const currentTVShow = (state='', action) =>{
 	if(action.type === SET_CURRENT_TVSHOW_SUCCESS){
 		return action.payload.tvShowName;
@@ -177,6 +196,7 @@ export const tvshows = combineReducers({
   episodes,
   casts,
   currentTVShow,
-  options
+  options,
+  genres
 });
 

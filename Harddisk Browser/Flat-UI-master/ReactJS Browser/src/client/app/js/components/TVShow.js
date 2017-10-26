@@ -7,7 +7,7 @@ import Gap from './common/Gap';
 import {Images, ImagePosition} from '../constants/images';
 import TVShowModal from './TVShowModal';
 import UpcomingEpisodes from './UpcomingEpisodes';
-import {blurImage, extractTVShowsFromURL, getBookmark} from '../utils/utils';
+import {blurImage, extractTVShowsFromURL} from '../utils/utils';
 import {  fetchTVShowsData, 
           fetchTVShowInfo, 
           setCurrentTVShow, 
@@ -119,7 +119,6 @@ class TVShow extends React.Component {
     let self=this,
   	{error, open, tvShow, records: tvShows} = this.state;
     let {isLocal, isLoading, tvShowsInfo} = this.props;
-    let bookmark = getBookmark(tvShows);
 
   	let TVShowImages = isEmpty(tvShows)? null : tvShows.map(function(tvShow,i){
       let {tv_show_name, tv_show_tag} = tvShow;
@@ -146,9 +145,6 @@ class TVShow extends React.Component {
         {!isLoading && 
         <div style={styles.outerContainer}>
           <ActionsPanel callback={(tvShows)=>this.setTVShowsState(tvShows)} />
-          {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
-              <a href={bookmark} style={styles.bookmark}>Bookmark</a>
-          </div>}
           <UpcomingEpisodes showModal={(tvShow)=>this.showModal(tvShow)}/>
           <div className='tvShowPage' style={styles.container}>
             {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
@@ -185,19 +181,6 @@ const styles={
   outerContainer:{
     textAlign: 'center',
     width:'100%'
-  },
-  bookmarkContainer:{
-    zIndex: 100,
-    position: 'fixed',
-    top: '10px',
-    textAlign: 'right',
-    right: '150px',
-    border: '2px solid white',
-    backgroundColor: 'black'
-  },
-  bookmark:{
-    padding: '0px 15px',
-    color: 'white'
   },
   container:{
     position: 'absolute',
@@ -243,10 +226,6 @@ const styles={
     textShadow: 'none',
     zIndex: '10',
     opacity: '0.7'
-  },
-  showInfo:{
-    color: 'grey',
-    fontWeight: 100
   }
 }
 const mapStateToProps = (state) =>{

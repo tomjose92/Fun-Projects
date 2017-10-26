@@ -248,3 +248,7 @@ a:focus {
 .blur{
   -webkit-filter: blur(5px);
 }
+
+.option:hover{
+  color: lightgreen;
+}
