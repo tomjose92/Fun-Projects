@@ -12,17 +12,14 @@ import {  fetchTVShowsData,
           fetchTVShowInfo, 
           setCurrentTVShow, 
           setTVShowData,
-          addTVShow,
-          removeTVShow,
-          searchTVShow} from '../actions/tvshow';
+          removeTVShow} from '../actions/tvshow';
 import {  getTVShowData, 
           isFetchingTVShow, 
           getTVShowStatus,
           getTVShowsInfo,
-          getTVShows,
-          getCurrentTVShow,
-          getSearchOptions} from '../selectors/selectors';
+          getTVShows} from '../selectors/selectors';
 import isEmpty from 'lodash/isEmpty';
+import ActionsPanel from './ActionsPanel';
 
 class TVShow extends React.Component {
   constructor(){
@@ -38,253 +35,156 @@ class TVShow extends React.Component {
       };
     }
 
-    fetchTVShowData(isLocal=true){
-      console.log('fetchTVShowData');
-      console.log('Accessing',isLocal?'local':'online');   
+  fetchTVShowData(isLocal=true){
+    console.log('fetchTVShowData');
+    console.log('Accessing',isLocal?'local':'online');   
 
-      let data = extractTVShowsFromURL();
-      let url = isLocal?TVSHOW_LOCAL_URL: TVSHOW_ONLINE_URL;
-      let {isInit} = this.state;
-      if(data.length>0)
-      {
-        this.props.setTVShowData(data);  
-      }
-      else
-      {
-        this.props.fetchTVShowsData({url, isLocal, isInit});
-      }
-      !isInit && this.setState({
-        isInit: true
-      });
+    let data = extractTVShowsFromURL();
+    let url = isLocal?TVSHOW_LOCAL_URL: TVSHOW_ONLINE_URL;
+    let {isInit} = this.state;
+    if(data.length>0)
+    {
+      this.props.setTVShowData(data);  
     }
-
-    componentWillMount() {
-      let {tvShows} = this.props;
-      if(isEmpty(tvShows)){
-        this.fetchTVShowData(false);
-      }
-      else
-      {
-        let {records} = this.state;
-        if(isEmpty(records))
-        {
-          this.setState({
-            records: tvShows, 
-            isInit: true
-          });
-        }
-      }
+    else
+    {
+      this.props.fetchTVShowsData({url, isLocal, isInit});
     }
+    !isInit && this.setState({
+      isInit: true
+    });
+  }
 
-    shouldComponentUpdate( nextProps){
-      return nextProps;
+  componentWillMount() {
+    let {tvShows} = this.props;
+    if(isEmpty(tvShows)){
+      this.fetchTVShowData(false);
     }
-
-    closeModal(){
-      this.setState({
-        tvShow:{},
-        open: false
-      });
-    }
-
-    showModal(tvShow,index){
-      let {records: tvShows} = this.state;
-      let {tvShowsInfo} = this.props;
-      let {tv_show_name} = tvShow;
-      if(!tvShowsInfo[tv_show_name])
-      {
-        this.props.fetchTVShowInfo(tv_show_name);
-      }
-      else
-      {
-        this.props.setCurrentTVShow(tv_show_name);  
-      }
-      if(index!=undefined)
-      {
-        tvShow.prev = tvShows[index-1];
-        tvShow.next = tvShows[index+1];
-        tvShow.index = index;
-      }
-      this.setState({
-        tvShow,
-        open: true
-      });
-      blurImage(false);
-    }
-
-    setSearchText(e){
-      let searchText = e.target.value.trim();
-      let {tvShows} = this.props;
-      
-      if(searchText.length==0)
-      {
-        this.setState({
-          records: tvShows
-        });
-        return;
-      }
-
-      tvShows = tvShows.filter((tvShow)=>{
-        return (tvShow.tv_show_name.toLowerCase().indexOf(searchText.toLowerCase())>-1);
-      });
-      this.setState({
-        records: tvShows
-      });
-    }
-
-    toggleSearch(){
-      let {search} = this.state;
-      let {tvShows} = this.props;
-      if(search)
-      {
-        this.setState({
-          records: tvShows
-        });
-      }
-
-      this.setState({
-        search: !search
-      });
-    }
-
-    setAddShow(e){
-      let addShowText = e.target.value.trim();
-      this.props.searchTVShow(addShowText);
-      this.setState({
-        addShowText
-      });
-    }
-
-    toggleAddShow(bool){
-      let {addShow} = this.state;
-      let value = bool!=undefined? bool : !addShow;
-      this.setState({
-        addShow: value,
-        addShowText: null
-      });
-    }
-
-    addTVShow(tvShowName){
-      let {tvShows} = this.props;
-      let existingShow = tvShows.find(function(tvShow){
-        return tvShowName==tvShow.tv_show_name
-      });
-      if(tvShowName && tvShowName.trim()!='' && !existingShow)
-      {
-        this.props.addTVShow(tvShowName);
-      }
-    }
-
-  	render() {
-      let self=this,
-    	{error, open, tvShow,search, addShow, records: tvShows, addShowText} = this.state;
-      let {isLocal, isLoading, tvShowsInfo, searchOptions} = this.props;
-      let bookmark = getBookmark(tvShows);
-      let options = [];
-      if(addShowText){
-        options = searchOptions.map(function(option, index){
-          let {name, rating:{average: rating}, image, status} = option;
-          return (
-            <li key={index} style={styles.option}>
-              {name} &nbsp; &nbsp; 
-              {rating && <span style={styles.showInfo}>Rating : {rating} &nbsp;|&nbsp;</span>}
-              {status && <span style={styles.showInfo}>Status : {status} </span>}
-              <span title={'Add TV Show : '+name} style={{cursor:'pointer',paddingLeft:'20px'}} className={'fui-plus'} onClick={()=>self.addTVShow(name)}/>
-            </li>
-          );
-        });
-      }
-
-    	let TVShowImages = isEmpty(tvShows)? null : tvShows.map(function(tvShow,i){
-        let {tv_show_name, tv_show_tag} = tvShow;
-        let showInfo = tvShowsInfo && tvShowsInfo[tv_show_name];
-        let image = showInfo && showInfo.image && showInfo.image.medium;
-        return (
-          <span className='tvShow' title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
-            <div style={styles.close} onClick={()=>self.props.removeTVShow(tv_show_name)}>&#10005;</div>
-            <a onClick={()=>self.showModal(tvShow, i)}>
-              {false ? 
-                <img className='tvshow' key={"image"+i} style={Object.assign({},styles.image,Images[tv_show_tag], ImagePosition[tv_show_tag])}/>
-                :<img className='tvshow' key={"image"+i} style={styles.image} src={image}/>
-              }
-            </a>
-          </span>
-        )
-      });
-
-	    return (
-        <div>
-          <nav>
-            <Header isLocal={isLocal} loading={isLoading} error={error} onRefresh={()=>this.fetchTVShowData(false)} app="TVShows"/>
-          </nav>
-          {!isLoading && 
-          <div style={styles.outerContainer}>
-            <div style={styles.searchContainer}>
-              <span style={{paddingRight:'10px'}}>Search Show</span> 
-              {search && <input onChange={(e)=>this.setSearchText(e)} style={styles.inputText} type='text'></input>}
-              <span style={{cursor:'pointer',paddingLeft:'10px'}} className={search?'fui-cross':'fui-search'} onClick={()=>this.toggleSearch()}/>
-
-              <span style={{paddingLeft:'50px', paddingRight: '10px'}}>Add Show</span> 
-              {addShow && <input onChange={(e)=>this.setAddShow(e)} style={styles.inputText} type='text'></input>}
-              <span style={{cursor:'pointer',paddingLeft:'10px'}} className={addShow?'fui-cross':'fui-plus'} onClick={()=>this.toggleAddShow()}/>
-              <div className='mediaBG' style={styles.searchBar}><ul>{options}</ul></div>
-            </div>
-            {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
-                <a href={bookmark} style={styles.bookmark}>Bookmark</a>
-            </div>}
-            <UpcomingEpisodes showModal={(tvShow)=>this.showModal(tvShow)}/>
-            <div className='tvShowPage' style={styles.container}>
-              {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
-              {TVShowImages}
-            </div>
-          </div>}
-        </div>
-      );
-  	}
-
-    componentDidMount() {
-      /*let self=this;
+    else
+    {
       let {records} = this.state;
       if(isEmpty(records))
       {
-        setTimeout(function(){
-          self.fetchTVShowData(false);
-        },this.state.interval);
-      }*/
-    }
-
-    componentDidUpdate(prevProps, prevState)
-    {
-      let {tvShows, currentShow} = this.props;
-      let {tvShows: oldTVShows, currentShow: prevShow, isLoading:oldLoading} = prevProps;
-      if(currentShow!=prevShow)
-      {
-        this.toggleAddShow(false);
+        this.setState({
+          records: tvShows, 
+          isInit: true
+        });
       }
-      if(tvShows!=oldTVShows)
-      {
-        this.setState({records: tvShows});
-      }      
     }
+  }
 
+  shouldComponentUpdate( nextProps){
+    return nextProps;
+  }
+
+  closeModal(){
+    this.setState({
+      tvShow:{},
+      open: false
+    });
+  }
+
+  showModal(tvShow,index){
+    let {records: tvShows} = this.state;
+    let {tvShowsInfo} = this.props;
+    let {tv_show_name} = tvShow;
+    if(!tvShowsInfo[tv_show_name])
+    {
+      this.props.fetchTVShowInfo(tv_show_name);
+    }
+    else
+    {
+      this.props.setCurrentTVShow(tv_show_name);  
+    }
+    if(index!=undefined)
+    {
+      tvShow.prev = tvShows[index-1];
+      tvShow.next = tvShows[index+1];
+      tvShow.index = index;
+    }
+    this.setState({
+      tvShow,
+      open: true
+    });
+    blurImage(false);
+  }
+
+  setTVShowsState(tvShows){
+    this.setState({
+      records: tvShows
+    });
+  }
+
+	render() {
+    let self=this,
+  	{error, open, tvShow, records: tvShows} = this.state;
+    let {isLocal, isLoading, tvShowsInfo} = this.props;
+    let bookmark = getBookmark(tvShows);
+
+  	let TVShowImages = isEmpty(tvShows)? null : tvShows.map(function(tvShow,i){
+      let {tv_show_name, tv_show_tag} = tvShow;
+      let showInfo = tvShowsInfo && tvShowsInfo[tv_show_name];
+      let image = showInfo && showInfo.image && showInfo.image.medium;
+      return (
+        <span className='tvShow' title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
+          <div style={styles.close} onClick={()=>self.props.removeTVShow(tv_show_name)}>&#10005;</div>
+          <a onClick={()=>self.showModal(tvShow, i)}>
+            {false ? 
+              <img className='tvshow' key={"image"+i} style={Object.assign({},styles.image,Images[tv_show_tag], ImagePosition[tv_show_tag])}/>
+              :<img className='tvshow' key={"image"+i} style={styles.image} src={image}/>
+            }
+          </a>
+        </span>
+      )
+    });
+
+    return (
+      <div>
+        <nav>
+          <Header isLocal={isLocal} loading={isLoading} error={error} onRefresh={()=>this.fetchTVShowData(false)} app="TVShows"/>
+        </nav>
+        {!isLoading && 
+        <div style={styles.outerContainer}>
+          <ActionsPanel callback={(tvShows)=>this.setTVShowsState(tvShows)} />
+          {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
+              <a href={bookmark} style={styles.bookmark}>Bookmark</a>
+          </div>}
+          <UpcomingEpisodes showModal={(tvShow)=>this.showModal(tvShow)}/>
+          <div className='tvShowPage' style={styles.container}>
+            {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
+            {TVShowImages}
+          </div>
+        </div>}
+      </div>
+    );
+	}
+
+  componentDidMount() {
+    /*let self=this;
+    let {records} = this.state;
+    if(isEmpty(records))
+    {
+      setTimeout(function(){
+        self.fetchTVShowData(false);
+      },this.state.interval);
+    }*/
+  }
+
+  componentDidUpdate(prevProps, prevState)
+  {
+    let {tvShows} = this.props;
+    let {tvShows: oldTVShows} = prevProps;
+    if(tvShows!=oldTVShows)
+    {
+      this.setState({records: tvShows});
+    }      
+  }
 };
 
 const styles={
-  inputText:{
-    height:'25px',
-    color:'black'
-  },
   outerContainer:{
     textAlign: 'center',
     width:'100%'
-  },
-  searchContainer:{
-    position:'fixed',
-    top:'10px',
-    width:'100%',
-    zIndex:100,
-    color:'white',
-    height: '0px'
   },
   bookmarkContainer:{
     zIndex: 100,
@@ -347,37 +247,18 @@ const styles={
   showInfo:{
     color: 'grey',
     fontWeight: 100
-  },
-  searchBar:{
-    position:'absolute', 
-    display: '-webkit-box',
-    overflow: 'overlay',
-    maxHeight: '150px',
-    top: '50px',
-    margin: '0px 500px',
-    opacity: 0.8
-  },
-  option:{
-    textAlign: 'left', 
-    fontWeight: 'bold', 
-    fontSize: '20px'
   }
 }
-
 const mapStateToProps = (state) =>{
   let tvShows = getTVShowData(state);
   let isLoading = isFetchingTVShow(state);
   let isLocal = getTVShowStatus(state);
   let tvShowsInfo = getTVShowsInfo(state);
-  let currentShow = getCurrentTVShow(state);
-  let searchOptions = getSearchOptions(state);
   return {
     tvShows,
     isLoading,
     isLocal,
-    tvShowsInfo,
-    currentShow,
-    searchOptions
+    tvShowsInfo
   };
 };
 
@@ -388,8 +269,6 @@ export default connect(
     fetchTVShowInfo,
     setCurrentTVShow,
     setTVShowData,
-    addTVShow,
     removeTVShow,
-    searchTVShow
   }
 )(TVShow);  

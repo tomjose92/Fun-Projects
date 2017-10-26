@@ -77,7 +77,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
 	
-	var _store = __webpack_require__(/*! ./js/store/store */ 446);
+	var _store = __webpack_require__(/*! ./js/store/store */ 447);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -42944,6 +42944,10 @@
 	
 	var _isEmpty2 = _interopRequireDefault(_isEmpty);
 	
+	var _ActionsPanel = __webpack_require__(/*! ./ActionsPanel */ 446);
+	
+	var _ActionsPanel2 = _interopRequireDefault(_ActionsPanel);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43048,73 +43052,11 @@
 	      (0, _utils.blurImage)(false);
 	    }
 	  }, {
-	    key: 'setSearchText',
-	    value: function setSearchText(e) {
-	      var searchText = e.target.value.trim();
-	      var tvShows = this.props.tvShows;
-	
-	
-	      if (searchText.length == 0) {
-	        this.setState({
-	          records: tvShows
-	        });
-	        return;
-	      }
-	
-	      tvShows = tvShows.filter(function (tvShow) {
-	        return tvShow.tv_show_name.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
-	      });
+	    key: 'setTVShowsState',
+	    value: function setTVShowsState(tvShows) {
 	      this.setState({
 	        records: tvShows
 	      });
-	    }
-	  }, {
-	    key: 'toggleSearch',
-	    value: function toggleSearch() {
-	      var search = this.state.search;
-	      var tvShows = this.props.tvShows;
-	
-	      if (search) {
-	        this.setState({
-	          records: tvShows
-	        });
-	      }
-	
-	      this.setState({
-	        search: !search
-	      });
-	    }
-	  }, {
-	    key: 'setAddShow',
-	    value: function setAddShow(e) {
-	      var addShowText = e.target.value.trim();
-	      this.props.searchTVShow(addShowText);
-	      this.setState({
-	        addShowText: addShowText
-	      });
-	    }
-	  }, {
-	    key: 'toggleAddShow',
-	    value: function toggleAddShow(bool) {
-	      var addShow = this.state.addShow;
-	
-	      var value = bool != undefined ? bool : !addShow;
-	      this.setState({
-	        addShow: value,
-	        addShowText: null
-	      });
-	    }
-	  }, {
-	    key: 'addTVShow',
-	    value: function addTVShow(tvShowName) {
-	      var tvShows = this.props.tvShows;
-	
-	      var existingShow = tvShows.find(function (tvShow) {
-	        return tvShowName == tvShow.tv_show_name;
-	      });
-	      if (tvShowName && tvShowName.trim() != '' && !existingShow) {
-	        this.props.addTVShow(tvShowName);
-	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -43126,50 +43068,13 @@
 	          error = _state.error,
 	          open = _state.open,
 	          tvShow = _state.tvShow,
-	          search = _state.search,
-	          addShow = _state.addShow,
-	          tvShows = _state.records,
-	          addShowText = _state.addShowText;
+	          tvShows = _state.records;
 	      var _props = this.props,
 	          isLocal = _props.isLocal,
 	          isLoading = _props.isLoading,
-	          tvShowsInfo = _props.tvShowsInfo,
-	          searchOptions = _props.searchOptions;
+	          tvShowsInfo = _props.tvShowsInfo;
 	
 	      var bookmark = (0, _utils.getBookmark)(tvShows);
-	      var options = [];
-	      if (addShowText) {
-	        options = searchOptions.map(function (option, index) {
-	          var name = option.name,
-	              rating = option.rating.average,
-	              image = option.image,
-	              status = option.status;
-	
-	          return _react2.default.createElement(
-	            'li',
-	            { key: index, style: styles.option },
-	            name,
-	            ' \xA0 \xA0',
-	            rating && _react2.default.createElement(
-	              'span',
-	              { style: styles.showInfo },
-	              'Rating : ',
-	              rating,
-	              ' \xA0|\xA0'
-	            ),
-	            status && _react2.default.createElement(
-	              'span',
-	              { style: styles.showInfo },
-	              'Status : ',
-	              status,
-	              ' '
-	            ),
-	            _react2.default.createElement('span', { title: 'Add TV Show : ' + name, style: { cursor: 'pointer', paddingLeft: '20px' }, className: 'fui-plus', onClick: function onClick() {
-	                return self.addTVShow(name);
-	              } })
-	          );
-	        });
-	      }
 	
 	      var TVShowImages = (0, _isEmpty2.default)(tvShows) ? null : tvShows.map(function (tvShow, i) {
 	        var tv_show_name = tvShow.tv_show_name,
@@ -43210,41 +43115,9 @@
 	        !isLoading && _react2.default.createElement(
 	          'div',
 	          { style: styles.outerContainer },
-	          _react2.default.createElement(
-	            'div',
-	            { style: styles.searchContainer },
-	            _react2.default.createElement(
-	              'span',
-	              { style: { paddingRight: '10px' } },
-	              'Search Show'
-	            ),
-	            search && _react2.default.createElement('input', { onChange: function onChange(e) {
-	                return _this2.setSearchText(e);
-	              }, style: styles.inputText, type: 'text' }),
-	            _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: search ? 'fui-cross' : 'fui-search', onClick: function onClick() {
-	                return _this2.toggleSearch();
-	              } }),
-	            _react2.default.createElement(
-	              'span',
-	              { style: { paddingLeft: '50px', paddingRight: '10px' } },
-	              'Add Show'
-	            ),
-	            addShow && _react2.default.createElement('input', { onChange: function onChange(e) {
-	                return _this2.setAddShow(e);
-	              }, style: styles.inputText, type: 'text' }),
-	            _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: addShow ? 'fui-cross' : 'fui-plus', onClick: function onClick() {
-	                return _this2.toggleAddShow();
-	              } }),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'mediaBG', style: styles.searchBar },
-	              _react2.default.createElement(
-	                'ul',
-	                null,
-	                options
-	              )
-	            )
-	          ),
+	          _react2.default.createElement(_ActionsPanel2.default, { callback: function callback(tvShows) {
+	              return _this2.setTVShowsState(tvShows);
+	            } }),
 	          bookmark && _react2.default.createElement(
 	            'div',
 	            { title: 'Drag and Drop to Bookmark this', style: styles.bookmarkContainer },
@@ -43285,16 +43158,9 @@
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps, prevState) {
-	      var _props2 = this.props,
-	          tvShows = _props2.tvShows,
-	          currentShow = _props2.currentShow;
-	      var oldTVShows = prevProps.tvShows,
-	          prevShow = prevProps.currentShow,
-	          oldLoading = prevProps.isLoading;
+	      var tvShows = this.props.tvShows;
+	      var oldTVShows = prevProps.tvShows;
 	
-	      if (currentShow != prevShow) {
-	        this.toggleAddShow(false);
-	      }
 	      if (tvShows != oldTVShows) {
 	        this.setState({ records: tvShows });
 	      }
@@ -43307,21 +43173,9 @@
 	;
 	
 	var styles = {
-	  inputText: {
-	    height: '25px',
-	    color: 'black'
-	  },
 	  outerContainer: {
 	    textAlign: 'center',
 	    width: '100%'
-	  },
-	  searchContainer: {
-	    position: 'fixed',
-	    top: '10px',
-	    width: '100%',
-	    zIndex: 100,
-	    color: 'white',
-	    height: '0px'
 	  },
 	  bookmarkContainer: {
 	    zIndex: 100,
@@ -43384,37 +43238,18 @@
 	  showInfo: {
 	    color: 'grey',
 	    fontWeight: 100
-	  },
-	  searchBar: {
-	    position: 'absolute',
-	    display: '-webkit-box',
-	    overflow: 'overlay',
-	    maxHeight: '150px',
-	    top: '50px',
-	    margin: '0px 500px',
-	    opacity: 0.8
-	  },
-	  option: {
-	    textAlign: 'left',
-	    fontWeight: 'bold',
-	    fontSize: '20px'
 	  }
 	};
-	
 	var mapStateToProps = function mapStateToProps(state) {
 	  var tvShows = (0, _selectors.getTVShowData)(state);
 	  var isLoading = (0, _selectors.isFetchingTVShow)(state);
 	  var isLocal = (0, _selectors.getTVShowStatus)(state);
 	  var tvShowsInfo = (0, _selectors.getTVShowsInfo)(state);
-	  var currentShow = (0, _selectors.getCurrentTVShow)(state);
-	  var searchOptions = (0, _selectors.getSearchOptions)(state);
 	  return {
 	    tvShows: tvShows,
 	    isLoading: isLoading,
 	    isLocal: isLocal,
-	    tvShowsInfo: tvShowsInfo,
-	    currentShow: currentShow,
-	    searchOptions: searchOptions
+	    tvShowsInfo: tvShowsInfo
 	  };
 	};
 	
@@ -43423,9 +43258,7 @@
 	  fetchTVShowInfo: _tvshow.fetchTVShowInfo,
 	  setCurrentTVShow: _tvshow.setCurrentTVShow,
 	  setTVShowData: _tvshow.setTVShowData,
-	  addTVShow: _tvshow.addTVShow,
-	  removeTVShow: _tvshow.removeTVShow,
-	  searchTVShow: _tvshow.searchTVShow
+	  removeTVShow: _tvshow.removeTVShow
 	})(TVShow);
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "TVShow.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -47191,6 +47024,282 @@
 
 /***/ }),
 /* 446 */
+/*!******************************************************!*\
+  !*** ./src/client/app/js/components/ActionsPanel.js ***!
+  \******************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react-dom/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
+	
+	var _tvshow = __webpack_require__(/*! ../actions/tvshow */ 445);
+	
+	var _selectors = __webpack_require__(/*! ../selectors/selectors */ 391);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ActionsPanel = function (_React$Component) {
+	  _inherits(ActionsPanel, _React$Component);
+	
+	  function ActionsPanel() {
+	    _classCallCheck(this, ActionsPanel);
+	
+	    var _this = _possibleConstructorReturn(this, (ActionsPanel.__proto__ || Object.getPrototypeOf(ActionsPanel)).call(this));
+	
+	    document.body.className = "mediaBG";
+	    _this.state = {
+	      search: false,
+	      addShow: false
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(ActionsPanel, [{
+	    key: 'setSearchText',
+	    value: function setSearchText(e) {
+	      var searchText = e.target.value.trim();
+	      var tvShows = this.props.tvShows;
+	
+	
+	      if (searchText.length == 0) {
+	        this.props.callback(tvShows);
+	        return;
+	      }
+	
+	      tvShows = tvShows.filter(function (tvShow) {
+	        return tvShow.tv_show_name.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+	      });
+	      this.props.callback(tvShows);
+	    }
+	  }, {
+	    key: 'toggleSearch',
+	    value: function toggleSearch(bool) {
+	      var search = this.state.search;
+	      var tvShows = this.props.tvShows;
+	
+	      var value = bool != undefined ? bool : !search;
+	      if (value) {
+	        this.toggleAddShow(false);
+	      }
+	
+	      if (search) {
+	        this.props.callback(tvShows);
+	      }
+	
+	      this.setState({
+	        search: value
+	      });
+	    }
+	  }, {
+	    key: 'setAddShow',
+	    value: function setAddShow(e) {
+	      var addShowText = e.target.value.trim();
+	      this.props.searchTVShow(addShowText);
+	      this.setState({
+	        addShowText: addShowText
+	      });
+	    }
+	  }, {
+	    key: 'toggleAddShow',
+	    value: function toggleAddShow(bool) {
+	      var addShow = this.state.addShow;
+	
+	      var value = bool != undefined ? bool : !addShow;
+	      if (value) {
+	        this.toggleSearch(false);
+	      }
+	
+	      this.setState({
+	        addShow: value,
+	        addShowText: null,
+	        options: []
+	      });
+	    }
+	  }, {
+	    key: 'addTVShow',
+	    value: function addTVShow(tvShowName) {
+	      var tvShows = this.props.tvShows;
+	
+	      var existingShow = tvShows.find(function (tvShow) {
+	        return tvShowName == tvShow.tv_show_name;
+	      });
+	      if (tvShowName && tvShowName.trim() != '' && !existingShow) {
+	        this.props.addTVShow(tvShowName);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      var _state = this.state,
+	          addShowText = _state.addShowText,
+	          addShow = _state.addShow,
+	          search = _state.search,
+	          searchOptions = _state.options;
+	
+	      var options = [];
+	      var self = this;
+	      if (addShowText) {
+	        options = searchOptions.map(function (option, index) {
+	          var name = option.name,
+	              rating = option.rating.average,
+	              image = option.image,
+	              status = option.status;
+	
+	          return _react2.default.createElement(
+	            'li',
+	            { key: index, style: styles.option },
+	            name,
+	            ' \xA0 \xA0',
+	            rating && _react2.default.createElement(
+	              'span',
+	              { style: styles.showInfo },
+	              'Rating : ',
+	              rating,
+	              ' \xA0|\xA0'
+	            ),
+	            status && _react2.default.createElement(
+	              'span',
+	              { style: styles.showInfo },
+	              'Status : ',
+	              status,
+	              ' '
+	            ),
+	            _react2.default.createElement('span', { title: 'Add TV Show : ' + name, style: { cursor: 'pointer', paddingLeft: '20px' }, className: 'fui-plus', onClick: function onClick() {
+	                return self.addTVShow(name);
+	              } })
+	          );
+	        });
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { style: styles.actionsContainer },
+	        _react2.default.createElement(
+	          'span',
+	          { style: { paddingRight: '10px' } },
+	          'Search Show'
+	        ),
+	        search && _react2.default.createElement('input', { onChange: function onChange(e) {
+	            return _this2.setSearchText(e);
+	          }, style: styles.inputText, type: 'text' }),
+	        _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: search ? 'fui-cross' : 'fui-search', onClick: function onClick() {
+	            return _this2.toggleSearch();
+	          } }),
+	        _react2.default.createElement(
+	          'span',
+	          { style: { paddingLeft: '30px', paddingRight: '10px' } },
+	          'Add Show'
+	        ),
+	        addShow && _react2.default.createElement('input', { onChange: function onChange(e) {
+	            return _this2.setAddShow(e);
+	          }, style: styles.inputText, type: 'text' }),
+	        _react2.default.createElement('span', { style: { cursor: 'pointer', paddingLeft: '10px' }, className: addShow ? 'fui-cross' : 'fui-plus', onClick: function onClick() {
+	            return _this2.toggleAddShow();
+	          } }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'mediaBG', style: styles.searchBar },
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            options
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps, prevState) {
+	      var _props = this.props,
+	          currentShow = _props.currentShow,
+	          searchOptions = _props.searchOptions;
+	      var prevShow = prevProps.currentShow,
+	          oldSearchOptions = prevProps.searchOptions;
+	
+	      if (searchOptions.length > 0 && searchOptions != oldSearchOptions) {
+	        this.setState({
+	          options: searchOptions
+	        });
+	      }
+	      if (currentShow != prevShow) {
+	        this.toggleAddShow(false);
+	      }
+	    }
+	  }]);
+	
+	  return ActionsPanel;
+	}(_react2.default.Component);
+	
+	var styles = {
+	  actionsContainer: {
+	    position: 'fixed',
+	    top: '10px',
+	    width: '100%',
+	    zIndex: 100,
+	    color: 'white',
+	    height: '0px'
+	  },
+	  searchBar: {
+	    position: 'absolute',
+	    display: '-webkit-box',
+	    overflow: 'overlay',
+	    maxHeight: '150px',
+	    top: '50px',
+	    margin: '0px 500px',
+	    opacity: 0.8,
+	    width: '50%'
+	  },
+	  option: {
+	    textAlign: 'left',
+	    fontWeight: 'bold',
+	    fontSize: '20px'
+	  },
+	  inputText: {
+	    height: '25px',
+	    color: 'black'
+	  }
+	};
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  var tvShows = (0, _selectors.getTVShowData)(state);
+	  var currentShow = (0, _selectors.getCurrentTVShow)(state);
+	  var searchOptions = (0, _selectors.getSearchOptions)(state);
+	  return {
+	    tvShows: tvShows,
+	    currentShow: currentShow,
+	    searchOptions: searchOptions
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, {
+	  addTVShow: _tvshow.addTVShow,
+	  searchTVShow: _tvshow.searchTVShow
+	})(ActionsPanel);
+	
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "ActionsPanel.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ }),
+/* 447 */
 /*!******************************************!*\
   !*** ./src/client/app/js/store/store.js ***!
   \******************************************/
@@ -47207,11 +47316,11 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 447);
+	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 448);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 448);
+	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 449);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
@@ -47230,7 +47339,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "store.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 447 */
+/* 448 */
 /*!************************************!*\
   !*** ./~/redux-thunk/lib/index.js ***!
   \************************************/
@@ -47261,7 +47370,7 @@
 	exports['default'] = thunk;
 
 /***/ }),
-/* 448 */
+/* 449 */
 /*!************************************************!*\
   !*** ./src/client/app/js/reducers/reducers.js ***!
   \************************************************/
@@ -47278,9 +47387,9 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _movies = __webpack_require__(/*! ./movies */ 449);
+	var _movies = __webpack_require__(/*! ./movies */ 450);
 	
-	var _tvshow = __webpack_require__(/*! ./tvshow */ 450);
+	var _tvshow = __webpack_require__(/*! ./tvshow */ 451);
 	
 	var createReducer = exports.createReducer = function createReducer() {
 	  return (0, _redux.combineReducers)({
@@ -47294,7 +47403,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "reducers.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 449 */
+/* 450 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/movies.js ***!
   \**********************************************/
@@ -47362,7 +47471,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "movies.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 450 */
+/* 451 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/tvshow.js ***!
   \**********************************************/

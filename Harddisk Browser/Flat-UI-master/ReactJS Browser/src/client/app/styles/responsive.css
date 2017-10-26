@@ -13,4 +13,7 @@
     .showTitle{
     	margin-left: 0px !important;
     }
+    input{
+        width: 100px;
+    }
 }
