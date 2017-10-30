@@ -7,9 +7,9 @@ import {  getTVShowData,
           getSearchOptions,
           getTVShowsInfo,
           getTVShowGenres
-        } from '../selectors/selectors';
+        } from 'selectors';
 import includes from 'lodash/includes';
-import {getBookmark} from '../utils/utils';
+import {getBookmark} from 'utils';
 
 class ActionsPanel extends React.Component {
   constructor(){
@@ -178,8 +178,9 @@ class ActionsPanel extends React.Component {
     {
       genreHTML = genres.map(function(genre, index){
         let isChecked = includes(genreList,genre);
+        let newStyles = {...styles.genre, color: (isChecked?'lightgreen':'white')};
         return (
-          <li className='option' key={index} style={styles.genre} 
+          <li className='option' key={index} style={newStyles} 
             onClick={()=>self.sortFilterByGenre(genre)}>
             {isChecked && <span style={{marginLeft: '-30px', position:'absolute'}} className="fui-check"></span>}
             {genre} 

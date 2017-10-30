@@ -1,5 +1,5 @@
 import * as ActionTypes from './actionTypes.js';
-import * as Services from '../services/services.js';
+import * as Services from 'services';
 
 export const fetchMovieStart = () => {
   return {

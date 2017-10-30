@@ -11,6 +11,11 @@ var config = {
     filename: 'bundle.js'
   },
   resolve: {
+    alias: {
+      selectors: '../selectors/selectors',
+      services: '../services/services',
+      utils: '../utils/utils'
+    },
     extensions: ['', '.js', '.jsx', '.json']
   },
   module : {

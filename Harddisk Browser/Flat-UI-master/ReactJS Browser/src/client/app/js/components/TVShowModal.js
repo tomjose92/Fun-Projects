@@ -6,10 +6,10 @@ import {Images,ModalPosition} from '../constants/images';
 import TVShowSeason from './TVShowSeason';
 import TVShowEpisodes from './TVShowEpisodes';
 import Gap from './common/Gap';
-import {getModalMeasures} from '../utils/utils';
+import {getModalMeasures} from 'utils';
 import {  getCurrentTVShowInfo, 
           getCurrentTVShowEpisodes,
-          getCurrentTVShowCasts } from '../selectors/selectors';
+          getCurrentTVShowCasts } from 'selectors';
 import MetaData from './MetaData';
 
 class TVShowModal extends Component {

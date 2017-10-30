@@ -6,7 +6,7 @@ import Space from './common/Space'
 import Icon from './common/Icon'
 import {MOVIE_ONLINE_URL,MOVIE_LOCAL_URL} from '../constants/apis'
 import {fetchMovieData} from '../actions/actions'
-import {getMovieData, isFetchingMovies, getMovieStatus} from '../selectors/selectors';
+import {getMovieData, isFetchingMovies, getMovieStatus} from 'selectors';
 import isEmpty from 'lodash/isEmpty';
 
 class Movies extends React.Component {

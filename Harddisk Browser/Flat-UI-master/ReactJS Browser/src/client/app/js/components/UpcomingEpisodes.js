@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Marquee from 'react-text-marquee';
-import {getTVShowEpisodes, getTVShowData} from '../selectors/selectors';
+import {getTVShowEpisodes, getTVShowData} from 'selectors';
 import {sortEpisodesByDate, stripHTMLFromText, getUpcomingShows} from '../utils/utils';
 
 class UpcomingEpisodes extends React.Component {

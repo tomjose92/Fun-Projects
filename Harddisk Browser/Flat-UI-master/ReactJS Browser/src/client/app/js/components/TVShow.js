@@ -7,7 +7,7 @@ import Gap from './common/Gap';
 import {Images, ImagePosition} from '../constants/images';
 import TVShowModal from './TVShowModal';
 import UpcomingEpisodes from './UpcomingEpisodes';
-import {blurImage, extractTVShowsFromURL} from '../utils/utils';
+import {blurImage, extractTVShowsFromURL} from 'utils';
 import {  fetchTVShowsData, 
           fetchTVShowInfo, 
           setCurrentTVShow, 
@@ -17,7 +17,7 @@ import {  getTVShowData,
           isFetchingTVShow, 
           getTVShowStatus,
           getTVShowsInfo,
-          getTVShows} from '../selectors/selectors';
+          getTVShows} from 'selectors';
 import isEmpty from 'lodash/isEmpty';
 import ActionsPanel from './ActionsPanel';
 
