@@ -72,7 +72,7 @@ export const searchTVShowSuccess = (response) =>{
 export const setTVShowData = (data) => {
   return (dispatch) => {
     dispatch(fetchTVShowsStart());
-    let interval = 1000;
+    let interval = 3000;
     for(let tvShow of data)
     {
       dispatch(fetchTVShowInfo(tvShow.tv_show_name));

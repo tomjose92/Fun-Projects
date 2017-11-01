@@ -165,10 +165,10 @@ class ActionsPanel extends React.Component {
         return (
           <li title={'Add TV Show : '+name}  className='option' key={index} style={styles.option}
             onClick={()=>self.addTVShow(name)}>
+            <span style={{paddingRight:'20px'}} className={'fui-plus'}/>
             {name} &nbsp; &nbsp; 
             {rating && <span style={styles.optionInfo}>Rating : {rating} &nbsp;|&nbsp;</span>}
             {status && <span style={styles.optionInfo}>Status : {status} </span>}
-            <span style={{paddingLeft:'20px'}} className={'fui-plus'}/>
           </li>
         );
       });
@@ -200,17 +200,11 @@ class ActionsPanel extends React.Component {
         {addShow && <span>
           <span style={{paddingLeft:'30px', paddingRight: '10px'}}>Add Show</span>
           <input onChange={(e)=>this.setAddShow(e)} style={styles.inputText} type='text'></input>
-          <div className='mediaBG' style={styles.searchBar}>
-            <ul style={styles.list}>{options}</ul>
-          </div>
         </span>}
         <span title={!addShow?'Add Show':''} style={{cursor:'pointer',paddingLeft:(addShow?'10px': '30px')}} className={addShow?'fui-cross':'fui-plus'} onClick={()=>this.toggleAddShow()}/>
 
         {showGenre && <span>
             <span title='By Genre' style={{paddingLeft:'30px', paddingRight: '10px'}}>Sort Show</span>
-            <div className='mediaBG' style={styles.genreBar}>
-              <ul style={styles.list}>{genreHTML}</ul>
-            </div>
         </span>}
         <span title={!showGenre?'Sort Show':''} style={{cursor: 'pointer', paddingLeft:(showGenre?'10px': '30px')}} className="fui-list-columned" 
           onClick={()=>this.toggleGenre()}></span>
@@ -218,6 +212,17 @@ class ActionsPanel extends React.Component {
         {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
             <a href={bookmark} style={styles.bookmark}>Bookmark</a>
         </div>}
+
+        {addShow && 
+          <div className='mediaBG' style={styles.searchBar}>
+            <ul style={styles.list}>{options}</ul>
+          </div>
+        }
+        {showGenre && 
+          <div className='mediaBG' style={styles.genreBar}>
+              <ul style={styles.list}>{genreHTML}</ul>
+          </div>
+        }
       </div>
     );
   }
@@ -249,13 +254,14 @@ const styles = {
     height: '0px'
   },
   searchBar:{
-    position:'absolute', 
+    position:'relative', 
     display: '-webkit-box',
     overflow: 'overlay',
     maxHeight: '150px',
-    top: '50px',
-    margin: '0px 500px',
-    width: '50%'
+    margin: '0px auto',
+    top: '12px',
+    width: '50%',
+    left: '100px'
   },
   option:{
     textAlign: 'left', 
@@ -269,14 +275,15 @@ const styles = {
     fontWeight: 100
   },
   genreBar:{
-    position:'absolute', 
+    position:'relative', 
     display: '-webkit-box',
     overflow: 'overlay',
     maxHeight: '150px',
-    top: '50px',
-    margin: '0px 800px',
+    top: '12px',
+    margin: '0px auto',
     opacity: 0.8,
-    width: '250px'
+    width: '250px',
+    left: '130px'
   },
   genre:{
     textAlign: 'left', 
