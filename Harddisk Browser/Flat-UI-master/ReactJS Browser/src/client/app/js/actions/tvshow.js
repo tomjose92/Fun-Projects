@@ -87,7 +87,7 @@ export const fetchTVShowsData = (data) => {
   return (dispatch) => {
     dispatch(fetchTVShowsStart());
     let {url, isLocal, isInit} = data;
-    let interval = 1000;
+    let interval = 3000;
     Services.fetchData(url)
     .then((response)=>{
       let {error, data} = response;

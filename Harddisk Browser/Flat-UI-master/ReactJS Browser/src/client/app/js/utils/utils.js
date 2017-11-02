@@ -1,3 +1,5 @@
+import UAParser from 'ua-parser-js';
+
 export const getEpisodesWidth = () => {
 	let width=800,
     modal = document.getElementsByClassName('tvShowModal')[0];
@@ -116,3 +118,15 @@ export const getUpcomingShows = (episodes) => {
   }
   return upcoming;
 }
+
+export const isMobile = () => {
+  var parser = new UAParser();
+  let devices = ['mobile','tablet'];
+  return parser.getDevice() && includes(devices,parser.getDevice().type);
+};
+
+export const isOnlyMobile = () => {
+  var parser = new UAParser();
+  let devices = ['mobile'];
+  return parser.getDevice() && includes(devices,parser.getDevice().type);
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import Radium,{StyleRoot} from 'radium';
 import {connect} from 'react-redux';
 import Header from './common/Header';
 import Link from './common/Link';
@@ -21,6 +22,7 @@ import {  getTVShowData,
 import isEmpty from 'lodash/isEmpty';
 import ActionsPanel from './ActionsPanel';
 
+@Radium
 class TVShow extends React.Component {
   constructor(){
       super();
@@ -138,7 +140,7 @@ class TVShow extends React.Component {
     });
 
     return (
-      <div>
+      <StyleRoot>
         <nav>
           <Header isLocal={isLocal} loading={isLoading} error={error} onRefresh={()=>this.fetchTVShowData(false)} app="TVShows"/>
         </nav>
@@ -146,12 +148,12 @@ class TVShow extends React.Component {
         <div style={styles.outerContainer}>
           <ActionsPanel callback={(tvShows)=>this.setTVShowsState(tvShows)} />
           <UpcomingEpisodes showModal={(tvShow)=>this.showModal(tvShow)}/>
-          <div className='tvShowPage' style={styles.container}>
+          <div style={styles.container}>
             {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
             {TVShowImages}
           </div>
         </div>}
-      </div>
+      </StyleRoot>
     );
 	}
 
@@ -187,16 +189,17 @@ const styles={
     marginTop: '110px',
     marginLeft: '100px',
     marginRight: '100px',
-    textAlign: 'left'
+    textAlign: 'left',
+    '@media screen and (max-width: 1023px)':{
+      marginLeft: '50px',
+      marginRight: '50px',
+    }
   },
   image:{
     height: '300px',
     width: '250px',
     cursor: 'pointer',
     paddingBottom: '20px',
-    ':hover':{
-      transform: 'translateY(-10px)'      
-    },
     backgroundRepeat: 'no-repeat',
     backgroundClip : 'content-box',
     backgroundSize : '1275px 1420px'

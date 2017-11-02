@@ -117,7 +117,11 @@ class ActionsPanel extends React.Component {
   sortFilterByGenre(queryGenre){
     let {tvShowsInfo} = this.props;
     let {genreList=[]} = this.state;
-    if(!includes(genreList, queryGenre))
+    if(!queryGenre)
+    {
+      genreList=[];
+    }
+    else if(!includes(genreList, queryGenre))
     {
       genreList.push(queryGenre);
     }
@@ -204,9 +208,10 @@ class ActionsPanel extends React.Component {
         <span title={!addShow?'Add Show':''} style={{cursor:'pointer',paddingLeft:(addShow?'10px': '30px')}} className={addShow?'fui-cross':'fui-plus'} onClick={()=>this.toggleAddShow()}/>
 
         {showGenre && <span>
-            <span title='By Genre' style={{paddingLeft:'30px', paddingRight: '10px'}}>Sort Show</span>
+            <span title='By Genre' style={{paddingLeft:'30px'}}>Sort By Genre</span>
+            <span title='Reset Filter' style={{cursor:'pointer',padding:'0px 10px'}} className='fui-cross' onClick={()=>this.sortFilterByGenre()}/> 
         </span>}
-        <span title={!showGenre?'Sort Show':''} style={{cursor: 'pointer', paddingLeft:(showGenre?'10px': '30px')}} className="fui-list-columned" 
+        <span title={!showGenre?'Sort By Genre':''} style={{cursor: 'pointer', paddingLeft:(showGenre?'10px': '30px')}} className="fui-list-columned" 
           onClick={()=>this.toggleGenre()}></span>
 
         {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
@@ -283,7 +288,8 @@ const styles = {
     margin: '0px auto',
     opacity: 0.8,
     width: '250px',
-    left: '130px'
+    left: '130px',
+    border: '1px solid grey'
   },
   genre:{
     textAlign: 'left', 

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm run dev",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
     "serve": "http-server ."
@@ -13,6 +14,7 @@
   "dependencies": {
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
+    "babel-plugin-syntax-decorators": "^6.13.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "bluebird": "^3.4.5",
@@ -29,6 +31,7 @@
     "redux": "^3.5.2",
     "redux-thunk": "^2.0.1",
     "reselect": "^2.5.4",
+    "ua-parser-js": "^0.7.17",
     "webpack": "^1.14.0"
   },
   "devDependencies": {
