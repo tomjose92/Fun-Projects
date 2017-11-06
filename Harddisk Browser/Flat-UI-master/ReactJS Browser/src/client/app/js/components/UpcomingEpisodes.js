@@ -35,11 +35,9 @@ class UpcomingEpisodes extends React.Component {
 
 const styles = {
   container:{
-    paddingTop: '70px',
-    paddingBottom: '10px', 
+    padding: '70px 100px 10px',
     display:'grid',
-    width:'90%',
-    marginLeft: '100px',
+    width:'100%',
     zIndex: 99,
     position: 'fixed'
   }

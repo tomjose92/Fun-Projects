@@ -186,14 +186,14 @@ const styles={
   },
   container:{
     position: 'absolute',
-    marginTop: '110px',
-    marginLeft: '100px',
-    marginRight: '100px',
-    textAlign: 'left',
-    '@media screen and (max-width: 1023px)':{
-      marginLeft: '50px',
-      marginRight: '50px',
-    }
+    top: '110px',
+    left: '-20px',
+    right: '0px',
+    textAlign: 'center',
+    '@media screen and (min-width: 1600px)':{
+      left: '20px',
+      right: '50px',
+    },
   },
   image:{
     height: '300px',

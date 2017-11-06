@@ -82,7 +82,7 @@ class TVShowCastModal extends Component {
       ) 
     });
     return (
-       <Modal className='tvShowModal' contentLabel='CastModal' style={customStyles} isOpen={this.state.isOpen}>
+       <Modal className='scroll-green tvShowModal' contentLabel='CastModal' style={customStyles} isOpen={this.state.isOpen}>
           <div style={styles.titleContainer}>
             <span style={styles.title}>{tvShowName}</span>
           </div>

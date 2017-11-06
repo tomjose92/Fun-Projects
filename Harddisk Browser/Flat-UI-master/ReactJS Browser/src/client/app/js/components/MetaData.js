@@ -23,7 +23,7 @@ class MetaData extends Component {
   }
 
   render(){
-    let {data: {genres=[], status, runtime, name, rating}, casts, tvShowName} = this.props;
+    let {data: {genres=[], status, runtime, name, rating}, casts=[], tvShowName} = this.props;
     genres = genres.join(', ').replace(/,(?!.*,)/gmi, ' and');
     return (
        <div style={styles.container}>
@@ -47,7 +47,7 @@ class MetaData extends Component {
           &nbsp; 
           <span style={styles.value}>{genres}</span>
         </div>}
-        {casts && 
+        {casts.length>0 && 
           <div><a onClick={()=>this.openModal()}>See Cast</a>
             {this.state.open && <TVShowCastModal tvShowName={tvShowName} casts={casts} callback={()=>this.closeModal()}/>}
           </div>

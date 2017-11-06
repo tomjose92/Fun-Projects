@@ -58,7 +58,7 @@ class TVShowSeason extends React.Component{
         );
       });
       return (
-        <div style={styles.container} className='tvShowSeasons'>
+        <div style={styles.container} className='scroll-green tvShowSeasons'>
           {tvShowSeasons}
         </div>)
     }

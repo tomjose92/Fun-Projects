@@ -27,10 +27,12 @@ class TVShowModal extends Component {
   }
 
   componentDidMount(){
+    document.body.style.overflowY="hidden";
     this.handleKeyPress();
   }
 
   componentWillUnmount(){
+    document.body.style.overflowY="scroll";
     document.onkeydown = null;
   }  
 
@@ -61,7 +63,7 @@ class TVShowModal extends Component {
     }
     let image = currentTVShowInfo && currentTVShowInfo.image && currentTVShowInfo.image.original;
     return (
-       <Modal className='tvShowModal' contentLabel='ShowModal' style={customStyles} isOpen={this.state.isOpen}>
+       <Modal className='scroll-green tvShowModal' contentLabel='ShowModal' style={customStyles} isOpen={this.state.isOpen}>
           <div className='showTitle' style={styles.titleContainer}>
             {prev && <a style={{cursor:'pointer'}} className='fui-triangle-left-large' onClick={()=>this.props.navShow(prev, index-1)}/>}
             <span style={styles.title}>{tv_show_name}</span>

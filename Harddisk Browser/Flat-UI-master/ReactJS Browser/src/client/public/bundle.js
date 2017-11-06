@@ -43170,13 +43170,13 @@
 	  },
 	  container: {
 	    position: 'absolute',
-	    marginTop: '110px',
-	    marginLeft: '100px',
-	    marginRight: '100px',
-	    textAlign: 'left',
-	    '@media screen and (max-width: 1023px)': {
-	      marginLeft: '50px',
-	      marginRight: '50px'
+	    top: '110px',
+	    left: '-20px',
+	    right: '0px',
+	    textAlign: 'center',
+	    '@media screen and (min-width: 1600px)': {
+	      left: '20px',
+	      right: '50px'
 	    }
 	  },
 	  image: {
@@ -43624,11 +43624,13 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      document.body.style.overflowY = "hidden";
 	      this.handleKeyPress();
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
+	      document.body.style.overflowY = "scroll";
 	      document.onkeydown = null;
 	    }
 	  }, {
@@ -43677,7 +43679,7 @@
 	      var image = currentTVShowInfo && currentTVShowInfo.image && currentTVShowInfo.image.original;
 	      return _react2.default.createElement(
 	        _reactModal2.default,
-	        { className: 'tvShowModal', contentLabel: 'ShowModal', style: customStyles, isOpen: this.state.isOpen },
+	        { className: 'scroll-green tvShowModal', contentLabel: 'ShowModal', style: customStyles, isOpen: this.state.isOpen },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'showTitle', style: styles.titleContainer },
@@ -45577,7 +45579,7 @@
 	      });
 	      return _react2.default.createElement(
 	        'div',
-	        { style: styles.container, className: 'tvShowSeasons' },
+	        { style: styles.container, className: 'scroll-green tvShowSeasons' },
 	        tvShowSeasons
 	      );
 	    }
@@ -47072,7 +47074,8 @@
 	          runtime = _props$data.runtime,
 	          name = _props$data.name,
 	          rating = _props$data.rating,
-	          casts = _props.casts,
+	          _props$casts = _props.casts,
+	          casts = _props$casts === undefined ? [] : _props$casts,
 	          tvShowName = _props.tvShowName;
 	
 	      genres = genres.join(', ').replace(/,(?!.*,)/gmi, ' and');
@@ -47140,7 +47143,7 @@
 	            genres
 	          )
 	        ),
-	        casts && _react2.default.createElement(
+	        casts.length > 0 && _react2.default.createElement(
 	          'div',
 	          null,
 	          _react2.default.createElement(
@@ -47357,7 +47360,7 @@
 	      });
 	      return _react2.default.createElement(
 	        _reactModal2.default,
-	        { className: 'tvShowModal', contentLabel: 'CastModal', style: customStyles, isOpen: this.state.isOpen },
+	        { className: 'scroll-green tvShowModal', contentLabel: 'CastModal', style: customStyles, isOpen: this.state.isOpen },
 	        _react2.default.createElement(
 	          'div',
 	          { style: styles.titleContainer },
@@ -47557,11 +47560,9 @@
 	
 	var styles = {
 	  container: {
-	    paddingTop: '70px',
-	    paddingBottom: '10px',
+	    padding: '70px 100px 10px',
 	    display: 'grid',
-	    width: '90%',
-	    marginLeft: '100px',
+	    width: '100%',
 	    zIndex: 99,
 	    position: 'fixed'
 	  }
