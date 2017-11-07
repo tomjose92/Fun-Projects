@@ -75,7 +75,7 @@
 	
 	var _reactRedux = __webpack_require__(/*! react-redux */ 318);
 	
-	var _store = __webpack_require__(/*! ./js/store/store */ 466);
+	var _store = __webpack_require__(/*! ./js/store/store */ 469);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -47513,11 +47513,19 @@
 	  }
 	
 	  _createClass(UpcomingEpisodes, [{
+	    key: 'showModal',
+	    value: function showModal(tvShowName) {
+	      var tvShows = this.props.tvShows;
+	
+	      var tvShow = tvShows.find(function (tvShow) {
+	        return tvShow.tv_show_name == tvShowName;
+	      });
+	      this.props.showModal(tvShow);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props,
-	          upComingEpisodes = _props.upComingEpisodes,
-	          tvShows = _props.tvShows;
+	      var upComingEpisodes = this.props.upComingEpisodes;
 	
 	      if (upComingEpisodes.length > 0) {
 	        upComingEpisodes = (0, _utils.sortEpisodesByDate)(upComingEpisodes);
@@ -47534,15 +47542,12 @@
 	            name = _episode$episode.name;
 	
 	        var displayName = tvShowName + ' : S' + season + 'E' + number + ' ' + name + ' (' + date + ')';
-	        var tvShow = tvShows.find(function (tvShow) {
-	          return tvShow.tv_show_name == tvShowName;
-	        });
 	        return _react2.default.createElement(
 	          'span',
 	          { style: { color: color, padding: '0px 30px', cursor: 'pointer' },
 	            key: index, title: (0, _utils.stripHTMLFromText)(summary) || '',
 	            onClick: function onClick() {
-	              return self.props.showModal(tvShow);
+	              return self.showModal(tvShowName);
 	            } },
 	          displayName
 	        );
@@ -48145,6 +48150,8 @@
 	
 	var _utils = __webpack_require__(/*! utils */ 440);
 	
+	var _throttleDebounce = __webpack_require__(/*! throttle-debounce */ 466);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -48169,6 +48176,7 @@
 	      addShow: false,
 	      showGenre: false
 	    };
+	    _this.searchTVShow = (0, _throttleDebounce.debounce)(200, _this.searchTVShow);
 	    return _this;
 	  }
 	
@@ -48214,10 +48222,15 @@
 	      });
 	    }
 	  }, {
+	    key: 'searchTVShow',
+	    value: function searchTVShow(query) {
+	      this.props.searchTVShow(query);
+	    }
+	  }, {
 	    key: 'setAddShow',
 	    value: function setAddShow(e) {
 	      var addShowText = e.target.value.trim();
-	      this.props.searchTVShow(addShowText);
+	      addShowText && this.searchTVShow(addShowText);
 	      this.setState({
 	        addShowText: addShowText
 	      });
@@ -49270,6 +49283,152 @@
 
 /***/ }),
 /* 466 */
+/*!**************************************!*\
+  !*** ./~/throttle-debounce/index.js ***!
+  \**************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	var throttle = __webpack_require__(/*! ./throttle */ 467);
+	var debounce = __webpack_require__(/*! ./debounce */ 468);
+	
+	module.exports = {
+		throttle: throttle,
+		debounce: debounce
+	};
+
+
+/***/ }),
+/* 467 */
+/*!*****************************************!*\
+  !*** ./~/throttle-debounce/throttle.js ***!
+  \*****************************************/
+/***/ (function(module, exports) {
+
+	/* eslint-disable no-undefined,no-param-reassign,no-shadow */
+	
+	/**
+	 * Throttle execution of a function. Especially useful for rate limiting
+	 * execution of handlers on events like resize and scroll.
+	 *
+	 * @param  {Number}    delay          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+	 * @param  {Boolean}   noTrailing     Optional, defaults to false. If noTrailing is true, callback will only execute every `delay` milliseconds while the
+	 *                                    throttled-function is being called. If noTrailing is false or unspecified, callback will be executed one final time
+	 *                                    after the last throttled-function call. (After the throttled-function has not been called for `delay` milliseconds,
+	 *                                    the internal counter is reset)
+	 * @param  {Function}  callback       A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+	 *                                    to `callback` when the throttled-function is executed.
+	 * @param  {Boolean}   debounceMode   If `debounceMode` is true (at begin), schedule `clear` to execute after `delay` ms. If `debounceMode` is false (at end),
+	 *                                    schedule `callback` to execute after `delay` ms.
+	 *
+	 * @return {Function}  A new, throttled, function.
+	 */
+	module.exports = function ( delay, noTrailing, callback, debounceMode ) {
+	
+		// After wrapper has stopped being called, this timeout ensures that
+		// `callback` is executed at the proper times in `throttle` and `end`
+		// debounce modes.
+		var timeoutID;
+	
+		// Keep track of the last time `callback` was executed.
+		var lastExec = 0;
+	
+		// `noTrailing` defaults to falsy.
+		if ( typeof noTrailing !== 'boolean' ) {
+			debounceMode = callback;
+			callback = noTrailing;
+			noTrailing = undefined;
+		}
+	
+		// The `wrapper` function encapsulates all of the throttling / debouncing
+		// functionality and when executed will limit the rate at which `callback`
+		// is executed.
+		function wrapper () {
+	
+			var self = this;
+			var elapsed = Number(new Date()) - lastExec;
+			var args = arguments;
+	
+			// Execute `callback` and update the `lastExec` timestamp.
+			function exec () {
+				lastExec = Number(new Date());
+				callback.apply(self, args);
+			}
+	
+			// If `debounceMode` is true (at begin) this is used to clear the flag
+			// to allow future `callback` executions.
+			function clear () {
+				timeoutID = undefined;
+			}
+	
+			if ( debounceMode && !timeoutID ) {
+				// Since `wrapper` is being called for the first time and
+				// `debounceMode` is true (at begin), execute `callback`.
+				exec();
+			}
+	
+			// Clear any existing timeout.
+			if ( timeoutID ) {
+				clearTimeout(timeoutID);
+			}
+	
+			if ( debounceMode === undefined && elapsed > delay ) {
+				// In throttle mode, if `delay` time has been exceeded, execute
+				// `callback`.
+				exec();
+	
+			} else if ( noTrailing !== true ) {
+				// In trailing throttle mode, since `delay` time has not been
+				// exceeded, schedule `callback` to execute `delay` ms after most
+				// recent execution.
+				//
+				// If `debounceMode` is true (at begin), schedule `clear` to execute
+				// after `delay` ms.
+				//
+				// If `debounceMode` is false (at end), schedule `callback` to
+				// execute after `delay` ms.
+				timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
+			}
+	
+		}
+	
+		// Return the wrapper function.
+		return wrapper;
+	
+	};
+
+
+/***/ }),
+/* 468 */
+/*!*****************************************!*\
+  !*** ./~/throttle-debounce/debounce.js ***!
+  \*****************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* eslint-disable no-undefined */
+	
+	var throttle = __webpack_require__(/*! ./throttle */ 467);
+	
+	/**
+	 * Debounce execution of a function. Debouncing, unlike throttling,
+	 * guarantees that a function is only executed a single time, either at the
+	 * very beginning of a series of calls, or at the very end.
+	 *
+	 * @param  {Number}   delay         A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+	 * @param  {Boolean}  atBegin       Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
+	 *                                  after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
+	 *                                  (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
+	 * @param  {Function} callback      A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+	 *                                  to `callback` when the debounced-function is executed.
+	 *
+	 * @return {Function} A new, debounced function.
+	 */
+	module.exports = function ( delay, atBegin, callback ) {
+		return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
+	};
+
+
+/***/ }),
+/* 469 */
 /*!******************************************!*\
   !*** ./src/client/app/js/store/store.js ***!
   \******************************************/
@@ -49286,11 +49445,11 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 467);
+	var _reduxThunk = __webpack_require__(/*! redux-thunk */ 470);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 468);
+	var _reducers = __webpack_require__(/*! ../reducers/reducers */ 471);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
@@ -49309,7 +49468,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "store.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 467 */
+/* 470 */
 /*!************************************!*\
   !*** ./~/redux-thunk/lib/index.js ***!
   \************************************/
@@ -49340,7 +49499,7 @@
 	exports['default'] = thunk;
 
 /***/ }),
-/* 468 */
+/* 471 */
 /*!************************************************!*\
   !*** ./src/client/app/js/reducers/reducers.js ***!
   \************************************************/
@@ -49357,9 +49516,9 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 327);
 	
-	var _movies = __webpack_require__(/*! ./movies */ 469);
+	var _movies = __webpack_require__(/*! ./movies */ 472);
 	
-	var _tvshow = __webpack_require__(/*! ./tvshow */ 470);
+	var _tvshow = __webpack_require__(/*! ./tvshow */ 473);
 	
 	var createReducer = exports.createReducer = function createReducer() {
 	  return (0, _redux.combineReducers)({
@@ -49373,7 +49532,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "reducers.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 469 */
+/* 472 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/movies.js ***!
   \**********************************************/
@@ -49441,7 +49600,7 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "movies.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }),
-/* 470 */
+/* 473 */
 /*!**********************************************!*\
   !*** ./src/client/app/js/reducers/tvshow.js ***!
   \**********************************************/

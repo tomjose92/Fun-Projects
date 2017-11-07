@@ -5,8 +5,16 @@ import {getTVShowEpisodes, getTVShowData} from 'selectors';
 import {sortEpisodesByDate, stripHTMLFromText, getUpcomingShows} from '../utils/utils';
 
 class UpcomingEpisodes extends React.Component {
+  showModal(tvShowName){
+    let {tvShows} = this.props;
+    let tvShow = tvShows.find(function(tvShow){
+      return tvShow.tv_show_name == tvShowName
+    });
+    this.props.showModal(tvShow);
+  }
+
   render(){
-    let {upComingEpisodes, tvShows} = this.props;
+    let {upComingEpisodes} = this.props;
     if(upComingEpisodes.length > 0){
       upComingEpisodes = sortEpisodesByDate(upComingEpisodes);
     }
@@ -14,13 +22,10 @@ class UpcomingEpisodes extends React.Component {
     let html = upComingEpisodes.map(function(episode, index){
       let {tvShowName, episode:{summary, color, date, season, number, name}} = episode;
       let displayName = `${tvShowName} : S${season}E${number} ${name} (${date})`;
-      let tvShow = tvShows.find(function(tvShow){
-        return tvShow.tv_show_name == tvShowName
-      });
       return (
         <span style={{color, padding:'0px 30px', cursor: 'pointer'}} 
           key={index} title={stripHTMLFromText(summary) || ''}
-          onClick={()=>self.props.showModal(tvShow)}>
+          onClick={()=>self.showModal(tvShowName)}>
           {displayName}
         </span>
       );

@@ -10,6 +10,7 @@ import {  getTVShowData,
         } from 'selectors';
 import includes from 'lodash/includes';
 import {getBookmark} from 'utils';
+import {debounce} from 'throttle-debounce';
 
 class ActionsPanel extends React.Component {
   constructor(){
@@ -20,6 +21,7 @@ class ActionsPanel extends React.Component {
       addShow: false,
       showGenre: false
     };
+    this.searchTVShow = debounce(200, this.searchTVShow);
   }
 
   getUpdatedTVShows(){
@@ -60,9 +62,14 @@ class ActionsPanel extends React.Component {
     });
   }
 
+  searchTVShow(query)
+  {
+    this.props.searchTVShow(query);
+  }
+
   setAddShow(e){
     let addShowText = e.target.value.trim();
-    this.props.searchTVShow(addShowText);
+    addShowText && this.searchTVShow(addShowText);
     this.setState({
       addShowText
     });
