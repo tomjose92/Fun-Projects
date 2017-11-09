@@ -64,7 +64,12 @@ class TVShowCastModal extends Component {
       customStyles.content.width = width;
     }   
     let castsHTML = finalCasts.map(function(cast, index){
-      let {image, realName, characterName, characterImage, realImage} = cast;
+      let {image, realName, characterName, characterImage, realImage, otherShows} = cast;
+      if(otherShows)
+      {
+        otherShows = 'Also in ' + otherShows.join(', ').replace(/,(?!.*,)/gmi, ' and')  
+      }
+      
       let finalImage = image || characterImage || realImage;
       return (
         <span key={index} style={{paddingRight: '50px'}}> 
@@ -73,6 +78,7 @@ class TVShowCastModal extends Component {
           </div>
           <div style={styles.labelContainer}>
             <span style={styles.label}>Name:</span> &nbsp; <span style={styles.value}>{realName}</span>
+            {otherShows && <span style={styles.info} title={otherShows} className="fui-info-circle"></span>}
           </div>
           <img src={finalImage} 
             onMouseOver={()=>self.changeImage(index, true)}
@@ -122,6 +128,11 @@ const customStyles = {
 }
 
 const styles={
+  info:{
+    marginLeft: '15px',
+    color: 'white',
+    cursor: 'pointer'
+  },
   casts:{
     display: 'inline-flex',
     paddingTop: '100px',

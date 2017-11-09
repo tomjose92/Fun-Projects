@@ -23,11 +23,16 @@ class MetaData extends Component {
   }
 
   render(){
-    let {data: {genres=[], status, runtime, name, rating}, casts=[], tvShowName} = this.props;
+    let {data: {genres=[], status, language, runtime, name, rating}, casts=[], tvShowName} = this.props;
     genres = genres.join(', ').replace(/,(?!.*,)/gmi, ' and');
     return (
        <div style={styles.container}>
-        {rating && <div>
+        {language && <div>
+          <span style={styles.label}>Language:</span>
+          &nbsp; 
+          <span style={styles.value}>{language}</span>
+        </div>}
+        {rating && rating.average && <div>
           <span style={styles.label}>Rating:</span>
           &nbsp; 
           <span style={styles.value}>{rating.average}</span>

@@ -1,15 +1,16 @@
 import UAParser from 'ua-parser-js';
+import includes from 'lodash/includes';
 
 export const getEpisodesWidth = () => {
-	let width=800,
-    modal = document.getElementsByClassName('tvShowModal')[0];
-    if(modal===undefined)
-    {
-      return width;
-    }
-    let modalWidth = modal.getBoundingClientRect().width;
-    width = Math.min(width, modalWidth - 110);
+  let width=800,
+  modal = document.getElementsByClassName('tvShowModal')[0];
+  if(modal===undefined)
+  {
     return width;
+  }
+  let modalWidth = modal.getBoundingClientRect().width;
+  width = Math.min(width, modalWidth - 110);
+  return width;
 }
 
 export const getModalMeasures = () => {
@@ -130,3 +131,41 @@ export const isOnlyMobile = () => {
   let devices = ['mobile'];
   return parser.getDevice() && includes(devices,parser.getDevice().type);
 };
+
+export const findOtherCastShows = (casts) => {
+  let allCasts = [];
+  Object.keys(casts).map(function(key){
+    casts[key].map(function(obj, index){
+      let {realName, realImage} = obj;
+      allCasts.push({realName, realImage, show:key, index});  
+    });
+  });
+
+  let otherShowCasts = [];
+  for(let i=0;i<allCasts.length;i++){
+    let obj = allCasts[i];
+    let {show, realName, realImage, index} = obj;
+    let otherShows = [];
+    for(let j=0; j<allCasts.length; j++)
+    {
+      let cast = allCasts[j]; 
+      if(show!=cast.show && realName==cast.realName && !includes(otherShows, cast.show))
+      {
+        otherShows.push(cast.show);
+      }
+    }
+    if(!!otherShows.length){  
+      otherShowCasts.push({...obj, otherShows})
+    }
+  }
+
+  if(!!otherShowCasts.length)
+  {
+    otherShowCasts.map(function(cast){
+      let {index, show, otherShows} = cast;
+      casts[show][index].otherShows = otherShows;
+    });
+  }
+  return casts;
+  
+}

@@ -45777,11 +45777,17 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.isOnlyMobile = exports.isMobile = exports.getUpcomingShows = exports.getBookmark = exports.extractTVShowsFromURL = exports.stripHTMLFromText = exports.sortEpisodesByDate = exports.getDate = exports.getYear = exports.blurImage = exports.getModalMeasures = exports.getEpisodesWidth = undefined;
+	exports.findOtherCastShows = exports.isOnlyMobile = exports.isMobile = exports.getUpcomingShows = exports.getBookmark = exports.extractTVShowsFromURL = exports.stripHTMLFromText = exports.sortEpisodesByDate = exports.getDate = exports.getYear = exports.blurImage = exports.getModalMeasures = exports.getEpisodesWidth = undefined;
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _uaParserJs = __webpack_require__(/*! ua-parser-js */ 441);
 	
 	var _uaParserJs2 = _interopRequireDefault(_uaParserJs);
+	
+	var _includes = __webpack_require__(/*! lodash/includes */ 449);
+	
+	var _includes2 = _interopRequireDefault(_includes);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -45896,13 +45902,56 @@
 	var isMobile = exports.isMobile = function isMobile() {
 	  var parser = new _uaParserJs2.default();
 	  var devices = ['mobile', 'tablet'];
-	  return parser.getDevice() && includes(devices, parser.getDevice().type);
+	  return parser.getDevice() && (0, _includes2.default)(devices, parser.getDevice().type);
 	};
 	
 	var isOnlyMobile = exports.isOnlyMobile = function isOnlyMobile() {
 	  var parser = new _uaParserJs2.default();
 	  var devices = ['mobile'];
-	  return parser.getDevice() && includes(devices, parser.getDevice().type);
+	  return parser.getDevice() && (0, _includes2.default)(devices, parser.getDevice().type);
+	};
+	
+	var findOtherCastShows = exports.findOtherCastShows = function findOtherCastShows(casts) {
+	  var allCasts = [];
+	  Object.keys(casts).map(function (key) {
+	    casts[key].map(function (obj, index) {
+	      var realName = obj.realName,
+	          realImage = obj.realImage;
+	
+	      allCasts.push({ realName: realName, realImage: realImage, show: key, index: index });
+	    });
+	  });
+	
+	  var otherShowCasts = [];
+	  for (var i = 0; i < allCasts.length; i++) {
+	    var obj = allCasts[i];
+	    var show = obj.show,
+	        realName = obj.realName,
+	        realImage = obj.realImage,
+	        index = obj.index;
+	
+	    var otherShows = [];
+	    for (var j = 0; j < allCasts.length; j++) {
+	      var cast = allCasts[j];
+	      if (show != cast.show && realName == cast.realName && !(0, _includes2.default)(otherShows, cast.show)) {
+	        otherShows.push(cast.show);
+	      }
+	    }
+	    if (!!otherShows.length) {
+	      otherShowCasts.push(_extends({}, obj, { otherShows: otherShows }));
+	    }
+	  }
+	
+	  if (!!otherShowCasts.length) {
+	    otherShowCasts.map(function (cast) {
+	      var index = cast.index,
+	          show = cast.show,
+	          otherShows = cast.otherShows;
+	
+	      casts[show][index].otherShows = otherShows;
+	    });
+	  }
+	  return casts;
 	};
 	
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/media/tom/Storage/Coding/Fun-Projects.git/trunk/Harddisk Browser/Flat-UI-master/ReactJS Browser/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "utils.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -47071,6 +47120,7 @@
 	          _props$data$genres = _props$data.genres,
 	          genres = _props$data$genres === undefined ? [] : _props$data$genres,
 	          status = _props$data.status,
+	          language = _props$data.language,
 	          runtime = _props$data.runtime,
 	          name = _props$data.name,
 	          rating = _props$data.rating,
@@ -47082,7 +47132,22 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { style: styles.container },
-	        rating && _react2.default.createElement(
+	        language && _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.label },
+	            'Language:'
+	          ),
+	          '\xA0',
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.value },
+	            language
+	          )
+	        ),
+	        rating && rating.average && _react2.default.createElement(
 	          'div',
 	          null,
 	          _react2.default.createElement(
@@ -47312,7 +47377,12 @@
 	            realName = cast.realName,
 	            characterName = cast.characterName,
 	            characterImage = cast.characterImage,
-	            realImage = cast.realImage;
+	            realImage = cast.realImage,
+	            otherShows = cast.otherShows;
+	
+	        if (otherShows) {
+	          otherShows = 'Also in ' + otherShows.join(', ').replace(/,(?!.*,)/gmi, ' and');
+	        }
 	
 	        var finalImage = image || characterImage || realImage;
 	        return _react2.default.createElement(
@@ -47346,7 +47416,8 @@
 	              'span',
 	              { style: styles.value },
 	              realName
-	            )
+	            ),
+	            otherShows && _react2.default.createElement('span', { style: styles.info, title: otherShows, className: 'fui-info-circle' })
 	          ),
 	          _react2.default.createElement('img', { src: finalImage,
 	            onMouseOver: function onMouseOver() {
@@ -47420,6 +47491,11 @@
 	};
 	
 	var styles = {
+	  info: {
+	    marginLeft: '15px',
+	    color: 'white',
+	    cursor: 'pointer'
+	  },
 	  casts: {
 	    display: 'inline-flex',
 	    paddingTop: '100px',
@@ -49662,6 +49738,7 @@
 				tv_show_name: tvShowName,
 				tv_show_tag: tvShowName.replace(/\s/g, '').toLowerCase()
 			});
+			window.location.href = (0, _utils.getBookmark)(state);
 		}
 		if (action.type === _actionTypes.REMOVE_TVSHOW_SUCCESS) {
 			var _tvShowName = action.payload.tvShowName;
@@ -49669,6 +49746,7 @@
 			state = state.filter(function (tvShow) {
 				return _tvShowName != tvShow.tv_show_name;
 			});
+			window.location.href = (0, _utils.getBookmark)(state);
 		}
 		return state;
 	};
@@ -49796,7 +49874,7 @@
 				});
 				var newState = _extends({}, state);
 				newState[tvShowName] = _casts;
-				return newState;
+				return (0, _utils.findOtherCastShows)(newState);
 			}
 		}
 		if (action.type === _actionTypes.REMOVE_TVSHOW_SUCCESS) {

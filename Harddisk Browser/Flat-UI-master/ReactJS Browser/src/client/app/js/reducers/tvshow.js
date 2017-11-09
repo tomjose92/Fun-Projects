@@ -11,7 +11,10 @@ import {
   REMOVE_TVSHOW_SUCCESS
 } from '../actions/actionTypes.js';
 
-import {getYear, getDate} from '../utils/utils';
+import {	findOtherCastShows, 
+			getBookmark, 
+			getYear, 
+			getDate} from '../utils/utils';
 import includes from 'lodash/includes';
 
 export const loading = (state = false, action) => {
@@ -39,6 +42,7 @@ export const tvShows = (state = [],action) => {
 			tv_show_name: tvShowName, 
 			tv_show_tag: tvShowName.replace(/\s/g,'').toLowerCase()
 		});
+		window.location.href = getBookmark(state);
 	}
 	if(action.type === REMOVE_TVSHOW_SUCCESS)
 	{
@@ -46,6 +50,7 @@ export const tvShows = (state = [],action) => {
 		state = state.filter(function(tvShow){
 			return tvShowName!=tvShow.tv_show_name
 		});
+		window.location.href = getBookmark(state);
 	}
 	return state;
 }
@@ -137,7 +142,7 @@ export const casts = (state=[],action) =>{
 			});
 			let newState = {...state};
 			newState[tvShowName] = casts;
-			return newState;
+			return findOtherCastShows(newState);
 		}
 	}
 	if(action.type === REMOVE_TVSHOW_SUCCESS)
