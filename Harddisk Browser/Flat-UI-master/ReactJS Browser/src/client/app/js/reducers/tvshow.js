@@ -142,7 +142,7 @@ export const casts = (state=[],action) =>{
 			});
 			let newState = {...state};
 			newState[tvShowName] = casts;
-			return findOtherCastShows(newState);
+			state = newState;
 		}
 	}
 	if(action.type === REMOVE_TVSHOW_SUCCESS)
@@ -150,7 +150,7 @@ export const casts = (state=[],action) =>{
 		let {tvShowName} = action.payload;
 		delete state[tvShowName];
 	}
-	return state;
+	return findOtherCastShows(state);
 }
 
 export const genres = (state=[], action) =>{

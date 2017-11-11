@@ -93,7 +93,7 @@ class TVShowCastModal extends Component {
             <span style={styles.title}>{tvShowName}</span>
           </div>
           <div style={styles.casts}>{castsHTML}</div>
-          <div style={{display:'inline-block', marginTop: '20px'}}>
+          <div style={styles.closeContainer}>
             <div style={styles.close} onClick={()=>this.handleClose()}>Close</div>
           </div>
        </Modal>
@@ -161,6 +161,11 @@ const styles={
   labelContainer:{
     whiteSpace:'nowrap'
   },
+  closeContainer:{
+    width: '100%',
+    display:'inline-block', 
+    marginTop: '20px'
+  },
   close:{
     background: '#56544D',
     color: '#CEC9BE',
@@ -169,7 +174,8 @@ const styles={
     fontSize: '20px',
     lineHeight: '30px',
     position: 'fixed',
-    width: '60px'
+    width: '60px',
+    display: 'inline-table'
   }
 };
 

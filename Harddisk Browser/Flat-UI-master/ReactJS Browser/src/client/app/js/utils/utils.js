@@ -134,7 +134,14 @@ export const isOnlyMobile = () => {
 
 export const findOtherCastShows = (casts) => {
   let allCasts = [];
-  Object.keys(casts).map(function(key){
+  let keys = Object.keys(casts);
+
+  if(keys.length<2)
+  {
+    return casts;
+  }
+
+  keys.map(function(key){
     casts[key].map(function(obj, index){
       let {realName, realImage} = obj;
       allCasts.push({realName, realImage, show:key, index});  
