@@ -42974,6 +42974,7 @@
 	      addShow: false,
 	      isInit: true
 	    };
+	    _this.setTVShowsState = _this.setTVShowsState.bind(_this);
 	    return _this;
 	  }
 	
@@ -43115,10 +43116,10 @@
 	        !isLoading && _react2.default.createElement(
 	          'div',
 	          { style: styles.outerContainer },
-	          _react2.default.createElement(_ActionsPanel2.default, { callback: function callback(tvShows) {
-	              return _this2.setTVShowsState(tvShows);
-	            } }),
-	          _react2.default.createElement(_UpcomingEpisodes2.default, { showModal: function showModal(tvShow) {
+	          _react2.default.createElement(_ActionsPanel2.default, { callback: this.setTVShowsState }),
+	          _react2.default.createElement(_UpcomingEpisodes2.default, {
+	            callback: this.setTVShowsState,
+	            showModal: function showModal(tvShow) {
 	              return _this2.showModal(tvShow);
 	            } }),
 	          _react2.default.createElement(
@@ -43170,7 +43171,7 @@
 	  },
 	  container: {
 	    position: 'absolute',
-	    top: '110px',
+	    top: '140px',
 	    left: '-20px',
 	    right: '0px',
 	    textAlign: 'center',
@@ -45567,7 +45568,7 @@
 	            episodes = season.episodes,
 	            showEpisodes = season.showEpisodes;
 	
-	        var seasonName = 'Season ' + tv_show_season + ' - ' + year;
+	        var seasonName = 'Season ' + tv_show_season + ' - ' + (year || 'TBA');
 	        return _react2.default.createElement(
 	          'div',
 	          { key: "season" + i, style: styles.season, className: showEpisodes == 'block' ? 'fui-radio-checked' : 'fui-radio-unchecked' },
@@ -48273,6 +48274,10 @@
 	
 	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
+	var _includes = __webpack_require__(/*! lodash/includes */ 443);
+	
+	var _includes2 = _interopRequireDefault(_includes);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48287,7 +48292,12 @@
 	  function UpcomingEpisodes() {
 	    _classCallCheck(this, UpcomingEpisodes);
 	
-	    return _possibleConstructorReturn(this, (UpcomingEpisodes.__proto__ || Object.getPrototypeOf(UpcomingEpisodes)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (UpcomingEpisodes.__proto__ || Object.getPrototypeOf(UpcomingEpisodes)).call(this));
+	
+	    _this.state = {
+	      toggle: false
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(UpcomingEpisodes, [{
@@ -48301,8 +48311,36 @@
 	      this.props.showModal(tvShow);
 	    }
 	  }, {
+	    key: 'filterByUpcoming',
+	    value: function filterByUpcoming() {
+	      var _props = this.props,
+	          tvShows = _props.tvShows,
+	          upComingEpisodes = _props.upComingEpisodes;
+	      var toggle = this.state.toggle;
+	
+	      var filteredShows = tvShows;
+	
+	      if (!toggle) {
+	        var upComingShows = upComingEpisodes.map(function (episode) {
+	          return episode.tvShowName;
+	        });
+	
+	        filteredShows = tvShows.filter(function (show) {
+	          return (0, _includes2.default)(upComingShows, show.tv_show_name);
+	        });
+	      }
+	
+	      this.setState({
+	        toggle: !toggle
+	      });
+	
+	      this.props.callback(filteredShows);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+	
 	      var upComingEpisodes = this.props.upComingEpisodes;
 	
 	      if (upComingEpisodes.length > 0) {
@@ -48333,8 +48371,29 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'mediaBG', style: styles.container },
-	        _react2.default.createElement(_reactTextMarquee2.default, { loop: true, hoverToStop: true, text: html })
+	        _react2.default.createElement(_reactTextMarquee2.default, { loop: true, hoverToStop: true, text: html }),
+	        _react2.default.createElement(
+	          'div',
+	          { style: { width: '100%', textAlign: '-webkit-right' } },
+	          _react2.default.createElement(
+	            'span',
+	            { style: styles.seeAll, onClick: function onClick() {
+	                return _this2.filterByUpcoming();
+	              } },
+	            this.state.toggle ? 'See All Shows' : 'See All Upcoming'
+	          )
+	        )
 	      );
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      var upComingEpisodes = this.props.upComingEpisodes,
+	          toggle = this.state.toggle;
+	      var nextEpisodes = nextProps.upComingEpisodes,
+	          oldToggle = nextState.toggle;
+	
+	      return nextEpisodes != upComingEpisodes || toggle != oldToggle;
 	    }
 	  }]);
 	
@@ -48342,6 +48401,18 @@
 	}(_react2.default.Component);
 	
 	var styles = {
+	  seeAll: {
+	    cursor: 'pointer',
+	    color: 'white',
+	    position: 'relative',
+	    width: '170px',
+	    fontSize: '15px',
+	    padding: '5px 10px',
+	    backgroundColor: '#f1c40f',
+	    fontWeight: 'bold',
+	    borderRadius: '6px'
+	
+	  },
 	  container: {
 	    padding: '70px 100px 10px',
 	    display: 'grid',

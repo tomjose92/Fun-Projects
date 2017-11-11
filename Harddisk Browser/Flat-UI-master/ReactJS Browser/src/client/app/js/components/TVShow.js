@@ -35,6 +35,7 @@ class TVShow extends React.Component {
         addShow: false,
         isInit: true
       };
+      this.setTVShowsState = this.setTVShowsState.bind(this);
     }
 
   fetchTVShowData(isLocal=true){
@@ -146,8 +147,10 @@ class TVShow extends React.Component {
         </nav>
         {!isLoading && 
         <div style={styles.outerContainer}>
-          <ActionsPanel callback={(tvShows)=>this.setTVShowsState(tvShows)} />
-          <UpcomingEpisodes showModal={(tvShow)=>this.showModal(tvShow)}/>
+          <ActionsPanel callback={this.setTVShowsState} />
+          <UpcomingEpisodes 
+            callback={this.setTVShowsState}
+            showModal={(tvShow)=>this.showModal(tvShow)}/>
           <div style={styles.container}>
             {open && <TVShowModal tvShow={tvShow} navShow={(tvShow,index)=>this.showModal(tvShow,index)} callback={()=>this.closeModal()} />}
             {TVShowImages}
@@ -186,7 +189,7 @@ const styles={
   },
   container:{
     position: 'absolute',
-    top: '110px',
+    top: '140px',
     left: '-20px',
     right: '0px',
     textAlign: 'center',

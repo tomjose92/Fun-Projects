@@ -3,14 +3,45 @@ import {connect} from 'react-redux';
 import Marquee from 'react-text-marquee';
 import {getTVShowEpisodes, getTVShowData} from 'selectors';
 import {sortEpisodesByDate, stripHTMLFromText, getUpcomingShows} from '../utils/utils';
+import includes from 'lodash/includes';
 
 class UpcomingEpisodes extends React.Component {
+  constructor(){
+    super();
+    this.state={
+      toggle: false
+    };
+  }
+
   showModal(tvShowName){
     let {tvShows} = this.props;
     let tvShow = tvShows.find(function(tvShow){
       return tvShow.tv_show_name == tvShowName
     });
     this.props.showModal(tvShow);
+  }
+
+  filterByUpcoming(){
+    let {tvShows,upComingEpisodes} = this.props;
+    let {toggle} = this.state;
+    let filteredShows = tvShows;
+    
+    if(!toggle)
+    {
+      let upComingShows = upComingEpisodes.map(function(episode){
+        return episode.tvShowName;
+      });
+
+      filteredShows = tvShows.filter(function(show){
+        return includes(upComingShows, show.tv_show_name);
+      });
+    }
+
+    this.setState({
+      toggle: !toggle
+    });
+
+    this.props.callback(filteredShows);
   }
 
   render(){
@@ -33,12 +64,37 @@ class UpcomingEpisodes extends React.Component {
     return (
       <div className='mediaBG' style={styles.container}>
         <Marquee loop={true} hoverToStop={true} text={html}/>
+        <div style={{width:'100%', textAlign: '-webkit-right'}}>
+          <span style={styles.seeAll} onClick={()=>this.filterByUpcoming()}>
+            {this.state.toggle?'See All Shows': 'See All Upcoming'}
+          </span>
+        </div>
       </div>
     )
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    let {upComingEpisodes: upComingEpisodes} = this.props,
+    {toggle} = this.state;
+    let {upComingEpisodes: nextEpisodes} = nextProps,
+    {toggle: oldToggle} = nextState;
+    return (nextEpisodes!=upComingEpisodes || toggle!=oldToggle);
   }
 }
 
 const styles = {
+  seeAll:{
+    cursor: 'pointer',
+    color: 'white',
+    position: 'relative',
+    width: '170px',
+    fontSize: '15px',
+    padding: '5px 10px',
+    backgroundColor: '#f1c40f',
+    fontWeight: 'bold',
+    borderRadius: '6px'
+
+  },
   container:{
     padding: '70px 100px 10px',
     display:'grid',

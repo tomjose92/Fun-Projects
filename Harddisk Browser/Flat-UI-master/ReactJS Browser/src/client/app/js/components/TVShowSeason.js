@@ -49,7 +49,7 @@ class TVShowSeason extends React.Component{
       {seasons} = this.props;
       let tvShowSeasons = seasons.map(function(season,i){ 
         let {tv_show_season, year, episodes, showEpisodes} = season;
-        let seasonName = 'Season ' + tv_show_season + ' - ' + year; 
+        let seasonName = 'Season ' + tv_show_season + ' - ' + (year || 'TBA'); 
         return (
           <div key={"season"+i} style={styles.season} className={showEpisodes=='block'?'fui-radio-checked':'fui-radio-unchecked'}>
             <Link style={{color:'white',marginLeft: '20px'}} onClick={()=>self.toggleEpisodes(i)} content={seasonName} />
