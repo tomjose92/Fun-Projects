@@ -50,9 +50,7 @@ export const getDate = (date) => {
   let values = date.split('-');
   date = new Date(values[0], values[1] - 1, values[2]);
   let newDate = date.toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
-  let currentDate = new Date();
-  currentDate = currentDate.setDate(currentDate.getDate() - 1);
-  currentDate = new Date(currentDate).toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
+  let currentDate = new Date().toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
   let color;
   if(new Date(newDate).getTime() == new Date(currentDate).getTime())
   {
@@ -69,6 +67,9 @@ export const sortEpisodesByDate = (episodes) => {
   return episodes.sort(function(a,b){
     let {episode:{date:aDate}} = a,
     {episode:{date:bDate}} = b;
+    if(aDate==='TBA' || bDate === 'TBA')
+      return 1;
+
     aDate = new Date(aDate).getTime();
     bDate = new Date(bDate).getTime();
     return aDate > bDate;

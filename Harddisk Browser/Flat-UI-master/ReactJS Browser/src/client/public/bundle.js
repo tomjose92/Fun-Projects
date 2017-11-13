@@ -45835,9 +45835,7 @@
 	  var values = date.split('-');
 	  date = new Date(values[0], values[1] - 1, values[2]);
 	  var newDate = date.toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
-	  var currentDate = new Date();
-	  currentDate = currentDate.setDate(currentDate.getDate() - 1);
-	  currentDate = new Date(currentDate).toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
+	  var currentDate = new Date().toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
 	  var color = void 0;
 	  if (new Date(newDate).getTime() == new Date(currentDate).getTime()) {
 	    color = 'yellow';
@@ -45851,6 +45849,8 @@
 	  return episodes.sort(function (a, b) {
 	    var aDate = a.episode.date,
 	        bDate = b.episode.date;
+	
+	    if (aDate === 'TBA' || bDate === 'TBA') return 1;
 	
 	    aDate = new Date(aDate).getTime();
 	    bDate = new Date(bDate).getTime();
@@ -48274,10 +48274,6 @@
 	
 	var _utils = __webpack_require__(/*! ../utils/utils */ 440);
 	
-	var _includes = __webpack_require__(/*! lodash/includes */ 443);
-	
-	var _includes2 = _interopRequireDefault(_includes);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48321,12 +48317,8 @@
 	      var filteredShows = tvShows;
 	
 	      if (!toggle) {
-	        var upComingShows = upComingEpisodes.map(function (episode) {
-	          return episode.tvShowName;
-	        });
-	
-	        filteredShows = tvShows.filter(function (show) {
-	          return (0, _includes2.default)(upComingShows, show.tv_show_name);
+	        filteredShows = upComingEpisodes.map(function (episode) {
+	          return { tv_show_name: episode.tvShowName };
 	        });
 	      }
 	
@@ -48343,9 +48335,6 @@
 	
 	      var upComingEpisodes = this.props.upComingEpisodes;
 	
-	      if (upComingEpisodes.length > 0) {
-	        upComingEpisodes = (0, _utils.sortEpisodesByDate)(upComingEpisodes);
-	      }
 	      var self = this;
 	      var html = upComingEpisodes.map(function (episode, index) {
 	        var tvShowName = episode.tvShowName,
@@ -48427,6 +48416,9 @@
 	  var tvShowEpisodes = (0, _selectors.getTVShowEpisodes)(state);
 	  var upComingEpisodes = (0, _utils.getUpcomingShows)(tvShowEpisodes);
 	  var tvShows = (0, _selectors.getTVShowData)(state);
+	  if (upComingEpisodes.length > 0) {
+	    upComingEpisodes = (0, _utils.sortEpisodesByDate)(upComingEpisodes);
+	  }
 	  return {
 	    upComingEpisodes: upComingEpisodes,
 	    tvShows: tvShows

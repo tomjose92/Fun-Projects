@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import Marquee from 'react-text-marquee';
 import {getTVShowEpisodes, getTVShowData} from 'selectors';
 import {sortEpisodesByDate, stripHTMLFromText, getUpcomingShows} from '../utils/utils';
-import includes from 'lodash/includes';
 
 class UpcomingEpisodes extends React.Component {
   constructor(){
@@ -28,12 +27,8 @@ class UpcomingEpisodes extends React.Component {
     
     if(!toggle)
     {
-      let upComingShows = upComingEpisodes.map(function(episode){
-        return episode.tvShowName;
-      });
-
-      filteredShows = tvShows.filter(function(show){
-        return includes(upComingShows, show.tv_show_name);
+      filteredShows = upComingEpisodes.map(function(episode){
+        return {tv_show_name:episode.tvShowName};
       });
     }
 
@@ -46,9 +41,6 @@ class UpcomingEpisodes extends React.Component {
 
   render(){
     let {upComingEpisodes} = this.props;
-    if(upComingEpisodes.length > 0){
-      upComingEpisodes = sortEpisodesByDate(upComingEpisodes);
-    }
     let self = this;
     let html = upComingEpisodes.map(function(episode, index){
       let {tvShowName, episode:{summary, color, date, season, number, name}} = episode;
@@ -109,6 +101,9 @@ const mapStateToProps = (state) =>{
   let tvShowEpisodes = getTVShowEpisodes(state);
   let upComingEpisodes = getUpcomingShows(tvShowEpisodes);
   let tvShows = getTVShowData(state);
+  if(upComingEpisodes.length > 0){
+    upComingEpisodes = sortEpisodesByDate(upComingEpisodes);
+  }
   return {
     upComingEpisodes,
     tvShows
