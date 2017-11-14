@@ -27,8 +27,9 @@ class UpcomingEpisodes extends React.Component {
     
     if(!toggle)
     {
-      filteredShows = upComingEpisodes.map(function(episode){
-        return {tv_show_name:episode.tvShowName};
+      filteredShows = upComingEpisodes.map(function(upcoming){
+        let {tvShowName, episode} = upcoming;
+        return {tv_show_name:tvShowName, episode};
       });
     }
 
@@ -84,11 +85,12 @@ const styles = {
     padding: '5px 10px',
     backgroundColor: '#f1c40f',
     fontWeight: 'bold',
-    borderRadius: '6px'
+    borderRadius: '6px',
+    top: '-25px'
 
   },
   container:{
-    padding: '70px 100px 10px',
+    padding: '70px 100px 0px',
     display:'grid',
     width:'100%',
     zIndex: 99,

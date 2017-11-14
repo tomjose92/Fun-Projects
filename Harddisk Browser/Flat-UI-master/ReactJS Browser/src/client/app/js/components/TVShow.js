@@ -118,17 +118,23 @@ class TVShow extends React.Component {
     });
   }
 
-	render() {
+  render() {
     let self=this,
-  	{error, open, tvShow, records: tvShows} = this.state;
+    {error, open, tvShow, records: tvShows} = this.state;
     let {isLocal, isLoading, tvShowsInfo} = this.props;
 
-  	let TVShowImages = isEmpty(tvShows)? null : tvShows.map(function(tvShow,i){
-      let {tv_show_name, tv_show_tag} = tvShow;
+    let TVShowImages = isEmpty(tvShows)? null : tvShows.map(function(tvShow,i){
+      let {tv_show_name, tv_show_tag, episode} = tvShow;
+      let title = tv_show_name;
+      if(episode)
+      {
+        let {season, number, name, date} = episode;
+        title += ` : S${season}E${number} ${name} (${date})`;
+      }
       let showInfo = tvShowsInfo && tvShowsInfo[tv_show_name];
       let image = showInfo && showInfo.image && showInfo.image.medium;
       return (
-        <span className='tvShow' title={tv_show_name} style={styles.imageBox} key={"tvShow"+i}>
+        <span className='tvShow' title={title} style={styles.imageBox} key={"tvShow"+i}>
           <div style={styles.close} onClick={()=>self.props.removeTVShow(tv_show_name)}>&#10005;</div>
           <a onClick={()=>self.showModal(tvShow, i)}>
             {false ? 
@@ -158,7 +164,7 @@ class TVShow extends React.Component {
         </div>}
       </StyleRoot>
     );
-	}
+  }
 
   componentDidMount() {
     /*let self=this;
