@@ -82,7 +82,7 @@ const styles = {
     position: 'relative',
     width: '170px',
     fontSize: '15px',
-    padding: '5px 10px',
+    padding: '8px 10px',
     backgroundColor: '#f1c40f',
     fontWeight: 'bold',
     borderRadius: '6px',
