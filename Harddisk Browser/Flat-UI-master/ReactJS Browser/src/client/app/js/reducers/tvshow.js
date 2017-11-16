@@ -88,27 +88,26 @@ export const episodes = (state=[], action) => {
 		if(response){
 			let {_embedded:{episodes: responseEpisodes}} = response;
 			let episodes = responseEpisodes.map(function(episode){
-				let {id, name, season, number, summary, airdate} = episode;
-				let dateInfo = getDate(airdate);
+				let {id, name, season, number, summary, airstamp} = episode;
+				let dateInfo = getDate(airstamp);
 				if(!upcoming && (dateInfo.color == 'yellow' || dateInfo.color == 'red'))
 				{
 					upcoming = {...episode, ...dateInfo};
 				}
-				return {id, tv_show_episode:name, season, number, summary, airdate, ...dateInfo};
+				return {id, tv_show_episode:name, season, number, summary, ...dateInfo};
 			});
 			
 			let seasons = [];
 			for(let i=0;i<episodes.length;i++)
 			{
 				let episode = episodes[i];
-				let {season:seasonNo, number, airdate} = episode;
-				
+				let {season:seasonNo, number, date} = episode;
 				if(!seasons[seasonNo-1])
 				{
 					seasons[seasonNo-1] = {
 						tv_show_season: seasonNo, 
 						episodes:[],
-						year: getYear(airdate)
+						year: getYear(date)
 					};
 				}
 				let {episodes: episodesData} = seasons[seasonNo-1];
@@ -116,6 +115,7 @@ export const episodes = (state=[], action) => {
 				seasons[seasonNo-1].episodes = episodesData;
 			}
 			let newState = {...state};
+			seasons = seasons.reverse();
 			newState[tvShowName] = {seasons, upcoming};
 			return newState;
 		}

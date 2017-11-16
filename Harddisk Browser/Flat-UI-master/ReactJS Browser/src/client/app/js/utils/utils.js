@@ -47,9 +47,7 @@ export const getDate = (date) => {
   {
     return {color:'red', date:'TBA'};
   }
-  let values = date.split('-');
-  date = new Date(values[0], values[1] - 1, values[2]);
-  let newDate = date.toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
+  let newDate = new Date(date).toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
   let currentDate = new Date().toString().replace(/\S+\s(\S+)\s(\d+)\s(\d+)\s.*/, '$1 $2, $3');
   let color;
   if(new Date(newDate).getTime() == new Date(currentDate).getTime())
