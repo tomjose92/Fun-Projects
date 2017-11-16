@@ -45834,8 +45834,9 @@
 	};
 	
 	var getYear = exports.getYear = function getYear(date) {
-	  var values = date.split('-');
-	  return values[0];
+	  var values = date.split(' ');
+	  console.warn(date, values);
+	  return values.reverse()[0];
 	};
 	
 	var getDate = exports.getDate = function getDate(date) {

@@ -38,8 +38,8 @@ export const blurImage = (val) => {
 }
 
 export const getYear = (date) => {
-  let values = date.split('-');
-  return values[0];
+  let values = date.split(' ');
+  return values.reverse()[0];
 }
 
 export const getDate = (date) => {
