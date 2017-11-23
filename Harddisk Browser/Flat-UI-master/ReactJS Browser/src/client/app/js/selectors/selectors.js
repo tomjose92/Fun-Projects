@@ -12,7 +12,7 @@ export const getTVShowEpisodes = (state) => state.tvshows && state.tvshows.episo
 export const getTVShowCasts = (state) => state.tvshows && state.tvshows.casts;
 export const getCurrentTVShow = (state) => state.tvshows && state.tvshows.currentTVShow;
 export const getSearchOptions = (state) => state.tvshows && state.tvshows.options;
-export const getTVShowGenres = (state) => state.tvshows && state.tvshows.genres;
+export const getTVShowGenres = (state) => state.tvshows && state.tvshows.filters && state.tvshows.filters.genres;
 
 export const getCurrentTVShowInfo = createSelector(
   	[getCurrentTVShow, getTVShowsInfo],

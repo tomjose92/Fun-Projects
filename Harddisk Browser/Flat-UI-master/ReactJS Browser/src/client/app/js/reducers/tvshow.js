@@ -153,22 +153,28 @@ export const casts = (state=[],action) =>{
 	return findOtherCastShows(state);
 }
 
-export const genres = (state=[], action) =>{
+export const filters = (state=[], action) =>{
+	let {genres: currentGenres=[], statuses: currentStatus=[]} = state;
 	if(action.type === FETCH_TVSHOW_INFO_SUCCESS){
 		let {response} = action.payload;
 		if(response){
-			let {genres} = response;
-			genres = state.concat(genres);
+			let {genres, status} = response;
+			genres = currentGenres.concat(genres);
 			let newGenres = [];
 			for(let i in genres) {
 		        if(!includes(newGenres, genres[i])) {
 		            newGenres.push(genres[i]);
 		        }
 		    }
-			return newGenres;
+			currentGenres = newGenres;
+
+			!includes(currentStatus, status) && currentStatus.push(status);
 		}
 	}
-	return state;
+	return {
+		genres: currentGenres,
+		statuses: currentStatus
+	};
 }
 
 export const currentTVShow = (state='', action) =>{
@@ -202,6 +208,6 @@ export const tvshows = combineReducers({
   casts,
   currentTVShow,
   options,
-  genres
+  filters
 });
 

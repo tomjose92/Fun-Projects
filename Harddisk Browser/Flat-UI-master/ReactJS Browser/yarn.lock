@@ -1709,7 +1709,7 @@ prompt@^0.2.14:
     utile "0.2.x"
     winston "0.8.x"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -1836,6 +1836,12 @@ react-router@^2.4.0:
     invariant "^2.2.1"
     loose-envify "^1.2.0"
     warning "^3.0.0"
+
+react-swap@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-swap/-/react-swap-2.0.2.tgz#ff3671bc571f74a4e146a032279848f90f2257e7"
+  dependencies:
+    prop-types "^15.6.0"
 
 react-text-marquee@^1.0.1:
   version "1.0.1"

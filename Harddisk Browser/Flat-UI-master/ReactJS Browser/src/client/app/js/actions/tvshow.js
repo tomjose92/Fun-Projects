@@ -64,7 +64,7 @@ export const addTVShowSuccess = (tvShowName) => {
 
 export const searchTVShowSuccess = (response) =>{
   return {
-    type: 'SEARCH_TVSHOW_SUCCESS',
+    type: ActionTypes.SEARCH_TVSHOW_SUCCESS,
     payload: {response}
   };
 }

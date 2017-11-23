@@ -215,10 +215,10 @@ class ActionsPanel extends React.Component {
         <span title={!addShow?'Add Show':''} style={{cursor:'pointer',paddingLeft:(addShow?'10px': '30px')}} className={addShow?'fui-cross':'fui-plus'} onClick={()=>this.toggleAddShow()}/>
 
         {showGenre && <span>
-            <span title='By Genre' style={{paddingLeft:'30px'}}>Sort By Genre</span>
+            <span title='By Genre' style={{paddingLeft:'30px'}}>Filter By Genre</span>
             <span title='Reset Filter' style={{cursor:'pointer',padding:'0px 10px'}} className='fui-cross' onClick={()=>this.sortFilterByGenre()}/> 
         </span>}
-        <span title={!showGenre?'Sort By Genre':''} style={{cursor: 'pointer', paddingLeft:(showGenre?'10px': '30px')}} className="fui-list-columned" 
+        <span title={!showGenre?'Filter By Genre':''} style={{cursor: 'pointer', paddingLeft:(showGenre?'10px': '30px')}} className="fui-list-columned" 
           onClick={()=>this.toggleGenre()}></span>
 
         {bookmark && <div title="Drag and Drop to Bookmark this" style={styles.bookmarkContainer}>
